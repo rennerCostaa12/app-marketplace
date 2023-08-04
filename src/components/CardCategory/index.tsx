@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { Container, TextCategory, ContentIcon } from "./styles";
 
 import { Entypo, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';

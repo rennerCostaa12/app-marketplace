@@ -2,7 +2,7 @@ import { Container, ContentIcons, ContentInputSearch, InputSearch, ButtonIcon, C
 import { AntDesign } from '@expo/vector-icons';
 
 import { useState } from 'react';
-import { Dialog, Toast, ALERT_TYPE } from 'react-native-alert-notification';
+import { Toast, ALERT_TYPE } from 'react-native-alert-notification';
 
 import { IconsBadge } from "../IconsBadge";
 
