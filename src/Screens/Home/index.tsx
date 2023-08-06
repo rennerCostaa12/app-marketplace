@@ -112,6 +112,7 @@ export const Home = () => {
                             products.map((value) => {
                                 return (
                                     <CardItem
+                                        key={value.id}
                                         id={value.id}
                                         typeItem={value.category.name}
                                         nameItem={value.title}
