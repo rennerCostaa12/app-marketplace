@@ -23,7 +23,8 @@ export const TabsRoutes = () => {
                 options={{
                     tabBarLabel: "Home",
                     tabBarLabelStyle: {
-                        fontSize: 14
+                        fontSize: 14,
+                        fontFamily: 'Lato_700Bold'
                     },
                     tabBarIcon: ({ color, size }) => (
                         <Entypo name="home" size={size} color={color} />
@@ -36,7 +37,8 @@ export const TabsRoutes = () => {
                 options={{
                     tabBarLabel: "Dúvidas",
                     tabBarLabelStyle: {
-                        fontSize: 14
+                        fontSize: 14,
+                        fontFamily: 'Lato_700Bold'
                     },
                     tabBarIcon: ({ color, size }) => (
                         <Entypo name="help" size={size} color={color} />
@@ -49,7 +51,8 @@ export const TabsRoutes = () => {
                 options={{
                     tabBarLabel: "Conta",
                     tabBarLabelStyle: {
-                        fontSize: 14
+                        fontSize: 14,
+                        fontFamily: 'Lato_700Bold'
                     },
                     tabBarIcon: ({ color, size }) => (
                         <AntDesign name="user" size={size} color={color} />

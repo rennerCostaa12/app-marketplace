@@ -20,7 +20,7 @@ export const StackRoutes = () => {
                 component={ApresentationApp}
             />
             <Screen
-                name='home'
+                name='tab_routes'
                 component={TabsRoutes}
             />
             <Screen

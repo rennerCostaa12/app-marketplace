@@ -37,6 +37,7 @@ export const CardCategory = ({ nameCategory, value, setValue, icon }: CardCatego
             </ContentIcon>
             <TextCategory
                 selected={value.toLocaleUpperCase() === nameCategory.toLocaleUpperCase() ? true : false}
+                style={{ fontFamily: 'Lato_400Regular' }}
             >
                 {nameCategory}
             </TextCategory>
