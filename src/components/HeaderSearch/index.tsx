@@ -3,6 +3,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { useState } from 'react';
 import { Toast, ALERT_TYPE } from 'react-native-alert-notification';
+import { useNavigation } from '@react-navigation/native';
 
 import { IconsBadge } from "../IconsBadge";
 
@@ -23,9 +24,7 @@ export const HeaderSearch = ({ setProducts, setLoading }: HeaderSearchProps) => 
 
     const [search, setSearch] = useState<string>('');
 
-    const handleSeeAllItemsFavorites = () => {
-        alert('SEE ALL ITEMS FAVORITES');
-    }
+    const { navigate } = useNavigation() as any;
 
     const handleSeeItemsCart = () => {
         alert('SEE ALL ITEMS CART');
@@ -76,7 +75,7 @@ export const HeaderSearch = ({ setProducts, setLoading }: HeaderSearchProps) => 
                 </ButtonIcon>
 
                 <ButtonIcon
-                    onPress={handleSeeAllItemsFavorites}
+                    onPress={() => navigate('productsFavorites')}
                 >
                     <IconsBadge
                         icon={<AntDesign name="hearto" size={30} color="black" />}
