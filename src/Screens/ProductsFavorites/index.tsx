@@ -46,9 +46,9 @@ const CardProductsFavorites = ({ dataProduct }: CardProductsFavoritesProps) => {
             </ContentImgProduct>
 
             <ContentDescription>
-                <TitleProduct>{dataProduct.nameItem}</TitleProduct>
-                <PriceProduct>{dataProduct.priceItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</PriceProduct>
-                <CategoryProduct>{dataProduct.typeItem.toLocaleUpperCase()}</CategoryProduct>
+                <TitleProduct style={{ fontFamily: 'Lato_700Bold'}}>{dataProduct.nameItem}</TitleProduct>
+                <PriceProduct style={{ fontFamily: 'Lato_400Regular'}}>{dataProduct.priceItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</PriceProduct>
+                <CategoryProduct style={{ fontFamily: 'Lato_400Regular'}}>{dataProduct.typeItem.toLocaleUpperCase()}</CategoryProduct>
             </ContentDescription>
             <ContentIcon>
                 <ButtonRemoveFavorite onPress={handleRemoveFavorite}>

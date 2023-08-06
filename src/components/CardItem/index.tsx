@@ -47,13 +47,13 @@ export const CardItem = ({ urlImg, nameItem, priceItem, typeItem, id }: ItemProp
                 />
             </ContentImg>
             <ContentDescriptionsItem>
-                <CategoryItem>
+                <CategoryItem style={{ fontFamily: 'Lato_400Regular' }}>
                     {typeItem.toLocaleUpperCase()}
                 </CategoryItem>
-                <NameItem>
+                <NameItem style={{ fontFamily: 'Lato_700Bold' }}>
                     {nameItem}
                 </NameItem>
-                <PriceItem>
+                <PriceItem style={{ fontFamily: 'Lato_700Bold' }}>
                     {priceItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                 </PriceItem>
             </ContentDescriptionsItem>

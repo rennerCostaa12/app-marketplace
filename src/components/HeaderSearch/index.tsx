@@ -57,6 +57,9 @@ export const HeaderSearch = ({ setProducts, setLoading }: HeaderSearchProps) => 
                 <InputSearch
                     placeholder="Pesquisa"
                     value={search}
+                    style={{
+                        fontFamily: 'Lato_400Regular'
+                    }}
                     onChangeText={(text: string) => setSearch(text)}
                     onSubmitEditing={() => handleFilteredItems(search)}
                 />

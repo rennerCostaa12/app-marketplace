@@ -90,7 +90,7 @@ export const Home = () => {
                     />
                 </ContentCategories>
                 <Content>
-                    <TitleItems>
+                    <TitleItems style={{ fontFamily: 'Lato_700Bold' }}>
                         {category.toLocaleUpperCase()}
                     </TitleItems>
                     <ContentItems

@@ -24,14 +24,12 @@ export const ImageItem = styled.Image`
 `
 
 export const NameItem = styled.Text`
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
 `
 
 export const PriceItem = styled.Text`
     font-size: 20px;
     text-align: right;
-    font-weight: bold;
     color: #649A8C;
     margin: 5px 0;
 `

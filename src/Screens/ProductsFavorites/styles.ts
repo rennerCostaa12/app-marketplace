@@ -30,7 +30,6 @@ export const ContentDescription = styled.View`
 
 export const TitleProduct = styled.Text`
     font-size: 18px;
-    font-weight: bold;
 `;
 
 export const PriceProduct = styled.Text`
