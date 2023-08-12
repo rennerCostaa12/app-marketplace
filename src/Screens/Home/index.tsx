@@ -36,21 +36,30 @@ const categories = [
     },
 ];
 
+let configPagination;
+
 export const Home = () => {
     const [products, setProducts] = useState<ProductsProps[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1);
+
+    const getAllProducts = async () => {
+        if(configPagination !== undefined && products.length >= configPagination.totalItems){
+            return null;
+        }
+        setLoading(true);
+        try {
+            const response = await Api.get(`products/find_all?page=${page}&limit=6`);
+            configPagination = response.data.meta;
+            setProducts([...products, ...response.data.items]);
+            setPage(page + 1);
+        } catch (error) {
+            console.log(error);
+        }
+        setLoading(false);
+    }
 
     useEffect(() => {
-        const getAllProducts = async () => {
-            setLoading(true);
-            try {
-                const response = await Api.get('products/find_all?page=1&limit=10');
-                setProducts(response.data.items);
-            } catch (error) {
-                console.log(error);
-            }
-            setLoading(false);
-        }
         getAllProducts();
     }, []);
 
@@ -71,34 +80,29 @@ export const Home = () => {
                 </ContentCategories>
                 <Content>
                     <ContentItems>
-                        {loading ?
-                            <ActivityIndicator
-                                color="#FF1493"
-                                size="large"
-                                visible
-                            />
-                            :
-                            <FlatList
-                                data={products}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <View style={{ margin: 10 }}>
-                                            <CardItem
-                                                key={item.id}
-                                                id={item.id}
-                                                typeItem={item.category.name}
-                                                nameItem={item.title}
-                                                priceItem={item.price}
-                                                urlImg={item.url_img}
-                                            />
-                                        </View>
-                                    )
-                                }}
-                                horizontal={false}
-                                numColumns={2}
-                                keyExtractor={item => String(item.id)}
-                            />
-                        }
+                        <FlatList
+                            data={products}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={{ margin: 10 }}>
+                                        <CardItem
+                                            key={item.id}
+                                            id={item.id}
+                                            typeItem={item.category.name}
+                                            nameItem={item.title}
+                                            priceItem={item.price}
+                                            urlImg={item.url_img}
+                                        />
+                                    </View>
+                                )
+                            }}
+                            horizontal={false}
+                            numColumns={2}
+                            keyExtractor={item => String(item.id)}
+                            onEndReached={getAllProducts}
+                            onEndReachedThreshold={0.1}
+                            ListFooterComponent={<ActivityIndicator color="#FF1493" size="large" visible={loading} />}
+                        />
                     </ContentItems>
                 </Content>
             </Container>
