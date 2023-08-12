@@ -20,6 +20,8 @@ import { useItemsFavorites } from "../../contexts/ItemsFavorites";
 
 import { ItemProps } from "../../contexts/ItemsFavorites";
 
+import { CartEmpty } from "../../Components/CartEmpty";
+
 interface CardProductsFavoritesProps {
     dataProduct: ItemProps;
 }
@@ -70,6 +72,7 @@ export const ProductsFavorites = () => {
                     data={itemsFavorites}
                     renderItem={({ item }) => <CardProductsFavorites dataProduct={item} />}
                     keyExtractor={item => String(item.id)}
+                    ListEmptyComponent={<CartEmpty text="Nenhum produto encontrado" />}
                 />
             </ContentProducts>
         </Container>
