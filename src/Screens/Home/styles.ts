@@ -4,11 +4,11 @@ export const Container = styled.View`
     background-color: #FFFFFF;
 `
 
-export const ContentCategories = styled.ScrollView`
+export const ContentCategories = styled.SafeAreaView`
     width: 100%;
     margin: 20px 10px;
-    height: 100px;
     background-color: #FFFFFF;
+    padding-right: 10px;
 `
 
 export const Content = styled.View`
