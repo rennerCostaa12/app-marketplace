@@ -15,9 +15,11 @@ export const Content = styled.View`
     background-color: #f3f3f3;
 `
 
-export const ContentItems = styled.ScrollView`
-    height: 500px;
-    padding: -10px 0;
+export const ContentItems = styled.SafeAreaView`
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
 `
 
 export const TitleItems = styled.Text`

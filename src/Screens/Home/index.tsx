@@ -1,7 +1,7 @@
 import { Container, ContentCategories, ContentItems, Content } from "./styles";
 
 import { useEffect, useState } from "react";
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 
 import { HeaderSearch } from "../../Components/HeaderSearch";
@@ -70,15 +70,7 @@ export const Home = () => {
                     />
                 </ContentCategories>
                 <Content>
-                    <ContentItems
-                        contentContainerStyle={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                            gap: 20
-                        }}
-                    >
+                    <ContentItems>
                         {loading ?
                             <ActivityIndicator
                                 color="#FF1493"
@@ -86,20 +78,27 @@ export const Home = () => {
                                 visible
                             />
                             :
-                            products.map((value) => {
-                                return (
-                                    <CardItem
-                                        key={value.id}
-                                        id={value.id}
-                                        typeItem={value.category.name}
-                                        nameItem={value.title}
-                                        priceItem={value.price}
-                                        urlImg={value.url_img}
-                                    />
-                                )
-                            })
+                            <FlatList
+                                data={products}
+                                renderItem={({ item }) => {
+                                    return (
+                                        <View style={{ margin: 10 }}>
+                                            <CardItem
+                                                key={item.id}
+                                                id={item.id}
+                                                typeItem={item.category.name}
+                                                nameItem={item.title}
+                                                priceItem={item.price}
+                                                urlImg={item.url_img}
+                                            />
+                                        </View>
+                                    )
+                                }}
+                                horizontal={false}
+                                numColumns={2}
+                                keyExtractor={item => String(item.id)}
+                            />
                         }
-
                     </ContentItems>
                 </Content>
             </Container>
