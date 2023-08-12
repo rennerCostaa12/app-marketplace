@@ -13,7 +13,6 @@ import { Api } from "../../Configs/Api";
 import { ProductsProps } from "../../Types/products";
 
 export const Home = () => {
-    const [category, setCategory] = useState<string>('Bebidas');
     const [products, setProducts] = useState<ProductsProps[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,8 +20,8 @@ export const Home = () => {
         const getAllProducts = async () => {
             setLoading(true);
             try {
-                const response = await Api.get('products');
-                setProducts(response.data);
+                const response = await Api.get('products/find_all?page=1&limit=10');
+                setProducts(response.data.items);
             } catch (error) {
                 console.log(error);
             }
@@ -30,21 +29,6 @@ export const Home = () => {
         }
         getAllProducts();
     }, []);
-
-    useEffect(() => {
-        const filterByCategory = async () => {
-            setLoading(true);
-            try {
-                const responseByCategory = await Api.get(`products/search_categories/${category}`)
-                setProducts(responseByCategory.data);
-            } catch (error) {
-                console.log(error);
-            }
-            setLoading(false);
-        }
-
-        filterByCategory();
-    }, [category]);
 
     return (
         <AlertNotificationRoot>
@@ -64,35 +48,28 @@ export const Home = () => {
                     <CardCategory
                         icon="drink"
                         nameCategory="Bebidas"
-                        setValue={setCategory}
-                        value={category}
+                        value="drinks"
                     />
 
                     <CardCategory
                         icon="food"
                         nameCategory="Comidas"
-                        setValue={setCategory}
-                        value={category}
+                        value="foods"
                     />
 
                     <CardCategory
                         icon="cleaning"
                         nameCategory="Limpeza"
-                        setValue={setCategory}
-                        value={category}
+                        value="cleaning"
                     />
 
                     <CardCategory
                         icon="toys"
                         nameCategory="Brinquedos"
-                        setValue={setCategory}
-                        value={category}
+                        value="toys"
                     />
                 </ContentCategories>
                 <Content>
-                    <TitleItems style={{ fontFamily: 'Lato_700Bold' }}>
-                        {category.toLocaleUpperCase()}
-                    </TitleItems>
                     <ContentItems
                         contentContainerStyle={{
                             justifyContent: 'center',
