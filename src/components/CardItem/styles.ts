@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 
 export const ContentDescriptionsItem = styled.View`
-    padding: 10px 5px;
+    padding: 10px;
 `
 
 export const ContentImg = styled.View`
@@ -26,6 +26,15 @@ export const ImageItem = styled.Image`
 export const NameItem = styled.Text`
     font-size: 16px;
 `
+
+export const ContentPricesAndSale = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0px;
+`;
+
+export const ButtonAddProduct = styled.TouchableOpacity``;
 
 export const PriceItem = styled.Text`
     font-size: 20px;

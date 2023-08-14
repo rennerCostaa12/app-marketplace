@@ -16,9 +16,9 @@ import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList } from 'react-native';
 
-import { useItemsFavorites } from "../../contexts/ItemsFavorites";
+import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 
-import { ItemProps } from "../../contexts/ItemsFavorites";
+import { ItemProps } from "../../Contexts/ItemsFavorites";
 
 import { CartEmpty } from "../../Components/CartEmpty";
 

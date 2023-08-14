@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { IconsBadge } from "../IconsBadge";
 
-import { useItemsFavorites } from "../../contexts/ItemsFavorites";
+import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 
 import { ProductsProps } from "../../Types/products";
 

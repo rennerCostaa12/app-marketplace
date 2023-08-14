@@ -1,10 +1,21 @@
-import { Container, ContentDescriptionsItem, ContentImg, NameItem, PriceItem, ImageItem, ContentIconFavorite, CategoryItem } from "./styles";
+import {
+    Container,
+    ContentDescriptionsItem,
+    ContentImg,
+    NameItem,
+    PriceItem,
+    ImageItem,
+    ContentIconFavorite,
+    CategoryItem,
+    ContentPricesAndSale,
+    ButtonAddProduct
+} from "./styles";
 
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { ItemProps } from "../../contexts/ItemsFavorites";
-import { useItemsFavorites } from "../../contexts/ItemsFavorites";
+import { ItemProps } from "../../Contexts/ItemsFavorites";
+import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 
 export const CardItem = ({ urlImg, nameItem, priceItem, typeItem, id }: ItemProps) => {
 
@@ -27,11 +38,11 @@ export const CardItem = ({ urlImg, nameItem, priceItem, typeItem, id }: ItemProp
     }
 
     const handleRemoveFavorited = async (id: string | number) => {
-        try{
+        try {
             const newItem = itemsFavorites.filter((data) => data.id !== id);
             setItemsFavorites(newItem)
             await AsyncStorage.setItem('@marketplace:items_favorites', JSON.stringify(newItem));
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
@@ -53,9 +64,14 @@ export const CardItem = ({ urlImg, nameItem, priceItem, typeItem, id }: ItemProp
                 <NameItem style={{ fontFamily: 'Lato_700Bold' }}>
                     {nameItem}
                 </NameItem>
-                <PriceItem style={{ fontFamily: 'Lato_700Bold' }}>
-                    {priceItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                </PriceItem>
+                <ContentPricesAndSale>
+                    <ButtonAddProduct>
+                        <FontAwesome name="cart-plus" size={30} color="#008000" />
+                    </ButtonAddProduct>
+                    <PriceItem style={{ fontFamily: 'Lato_700Bold' }}>
+                        {priceItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                    </PriceItem>
+                </ContentPricesAndSale>
             </ContentDescriptionsItem>
             <ContentIconFavorite onPress={() => isFavorited ? handleRemoveFavorited(id) : handleAddFavorited()}>
                 <AntDesign name={isFavorited ? 'heart' : 'hearto'} size={23} color='#FF1493' />

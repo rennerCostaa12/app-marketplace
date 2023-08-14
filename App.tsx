@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import { useFonts, Lato_400Regular, Lato_700Bold, Lato_300Light } from '@expo-google-fonts/lato';
 
-import { ItemsFavoritesContextProvider } from './src/contexts/ItemsFavorites';
+import { ItemsFavoritesContextProvider } from './src/Contexts/ItemsFavorites';
 
 export default function App() {
   let [fontLoaded] = useFonts({
