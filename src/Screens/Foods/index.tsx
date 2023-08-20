@@ -3,9 +3,9 @@ import { Container, ContentFoods } from "./styles"
 import { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 
-import { ActivityIndicator } from "../../Components/ActivityIndicator";
 import { CardItem } from "../../Components/CardItem";
 import { CartEmpty } from "../../Components/CartEmpty";
+import { Loading } from "../../Components/Loading";
 
 import { Api } from "../../Configs/Api";
 
@@ -33,30 +33,25 @@ export const Foods = () => {
 
     return (
         <Container>
-            {loading ?
-                <ActivityIndicator
-                    color="#FF1493"
-                    size="large"
-                    visible
+            <Loading
+                visible={loading}
+            />
+            <ContentFoods>
+                <FlatList
+                    data={foods}
+                    renderItem={({ item }) => {
+                        return (
+                            <View style={{ margin: 10 }}>
+                                <CardItem id={item.id} nameItem={item.title} priceItem={item.price} typeItem={item.category.name} urlImg={item.url_img} />
+                            </View>
+                        )
+                    }}
+                    keyExtractor={item => String(item.id)}
+                    horizontal={false}
+                    numColumns={2}
+                    ListEmptyComponent={!loading && <CartEmpty text="Nenhum produto encontrado" />}
                 />
-                :
-                <ContentFoods>
-                    <FlatList
-                        data={foods}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={{ margin: 10 }}>
-                                    <CardItem id={item.id} nameItem={item.title} priceItem={item.price} typeItem={item.category.name} urlImg={item.url_img} />
-                                </View>
-                            )
-                        }}
-                        keyExtractor={item => String(item.id)}
-                        horizontal={false}
-                        numColumns={2}
-                        ListEmptyComponent={<CartEmpty text="Nenhum produto encontrado" />}
-                    />
-                </ContentFoods>
-            }
+            </ContentFoods>
         </Container>
     )
 }

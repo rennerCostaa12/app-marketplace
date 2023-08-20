@@ -59,9 +59,14 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
     }, [quantity]);
 
     const handleRemoveItem = () => {
-        const newItems = itemsSales.filter((value) => value.id !== dataProduct.id);
-        setItemsSales(newItems);
-        AsyncStorage.setItem('@marketplace:items_sales', JSON.stringify(newItems));
+        try {
+            const newItems = itemsSales.filter((value) => value.id !== dataProduct.id);
+            setItemsSales(newItems);
+            AsyncStorage.setItem('@marketplace:items_sales', JSON.stringify(newItems));
+        } catch (error) {
+            console.error(error);
+        }
+
     }
 
     useEffect(() => {
@@ -104,7 +109,6 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
 
 export const ProductSales = () => {
     const { itemsSales } = useItemsSales();
-
     const { navigate } = useNavigation() as any;
 
     const totalAmount = itemsSales.reduce((total, item) => {
@@ -121,11 +125,13 @@ export const ProductSales = () => {
                     ListEmptyComponent={CartEmpty}
                 />
             </ContentCards>
-            <PriceFinal
-                style={{ fontFamily: 'Lato_700Bold' }}
-            >
-                {totalAmount.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-            </PriceFinal>
+            {itemsSales.length > 0 ? (
+                <PriceFinal
+                    style={{ fontFamily: 'Lato_700Bold' }}
+                >
+                    {totalAmount.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                </PriceFinal>
+            ) : null}
             {itemsSales.length > 0 ? (
                 <ContentButtonCheckout>
                     <Button

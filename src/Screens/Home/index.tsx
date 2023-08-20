@@ -8,6 +8,7 @@ import { HeaderSearch } from "../../Components/HeaderSearch";
 import { CardCategory } from "../../Components/CardCategory";
 import { CardItem } from "../../Components/CardItem";
 import { ActivityIndicator } from "../../Components/ActivityIndicator";
+import { Loading } from "../../Components/Loading";
 
 import { Api } from "../../Configs/Api";
 
@@ -44,7 +45,7 @@ export const Home = () => {
     const [page, setPage] = useState<number>(1);
 
     const getAllProducts = async () => {
-        if(configPagination !== undefined && products.length >= configPagination.totalItems){
+        if (configPagination !== undefined && products.length >= configPagination.totalItems) {
             return null;
         }
         setLoading(true);
