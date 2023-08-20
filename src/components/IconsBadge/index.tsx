@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Container, Badge, ContentIcon } from "./styles"
+import { Container, Badge, ContentIcon, ContentBadge } from "./styles"
 
 interface IconsBadgeProps {
     icon: ReactNode;
@@ -13,9 +13,11 @@ export const IconsBadge = ({ icon, quantity }: IconsBadgeProps) => {
                 {icon}
             </ContentIcon>
             {quantity > 0 && (
-                <Badge style={{ fontFamily: 'Lato_400Regular' }}>
-                    {quantity}
-                </Badge>
+                <ContentBadge>
+                    <Badge style={{ fontFamily: 'Lato_400Regular' }}>
+                        {quantity > 9 ? `9+` : quantity}
+                    </Badge>
+                </ContentBadge>
             )}
         </Container>
     )
