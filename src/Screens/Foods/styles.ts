@@ -5,6 +5,5 @@ export const Container = styled.View`
 `;
 
 export const ContentFoods = styled.View`
-    display: flex;
     align-items: center;
 `;

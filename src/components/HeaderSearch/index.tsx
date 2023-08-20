@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { IconsBadge } from "../IconsBadge";
 
-import { useItemsFavorites } from "../../contexts/ItemsFavorites";
+import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
+import { useItemsSales } from "../../Contexts/ItemsSales";
 
 import { ProductsProps } from "../../Types/products";
 
@@ -21,14 +22,11 @@ interface HeaderSearchProps {
 export const HeaderSearch = ({ setProducts, setLoading }: HeaderSearchProps) => {
 
     const { itemsFavorites } = useItemsFavorites();
+    const { itemsSales } = useItemsSales();
 
     const [search, setSearch] = useState<string>('');
 
     const { navigate } = useNavigation() as any;
-
-    const handleSeeItemsCart = () => {
-        alert('SEE ALL ITEMS CART');
-    }
 
     const handleFilteredItems = async (valueSearch: string) => {
         setLoading(true);
@@ -70,10 +68,11 @@ export const HeaderSearch = ({ setProducts, setLoading }: HeaderSearchProps) => 
 
             <ContentIcons>
                 <ButtonIcon
-                    onPress={handleSeeItemsCart}
+                    onPress={() => navigate('sales')}
                 >
                     <IconsBadge
                         icon={<AntDesign name="shoppingcart" size={30} color="black" />}
+                        quantity={itemsSales.length}
                     />
                 </ButtonIcon>
 
