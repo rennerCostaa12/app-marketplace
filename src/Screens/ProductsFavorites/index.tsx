@@ -18,7 +18,7 @@ import { FlatList } from 'react-native';
 
 import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 
-import { ItemProps } from "../../Contexts/ItemsFavorites";
+import { ItemProps } from "../../Types/products";
 
 import { CartEmpty } from "../../Components/CartEmpty";
 

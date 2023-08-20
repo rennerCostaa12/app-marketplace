@@ -10,3 +10,11 @@ export interface ProductsProps{
     available_quantity: number;
     url_img: string;
 }
+
+export interface ItemProps {
+    id: string | number;
+    urlImg: string;
+    nameItem: string;
+    priceItem: number;
+    typeItem: string;
+}

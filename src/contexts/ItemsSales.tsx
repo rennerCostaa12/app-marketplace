@@ -2,12 +2,13 @@ import { ReactNode, createContext, useContext, useState, useEffect } from "react
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export interface ItemProps {
+export interface ItemsSalesProps {
     id: string | number;
     urlImg: string;
     nameItem: string;
     priceItem: number;
     typeItem: string;
+    quantity: number;
 }
 
 interface ItemsSalesContextProviderProps{
@@ -15,15 +16,15 @@ interface ItemsSalesContextProviderProps{
 }
 
 interface ItemsSalesContextProps{
-    itemsSales: ItemProps[];
-    setItemsSales: (data: ItemProps[]) => void;
+    itemsSales: ItemsSalesProps[];
+    setItemsSales: (data: ItemsSalesProps[]) => void;
 }
 
 const ItemsSalesContext = createContext<ItemsSalesContextProps | undefined>(undefined);
 
 export const ItemsSalesContextProvider = ({ children }: ItemsSalesContextProviderProps) => {
 
-    const [itemsSales, setItemsSales] = useState<ItemProps[]>([]);
+    const [itemsSales, setItemsSales] = useState<ItemsSalesProps[]>([]);
 
     const getItemsSales = async () => {
         try{

@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useFonts, Lato_400Regular, Lato_700Bold, Lato_300Light } from '@expo-google-fonts/lato';
 
 import { ItemsFavoritesContextProvider } from './src/Contexts/ItemsFavorites';
+import { ItemsSalesContextProvider } from './src/Contexts/ItemsSales';
 
 export default function App() {
   let [fontLoaded] = useFonts({
@@ -23,7 +24,9 @@ export default function App() {
     <Container>
       <StatusBar style="auto" />
       <ItemsFavoritesContextProvider>
-        <Routes />
+        <ItemsSalesContextProvider>
+          <Routes />
+        </ItemsSalesContextProvider>
       </ItemsFavoritesContextProvider>
     </Container>
   );

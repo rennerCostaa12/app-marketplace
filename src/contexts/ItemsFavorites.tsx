@@ -1,14 +1,8 @@
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ItemProps } from "../Types/products";
 
-export interface ItemProps {
-    id: string | number;
-    urlImg: string;
-    nameItem: string;
-    priceItem: number;
-    typeItem: string;
-}
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface ItemsFavoritesContextProviderProps{
     children: ReactNode;

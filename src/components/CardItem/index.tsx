@@ -14,12 +14,44 @@ import {
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { ItemProps } from "../../Contexts/ItemsFavorites";
+import { ItemProps } from "../../Types/products";
 import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
+import { useItemsSales } from "../../Contexts/ItemsSales";
 
 export const CardItem = ({ urlImg, nameItem, priceItem, typeItem, id }: ItemProps) => {
 
     const { setItemsFavorites, itemsFavorites } = useItemsFavorites();
+    const { setItemsSales, itemsSales } = useItemsSales();
+
+    const handleAddItemSales = async () => {
+        try{
+            const findItem = itemsSales.filter((data) => data.id === id);
+            if(findItem.length >= 1){
+                const newObject = itemsSales.map((value) => {
+                    if(value.id === id){
+                        value.quantity++;
+                    }
+                    return value;
+                })
+                setItemsSales(newObject);
+                await AsyncStorage.setItem('@marketplace:items_sales', JSON.stringify(newObject));
+            }else{
+                const objectSales = {
+                    id,
+                    nameItem,
+                    priceItem,
+                    typeItem,
+                    urlImg,
+                    quantity: 1
+                }
+    
+                setItemsSales([...itemsSales, objectSales]);
+                await AsyncStorage.setItem('@marketplace:items_sales', JSON.stringify([...itemsSales, objectSales]));
+            }
+        }catch(error){
+            console.error(error);
+        }
+    }
 
     const handleAddFavorited = async () => {
         try {
@@ -33,7 +65,7 @@ export const CardItem = ({ urlImg, nameItem, priceItem, typeItem, id }: ItemProp
             setItemsFavorites([...itemsFavorites, objectFavorited]);
             await AsyncStorage.setItem('@marketplace:items_favorites', JSON.stringify([...itemsFavorites, objectFavorited]));
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -65,7 +97,7 @@ export const CardItem = ({ urlImg, nameItem, priceItem, typeItem, id }: ItemProp
                     {nameItem}
                 </NameItem>
                 <ContentPricesAndSale>
-                    <ButtonAddProduct>
+                    <ButtonAddProduct onPress={handleAddItemSales}>
                         <FontAwesome name="cart-plus" size={30} color="#008000" />
                     </ButtonAddProduct>
                     <PriceItem style={{ fontFamily: 'Lato_700Bold' }}>

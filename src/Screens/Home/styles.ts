@@ -18,7 +18,6 @@ export const Content = styled.View`
 export const ContentItems = styled.SafeAreaView`
     width: 100%;
     height: 600px;
-    display: flex;
     align-items: center;
 `
 
