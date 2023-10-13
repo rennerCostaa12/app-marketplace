@@ -11,7 +11,7 @@ export const ApresentationApp = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("tab_routes");
+      navigate("login");
     }, 3000);
   }, []);
 

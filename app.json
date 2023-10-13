@@ -25,6 +25,20 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker", 
+        { 
+          "photosPermission": "O aplicativo acessa suas fotos para permitir que você escolha as fotos de sua galeria"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permita que o aplicativo acesse sua câmera"
+        }
+      ]
+    ]
   }
 }
