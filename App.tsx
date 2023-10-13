@@ -2,6 +2,7 @@ import { Container } from "./styles";
 import { Routes } from "./src/Routes";
 
 import { StatusBar } from "expo-status-bar";
+import { AlertNotificationRoot } from "react-native-alert-notification";
 
 import {
   useFonts,
@@ -12,6 +13,7 @@ import {
 
 import { ItemsFavoritesContextProvider } from "./src/Contexts/ItemsFavorites";
 import { ItemsSalesContextProvider } from "./src/Contexts/ItemsSales";
+import { AuthContextProvider } from "./src/Contexts/Auth";
 
 export default function App() {
   let [fontLoaded] = useFonts({
@@ -26,12 +28,16 @@ export default function App() {
 
   return (
     <Container>
-      <StatusBar style="auto" />
-      <ItemsFavoritesContextProvider>
-        <ItemsSalesContextProvider>
-          <Routes />
-        </ItemsSalesContextProvider>
-      </ItemsFavoritesContextProvider>
+      <AlertNotificationRoot>
+        <StatusBar style="auto" />
+        <ItemsFavoritesContextProvider>
+          <ItemsSalesContextProvider>
+            <AuthContextProvider>
+              <Routes />
+            </AuthContextProvider>
+          </ItemsSalesContextProvider>
+        </ItemsFavoritesContextProvider>
+      </AlertNotificationRoot>
     </Container>
   );
 }

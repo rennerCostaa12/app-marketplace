@@ -17,7 +17,13 @@ import { Entypo, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import { Input } from "../../Components/Input";
-import { TextLink } from "../../Components/TextLink ";
+import { TextLink } from "../../Components/TextLink";
+import { Loading } from "../../Components/Loading";
+
+import { useAuthContext } from "../../Contexts/Auth";
+
+import { UserLoginProps } from "./types";
+import { useState } from "react";
 
 const SchemaLogin = yup.object({
   email: yup
@@ -36,14 +42,28 @@ export const Login = () => {
     resolver: yupResolver(SchemaLogin),
   });
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const { navigate } = useNavigation() as any;
 
-  const handleLogin = async (data: any) => {
-    console.log(data);
+  const { signIn } = useAuthContext();
+
+  const handleLogin = async (data: UserLoginProps) => {
+    try {
+      setLoading(true);
+      await signIn(data.email, data.password).then((response) => {
+        if (response) {
+          navigate("tab_routes");
+        }
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Container>
+      <Loading visible={loading} />
       <ContentImg>
         <Image
           source={{
@@ -63,7 +83,7 @@ export const Login = () => {
 
       <Input
         type="password"
-        placeholder="Email"
+        placeholder="Senha"
         icon={<AntDesign name="lock" size={24} color="black" />}
         onChangeText={(value) => setValue("password", value)}
         error={errors.password?.message}
