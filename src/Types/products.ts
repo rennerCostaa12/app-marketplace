@@ -1,20 +1,25 @@
-export interface CategoryProps{
-    id: number;
-    name: string;
+export interface CategoryProps {
+  id: number;
+  name: string;
+  created_at: Date | string;
+  update_at: Date | string;
 }
-export interface ProductsProps{
-    id: string | number;
-    title: string;
-    price: number;
-    category: CategoryProps,
-    available_quantity: number;
-    url_img: string;
+export interface ProductsProps {
+  id: string;
+  name: string;
+  price: number;
+  stock: number;
+  img_product: string;
+  unavailable: boolean;
+  created_at: Date | string;
+  updated_at: Date | string;
+  categories: CategoryProps;
 }
 
 export interface ItemProps {
-    id: string | number;
-    urlImg: string;
-    nameItem: string;
-    priceItem: number;
-    typeItem: string;
+  id: string | number;
+  urlImg: string;
+  nameItem: string;
+  priceItem: number;
+  typeItem: string;
 }

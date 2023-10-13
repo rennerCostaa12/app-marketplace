@@ -1,22 +1,26 @@
-import { Container } from './styles';
-import { Routes } from './src/Routes';
+import { Container } from "./styles";
+import { Routes } from "./src/Routes";
 
+import { StatusBar } from "expo-status-bar";
 
-import { StatusBar } from 'expo-status-bar';
+import {
+  useFonts,
+  Lato_400Regular,
+  Lato_700Bold,
+  Lato_300Light,
+} from "@expo-google-fonts/lato";
 
-import { useFonts, Lato_400Regular, Lato_700Bold, Lato_300Light } from '@expo-google-fonts/lato';
-
-import { ItemsFavoritesContextProvider } from './src/Contexts/ItemsFavorites';
-import { ItemsSalesContextProvider } from './src/Contexts/ItemsSales';
+import { ItemsFavoritesContextProvider } from "./src/Contexts/ItemsFavorites";
+import { ItemsSalesContextProvider } from "./src/Contexts/ItemsSales";
 
 export default function App() {
   let [fontLoaded] = useFonts({
     Lato_400Regular,
     Lato_700Bold,
-    Lato_300Light
-  })
+    Lato_300Light,
+  });
 
-  if(!fontLoaded){
+  if (!fontLoaded) {
     return null;
   }
 

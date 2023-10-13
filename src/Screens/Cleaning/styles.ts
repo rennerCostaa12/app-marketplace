@@ -1,9 +1,10 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.View`
-    margin: 10px 0;
+  margin: ${RFValue(10)}px 0;
 `;
 
 export const ContentClean = styled.View`
-    align-items: center;
+  align-items: center;
 `;

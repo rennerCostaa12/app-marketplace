@@ -1,49 +1,50 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.View`
-    margin-top: 20px;
+  margin-top: ${RFValue(20)}px;
 `;
 
 export const ContentProducts = styled.SafeAreaView``;
 
 export const ContentCard = styled.View`
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 20px 10px;
-    background-color: #FFFFFF;
-    margin-bottom: 15px;
-    elevation: 5;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: ${RFValue(10)}px;
+  padding: ${RFValue(20)}px ${RFValue(10)}px;
+  background-color: #ffffff;
+  margin-bottom: ${RFValue(15)}px;
+  elevation: 5;
 `;
 
 export const ContentImgProduct = styled.View``;
 
 export const ImgProduct = styled.Image`
-    width: 100px;
-    height: 100px;
+  width: ${RFValue(100)}px;
+  height: ${RFValue(100)}px;
 `;
 
 export const ContentDescription = styled.View`
-    flex: 1;
+  flex: 1;
 `;
 
 export const TitleProduct = styled.Text`
-    font-size: 18px;
+  font-size: ${RFValue(18)}px;
 `;
 
 export const PriceProduct = styled.Text`
-    font-size: 16px;
-    margin: 7px 0;
+  font-size: ${RFValue(16)}px;
+  margin: ${RFValue(7)}px 0;
 `;
 
 export const CategoryProduct = styled.Text`
-    font-size: 14px;
-    color: gray;
+  font-size: ${RFValue(14)}px;
+  color: gray;
 `;
 
 export const ContentIcon = styled.View`
-    margin: 0 10px;
+  margin: 0 ${RFValue(10)}px;
 `;
 
 export const ButtonRemoveFavorite = styled.TouchableOpacity``;
