@@ -1,6 +1,7 @@
 import { Container } from "./styles";
 
 import LottiView from "lottie-react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 import { Modal } from "react-native";
 
@@ -15,8 +16,8 @@ export const Loading = ({ visible }: LoadingProps) => {
         <LottiView
           autoPlay
           style={{
-            width: 300,
-            height: 300,
+            width: RFValue(300),
+            height: RFValue(300),
           }}
           source={require("../../assets/animations/loading-cart.json")}
         />

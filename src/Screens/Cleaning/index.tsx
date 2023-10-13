@@ -2,6 +2,7 @@ import { Container, ContentClean } from "./styles";
 
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 import { CardItem } from "../../Components/CardItem";
 import { CartEmpty } from "../../Components/CartEmpty";
@@ -40,13 +41,13 @@ export const Cleaning = () => {
           data={cleaning}
           renderItem={({ item }) => {
             return (
-              <View style={{ margin: 10 }}>
+              <View style={{ margin: RFValue(10) }}>
                 <CardItem
                   id={item.id}
-                  nameItem={item.title}
+                  nameItem={item.name}
                   priceItem={item.price}
-                  typeItem={item.category.name}
-                  urlImg={item.url_img}
+                  typeItem={item.categories.name}
+                  urlImg={item.img_product}
                 />
               </View>
             );
