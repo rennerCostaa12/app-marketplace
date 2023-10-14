@@ -5,4 +5,5 @@ export interface DatasRegisterUser {
   profile_img: string | null;
   address: string;
   password_confirm?: string | null | undefined;
+  complement: string | null;
 }

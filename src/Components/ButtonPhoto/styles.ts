@@ -8,6 +8,7 @@ interface ContentButtonProps {
 export const Container = styled.View``;
 
 export const ContentButton = styled.TouchableOpacity<ContentButtonProps>`
+  elevation: 10;
   width: ${RFValue(100)}px;
   height: ${RFValue(100)}px;
   border: none;
