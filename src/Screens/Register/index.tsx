@@ -39,6 +39,7 @@ const SchemaRegister = yup.object({
     .string()
     .required("Campo confirmação de senha é obrigatório"),
   address: yup.string().required("Campo endereço é obrigatório"),
+  complement: yup.string(),
 });
 
 export const Register = () => {
@@ -91,7 +92,8 @@ export const Register = () => {
   };
 
   const handleRegisterUser = async (data: DatasRegisterUser) => {
-    const { address, email, password, username, password_confirm } = data;
+    const { address, email, password, username, password_confirm, complement } =
+      data;
 
     if (!imgUser) {
       Toast.show({
@@ -119,6 +121,7 @@ export const Register = () => {
         password,
         profile_img: imgUser,
         address,
+        complement_address: complement,
       });
 
       if (responseRegisterUser.status) {
@@ -203,6 +206,13 @@ export const Register = () => {
                 type="default"
                 labelText="Endereço"
                 onChangeText={(value) => setValue("address", value)}
+                error={errors.address?.message}
+              />
+
+              <Input
+                type="default"
+                labelText="Complemento"
+                onChangeText={(value) => setValue("complement", value)}
                 error={errors.address?.message}
               />
             </ContainerInputs>

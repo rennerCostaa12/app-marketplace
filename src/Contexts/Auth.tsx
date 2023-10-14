@@ -15,6 +15,9 @@ export interface DatasUserProps {
   id: string;
   username: string;
   email: string;
+  profile_img: string;
+  address: string;
+  complement: string;
 }
 
 interface AuthContextProps {
@@ -53,7 +56,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         return true;
       }
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data.message);
       Toast.show({
         title: error.response.data.message,
         type: ALERT_TYPE.DANGER,
@@ -65,6 +68,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const signOut = async () => {
     await AsyncStorage.removeItem("@marketplace:tokenUser");
+    await AsyncStorage.removeItem("@marketplace:user");
   };
 
   useEffect(() => {
