@@ -19,13 +19,11 @@ export const ButtonPhoto = ({
     <Container>
       <ContentButton background={background} {...props}>
         <Image
-          source={{
-            uri: `${
-              urlImg
-                ? urlImg
-                : "https://cdn-icons-png.flaticon.com/512/5218/5218413.png"
-            }`,
-          }}
+          source={
+            urlImg
+              ? { uri: urlImg }
+              : require("../../assets/images/img_default_photo.png")
+          }
         />
         {enableIcon && (
           <ContentIconAdd>

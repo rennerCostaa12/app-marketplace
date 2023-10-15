@@ -19,8 +19,8 @@ export const Foods = () => {
   const filterByCategory = async () => {
     setLoading(true);
     try {
-      const responseFoods = await Api.get(`products/search_categories/comidas`);
-      setFoods(responseFoods.data);
+      const responseFoods = await Api.get(`products/findByCategory/1`);
+      setFoods(responseFoods.data.items);
     } catch (error) {
       console.log(error);
     }
@@ -41,11 +41,11 @@ export const Foods = () => {
             return (
               <View style={{ margin: RFValue(10) }}>
                 <CardItem
-                  id={item.id}
-                  nameItem={item.name}
-                  priceItem={item.price}
-                  typeItem={item.categories.name}
-                  urlImg={item.img_product}
+                  id={item?.id}
+                  nameItem={item?.name}
+                  priceItem={item?.price}
+                  typeItem={item?.categories.name}
+                  urlImg={item?.img_product}
                 />
               </View>
             );

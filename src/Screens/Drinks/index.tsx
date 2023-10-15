@@ -19,10 +19,8 @@ export const Drinks = () => {
   const filterByCategory = async () => {
     setLoading(true);
     try {
-      const responseDrinks = await Api.get(
-        `products/search_categories/bebidas`
-      );
-      setDrinks(responseDrinks.data);
+      const responseDrinks = await Api.get(`products/findByCategory/3`);
+      setDrinks(responseDrinks.data.items);
     } catch (error) {
       console.log(error);
     }

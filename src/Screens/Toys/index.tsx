@@ -19,10 +19,8 @@ export const Toys = () => {
   const filterByCategory = async () => {
     setLoading(true);
     try {
-      const responseToys = await Api.get(
-        `products/search_categories/brinquedos`
-      );
-      setToys(responseToys.data);
+      const responseToys = await Api.get(`products/findByCategory/4`);
+      setToys(responseToys.data.items);
     } catch (error) {
       console.log(error);
     }

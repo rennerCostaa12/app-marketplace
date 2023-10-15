@@ -19,10 +19,8 @@ export const Cleaning = () => {
   const filterByCategory = async () => {
     setLoading(true);
     try {
-      const responseCleaning = await Api.get(
-        `products/search_categories/limpeza`
-      );
-      setCleaning(responseCleaning.data);
+      const responseCleaning = await Api.get(`products/findByCategory/4`);
+      setCleaning(responseCleaning.data.items);
     } catch (error) {
       console.log(error);
     }
