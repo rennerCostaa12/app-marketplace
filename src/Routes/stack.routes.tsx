@@ -7,6 +7,7 @@ import { Foods } from "../Screens/Foods";
 import { Cleaning } from "../Screens/Cleaning";
 import { Toys } from "../Screens/Toys";
 import { ProductSales } from "../Screens/ProductsSales";
+import { SearchProducts } from "../Screens/SearchProducts";
 
 import { TabsRoutes } from "./tabs.routes";
 import { Login } from "../Screens/Login";
@@ -140,6 +141,14 @@ export const StackRoutes = () => {
             fontWeight: "bold",
           },
           headerTintColor: "#FFFFFF",
+        }}
+      />
+
+      <Screen
+        name="search_products"
+        component={SearchProducts}
+        options={{
+          headerShown: false,
         }}
       />
     </Navigator>

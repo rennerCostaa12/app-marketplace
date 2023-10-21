@@ -2,13 +2,16 @@ import { Container, ContentCategories, ContentItems, Content } from "./styles";
 
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
-import { AlertNotificationRoot } from "react-native-alert-notification";
+import {
+  ALERT_TYPE,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
 
 import { HeaderSearch } from "../../Components/HeaderSearch";
 import { CardCategory } from "../../Components/CardCategory";
 import { CardItem } from "../../Components/CardItem";
 import { ActivityIndicator } from "../../Components/ActivityIndicator";
-import { Loading } from "../../Components/Loading";
 
 import { Api } from "../../Configs/Api";
 
@@ -59,6 +62,10 @@ export const Home = () => {
       setPage(page + 1);
     } catch (error) {
       console.log(error);
+      Toast.show({
+        title: "Erro ao buscar dados!",
+        type: ALERT_TYPE.DANGER,
+      });
     }
     setLoading(false);
   };
@@ -70,7 +77,7 @@ export const Home = () => {
   return (
     <AlertNotificationRoot>
       <Container>
-        <HeaderSearch setProducts={setProducts} setLoading={setLoading} />
+        <HeaderSearch />
         <ContentCategories>
           <FlatList
             data={categories}
