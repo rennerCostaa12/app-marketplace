@@ -38,6 +38,12 @@
         {
           "cameraPermission": "Permita que o aplicativo acesse sua câmera"
         }
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Permita que o aplicativo acesse seu microfone."
+        }
       ]
     ]
   }
