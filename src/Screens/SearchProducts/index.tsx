@@ -17,16 +17,14 @@ import { FlatList, View, Keyboard } from "react-native";
 
 import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import { useNavigation } from "@react-navigation/native";
-import { AntDesign, FontAwesome5, Entypo } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Audio } from "expo-av";
 
 import { InputSearch } from "../../Components/InputSearch";
 import { CardItem } from "../../Components/CardItem";
 import { ActivityIndicator } from "../../Components/ActivityIndicator";
 import { IconsBadge } from "../../Components/IconsBadge";
-import { ModalRecordingVoice } from "../../Components/ModalRecordingVoice";
 
 import { useItemsSales } from "../../Contexts/ItemsSales";
 import { ProductsProps } from "../../Types/products";
@@ -47,8 +45,8 @@ export const SearchProducts = () => {
   const [showListRecentResearches, setShowListRecentResearches] =
     useState<boolean>(false);
 
-  const [showModalRecordingVoice, setShowModalRecordingVoice] =
-    useState<boolean>(false);
+  // const [showModalRecordingVoice, setShowModalRecordingVoice] =
+  //   useState<boolean>(false);
 
   const [listRecentsResearches, setListRecentsResearches] = useState<string[]>(
     []
@@ -129,22 +127,22 @@ export const SearchProducts = () => {
     }
   };
 
-  const handleOpenSpokenSearch = async () => {
-    try {
-      await Audio.requestPermissionsAsync();
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-      });
-      const { granted } = await Audio.getPermissionsAsync();
+  // const handleOpenSpokenSearch = async () => {
+  //   try {
+  //     await Audio.requestPermissionsAsync();
+  //     await Audio.setAudioModeAsync({
+  //       allowsRecordingIOS: true,
+  //       playsInSilentModeIOS: true,
+  //     });
+  //     const { granted } = await Audio.getPermissionsAsync();
 
-      if (granted) {
-        setShowModalRecordingVoice(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (granted) {
+  //       setShowModalRecordingVoice(true);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const ItemsRecentsResearches = ({
     nameResearche,
@@ -213,9 +211,10 @@ export const SearchProducts = () => {
           )}
         </ContentInputSearch>
 
+        {/* 
         <ContentIcon onPress={handleOpenSpokenSearch}>
           <FontAwesome5 name="microphone" size={RFValue(24)} color="#000000" />
-        </ContentIcon>
+        </ContentIcon> */}
 
         <ContentIcon onPress={() => navigate("sales")}>
           <IconsBadge
@@ -278,11 +277,11 @@ export const SearchProducts = () => {
           </ContentItems>
         )}
       </Body>
-      <ModalRecordingVoice
+      {/* <ModalRecordingVoice
         transparent
         visible={showModalRecordingVoice}
         setVisible={setShowModalRecordingVoice}
-      />
+      /> */}
     </Container>
   );
 };

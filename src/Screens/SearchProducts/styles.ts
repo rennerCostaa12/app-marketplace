@@ -21,8 +21,8 @@ export const ContentInputSearch = styled.View`
 
 export const ContentIconClearText = styled.TouchableOpacity`
   position: absolute;
+  top: ${RFValue(10)}px;
   right: ${RFValue(5)}px;
-  margin: ${RFValue(13)}px 0;
 `;
 
 export const ContentIcon = styled.TouchableOpacity``;

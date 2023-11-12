@@ -12,7 +12,7 @@ export const ContentIcon = styled.View`
 `;
 
 export const Input = styled.TextInput`
-  width: ${RFValue(200)}px;
+  width: ${RFValue(220)}px;
   border: ${RFValue(1)}px solid #8a8a8a;
   border-radius: ${RFValue(5)}px;
   padding: ${RFValue(5)}px;

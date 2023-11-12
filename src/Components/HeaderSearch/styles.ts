@@ -14,7 +14,7 @@ export const ContentInputSearch = styled.View``;
 
 export const ContentIcons = styled.View`
   flex-direction: row;
-  gap: ${RFValue(20)}px;
+  gap: ${RFValue(15)}px;
 `;
 
 export const InputSearch = styled.TextInput`
