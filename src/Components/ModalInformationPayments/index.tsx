@@ -172,7 +172,7 @@ export const ModalInformationPayments = ({
                       fontFamily: "Lato_400Regular",
                     }}
                   >
-                    {dataUser?.complement}
+                    {dataUser?.complement_address}
                   </ValueText>
                 </ContentAddress>
               </ContainerAddress>

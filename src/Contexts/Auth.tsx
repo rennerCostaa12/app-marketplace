@@ -17,7 +17,7 @@ export interface DatasUserProps {
   email: string;
   profile_img: string;
   address: string;
-  complement: string;
+  complement_address: string;
 }
 
 interface AuthContextProps {

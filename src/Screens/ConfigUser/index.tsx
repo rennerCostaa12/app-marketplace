@@ -26,8 +26,7 @@ import { Loading } from "../../Components/Loading";
 import { Button } from "../../Components/Button";
 
 import { DatasRegisterUser } from "../Register/types";
-
-import { useAuthContext } from "../../Contexts/Auth";
+import { useAuthContext, DatasUserProps } from "../../Contexts/Auth";
 
 import { Api } from "../../Configs/Api";
 
@@ -38,7 +37,7 @@ const SchemaRegister = yup.object({
     .email("Email inválido")
     .required("Campo email é obrigatório"),
   address: yup.string().required("Campo endereço é obrigatório"),
-  complement: yup.string(),
+  complement_address: yup.string(),
 });
 
 export const ConfigUser = () => {
@@ -50,7 +49,7 @@ export const ConfigUser = () => {
     resolver: yupResolver(SchemaRegister),
   });
 
-  const { dataUser, signOut } = useAuthContext();
+  const { dataUser, setDataUser, signOut } = useAuthContext();
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [imgUser, setImgUser] = useState<string | null>(null);
@@ -100,7 +99,7 @@ export const ConfigUser = () => {
         email: data.email,
         profile_img: imgUser,
         address: data.address,
-        complement_address: data.complement,
+        complement_address: data.complement_address,
       };
 
       const responseNewDatasUser = await Api.patch(
@@ -116,7 +115,7 @@ export const ConfigUser = () => {
           type: ALERT_TYPE.SUCCESS,
           autoClose: 2000,
         });
-
+        setDataUser(objectNewDatas as DatasUserProps);
         await AsyncStorage.setItem(
           "@marketplace:user",
           JSON.stringify(objectNewDatas)
@@ -144,7 +143,7 @@ export const ConfigUser = () => {
     setValue("address", dataUser.address);
     setValue("username", dataUser.username);
     setValue("email", dataUser.email);
-    setValue("complement", dataUser.complement);
+    setValue("complement_address", dataUser.complement_address);
   }, []);
 
   return (
@@ -198,8 +197,8 @@ export const ConfigUser = () => {
               <Input
                 type="default"
                 labelText="Complemento"
-                defaultValue={dataUser.complement}
-                onChangeText={(value) => setValue("complement", value)}
+                defaultValue={dataUser.complement_address}
+                onChangeText={(value) => setValue("complement_address", value)}
                 error={errors.address?.message}
               />
             </ContainerInputs>
