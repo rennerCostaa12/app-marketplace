@@ -15,7 +15,6 @@ import {
 import { useEffect, useState } from "react";
 import { FlatList, View, Keyboard } from "react-native";
 
-import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -25,11 +24,13 @@ import { InputSearch } from "../../Components/InputSearch";
 import { CardItem } from "../../Components/CardItem";
 import { ActivityIndicator } from "../../Components/ActivityIndicator";
 import { IconsBadge } from "../../Components/IconsBadge";
+import { ToastNotification } from "../../Components/ToastNotification";
 
 import { useItemsSales } from "../../Contexts/ItemsSales";
 import { ProductsProps } from "../../Types/products";
 
 import { Api } from "../../Configs/Api";
+import { TypeNotification } from "../../Components/ToastNotification/types";
 
 let configPagination;
 
@@ -51,6 +52,12 @@ export const SearchProducts = () => {
   const [listRecentsResearches, setListRecentsResearches] = useState<string[]>(
     []
   );
+
+  const [visibleNotification, setVisibleNotification] =
+    useState<boolean>(false);
+  const [titleNotification, setTitleNotification] = useState<string>("");
+  const [typeNotification, setTypeNotification] =
+    useState<TypeNotification>("success");
 
   const { itemsSales } = useItemsSales();
 
@@ -89,10 +96,9 @@ export const SearchProducts = () => {
       }
     } catch (error) {
       console.error(error);
-      Toast.show({
-        title: "Erro ao buscar dados!",
-        type: ALERT_TYPE.DANGER,
-      });
+      setVisibleNotification(true);
+      setTypeNotification("error");
+      setTitleNotification("Erro ao buscar dados");
     } finally {
       setLoading(false);
     }
@@ -118,10 +124,9 @@ export const SearchProducts = () => {
       }
     } catch (error) {
       console.error(error);
-      Toast.show({
-        title: "Erro ao buscar dados!",
-        type: ALERT_TYPE.DANGER,
-      });
+      setVisibleNotification(true);
+      setTypeNotification("error");
+      setTitleNotification("Erro ao buscar dados");
     } finally {
       setLoading(false);
     }
@@ -188,6 +193,14 @@ export const SearchProducts = () => {
 
   return (
     <Container>
+      <ToastNotification
+        type={typeNotification}
+        title={titleNotification}
+        visible={visibleNotification}
+        setVisible={setVisibleNotification}
+        autoHide
+        duration={2000}
+      />
       <ContentHeader>
         <AntDesign
           name="arrowleft"

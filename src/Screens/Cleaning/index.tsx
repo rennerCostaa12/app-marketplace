@@ -7,14 +7,21 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { CardItem } from "../../Components/CardItem";
 import { CartEmpty } from "../../Components/CartEmpty";
 import { Loading } from "../../Components/Loading";
+import { ToastNotification } from "../../Components/ToastNotification";
 
 import { Api } from "../../Configs/Api";
 
 import { ProductsProps } from "../../Types/products";
+import { TypeNotification } from "../../Components/ToastNotification/types";
 
 export const Cleaning = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cleaning, setCleaning] = useState<ProductsProps[]>([]);
+  const [visibleNotification, setVisibleNotification] =
+    useState<boolean>(false);
+  const [titleNotification, setTitleNotification] = useState<string>("");
+  const [typeNotification, setTypeNotification] =
+    useState<TypeNotification>("success");
 
   const filterByCategory = async () => {
     setLoading(true);
@@ -23,6 +30,9 @@ export const Cleaning = () => {
       setCleaning(responseCleaning.data.items);
     } catch (error) {
       console.log(error);
+      setVisibleNotification(true);
+      setTypeNotification("error");
+      setTitleNotification("Erro ao buscar dados");
     }
     setLoading(false);
   };
@@ -33,6 +43,14 @@ export const Cleaning = () => {
 
   return (
     <Container>
+      <ToastNotification
+        type={typeNotification}
+        title={titleNotification}
+        visible={visibleNotification}
+        setVisible={setVisibleNotification}
+        autoHide
+        duration={2000}
+      />
       <Loading visible={loading} />
       <ContentClean>
         <FlatList

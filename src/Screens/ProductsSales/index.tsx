@@ -22,12 +22,11 @@ import { useEffect, useState, useCallback } from "react";
 import { Alert, FlatList } from "react-native";
 
 import { useItemsSales } from "../../Contexts/ItemsSales";
+import { ItemsSalesProps } from "../../Contexts/ItemsSales";
 
 import { CartEmpty } from "../../Components/CartEmpty";
 import { QuantityProduct } from "../../Components/QuantityProduct";
 import { ModalMethodsPayments } from "../../Components/ModalMethodsPayments";
-
-import { ItemsSalesProps } from "../../Contexts/ItemsSales";
 
 interface CardProductSales {
   dataProduct: ItemsSalesProps;

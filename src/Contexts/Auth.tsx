@@ -6,7 +6,6 @@ import {
   useState,
 } from "react";
 
-import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Api } from "../Configs/Api";
@@ -20,8 +19,13 @@ export interface DatasUserProps {
   complement_address: string;
 }
 
+interface SignInReturnProps {
+  status: boolean;
+  message: any;
+}
+
 interface AuthContextProps {
-  signIn: (email: string, password: string) => Promise<boolean>;
+  signIn: (email: string, password: string) => Promise<SignInReturnProps>;
   signOut: () => void;
   dataUser: DatasUserProps;
   setDataUser: (data: DatasUserProps | null) => void;
@@ -36,7 +40,10 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [dataUser, setDataUser] = useState<DatasUserProps | null>(null);
 
-  const signIn = async (email: string, password: string): Promise<boolean> => {
+  const signIn = async (
+    email: string,
+    password: string
+  ): Promise<SignInReturnProps> => {
     try {
       const responseSignIn = await Api.post("auth/login-client", {
         email,
@@ -53,16 +60,17 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
           JSON.stringify(responseSignIn.data.user)
         );
         setDataUser(responseSignIn.data.user);
-        return true;
+        return {
+          status: true,
+          message: "TUDO OK",
+        };
       }
     } catch (error) {
       console.error(error.response.data.message);
-      Toast.show({
-        title: error.response.data.message,
-        type: ALERT_TYPE.DANGER,
-        autoClose: 2000,
-      });
-      return false;
+      return {
+        status: false,
+        message: error.response.data.message,
+      };
     }
   };
 

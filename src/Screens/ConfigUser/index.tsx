@@ -13,11 +13,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { Camera as CameraExpo } from "expo-camera";
 
+import { ToastNotification } from "../../Components/ToastNotification";
 import { ButtonPhoto } from "../../Components/ButtonPhoto";
 import { ModalSelectPhoto } from "../../Components/ModalSelectPhoto";
 import { Input } from "../../Components/Input";
@@ -29,6 +29,7 @@ import { DatasRegisterUser } from "../Register/types";
 import { useAuthContext, DatasUserProps } from "../../Contexts/Auth";
 
 import { Api } from "../../Configs/Api";
+import { TypeNotification } from "../../Components/ToastNotification/types";
 
 const SchemaRegister = yup.object({
   username: yup.string().required("Campo nome de usuário é obrigatório"),
@@ -50,6 +51,12 @@ export const ConfigUser = () => {
   });
 
   const { dataUser, setDataUser, signOut } = useAuthContext();
+
+  const [visibleNotification, setVisibleNotification] =
+    useState<boolean>(false);
+  const [titleNotification, setTitleNotification] = useState<string>("");
+  const [typeNotification, setTypeNotification] =
+    useState<TypeNotification>("success");
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [imgUser, setImgUser] = useState<string | null>(null);
@@ -110,11 +117,9 @@ export const ConfigUser = () => {
       objectNewDatas["id"] = dataUser.id;
 
       if (responseNewDatasUser.status) {
-        Toast.show({
-          title: "Dados atualizados com sucesso!",
-          type: ALERT_TYPE.SUCCESS,
-          autoClose: 2000,
-        });
+        setVisibleNotification(true);
+        setTypeNotification("success");
+        setTitleNotification("Dados atualizados");
         setDataUser(objectNewDatas as DatasUserProps);
         await AsyncStorage.setItem(
           "@marketplace:user",
@@ -123,11 +128,9 @@ export const ConfigUser = () => {
       }
     } catch (error) {
       console.error(error);
-      Toast.show({
-        title: error.response.data.message,
-        type: ALERT_TYPE.DANGER,
-        autoClose: 2000,
-      });
+      setVisibleNotification(true);
+      setTypeNotification("error");
+      setTitleNotification(error.response.message);
     } finally {
       setLoading(false);
     }
@@ -158,6 +161,14 @@ export const ConfigUser = () => {
             flex: 1,
           }}
         >
+          <ToastNotification
+            type={typeNotification}
+            title={titleNotification}
+            visible={visibleNotification}
+            setVisible={setVisibleNotification}
+            autoHide
+            duration={2000}
+          />
           <Container>
             <Loading visible={loading} />
             <ContentButtonPhoto>

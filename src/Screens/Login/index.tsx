@@ -16,14 +16,17 @@ import * as yup from "yup";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
+import { useState } from "react";
+
 import { Input } from "../../Components/Input";
 import { TextLink } from "../../Components/TextLink";
 import { Loading } from "../../Components/Loading";
+import { ToastNotification } from "../../Components/ToastNotification";
 
 import { useAuthContext } from "../../Contexts/Auth";
 
 import { UserLoginProps } from "./types";
-import { useState } from "react";
+import { TypeNotification } from "../../Components/ToastNotification/types";
 
 const SchemaLogin = yup.object({
   email: yup
@@ -43,6 +46,11 @@ export const Login = () => {
   });
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [visibleNotification, setVisibleNotification] =
+    useState<boolean>(false);
+  const [titleNotification, setTitleNotification] = useState<string>("");
+  const [typeNotification, setTypeNotification] =
+    useState<TypeNotification>("success");
 
   const { navigate } = useNavigation() as any;
 
@@ -52,8 +60,13 @@ export const Login = () => {
     try {
       setLoading(true);
       await signIn(data.email, data.password).then((response) => {
-        if (response) {
+        console.log(response);
+        if (response.status) {
           navigate("tab_routes");
+        } else {
+          setVisibleNotification(true);
+          setTypeNotification("error");
+          setTitleNotification(response.message);
         }
       });
     } finally {
@@ -63,6 +76,14 @@ export const Login = () => {
 
   return (
     <Container>
+      <ToastNotification
+        type={typeNotification}
+        title={titleNotification}
+        visible={visibleNotification}
+        setVisible={setVisibleNotification}
+        autoHide
+        duration={2000}
+      />
       <Loading visible={loading} />
       <ContentImg>
         <Image
@@ -71,6 +92,7 @@ export const Login = () => {
           }}
         />
       </ContentImg>
+
       <TitlePage style={{ fontFamily: "Lato_700Bold" }}>LOGIN</TitlePage>
 
       <Input
