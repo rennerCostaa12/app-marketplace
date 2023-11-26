@@ -68,13 +68,14 @@ export const ContentButtonCheckout = styled.View`
 export const Button = styled.TouchableOpacity<ButtonProps>`
   width: 100%;
   background: ${({ color }) => color};
-  padding: ${RFValue(20)}px ${RFValue(10)}px;
+  padding: ${RFValue(15)}px ${RFValue(10)}px;
   border-radius: ${RFValue(5)}px;
+  elevation: ${RFValue(5)};
 `;
 
 export const TextButton = styled.Text<TextButtonProps>`
   color: ${({ color }) => color};
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(16)}px;
   text-align: center;
 `;
 
@@ -89,7 +90,7 @@ export const ButtonRemove = styled.TouchableOpacity`
 export const PriceFinal = styled.Text`
   font-size: ${RFValue(30)}px;
   text-align: center;
-  margin: ${RFValue(10)}px 0;
+  margin: ${RFValue(30)}px 0;
   color: #ff1493;
 `;
 

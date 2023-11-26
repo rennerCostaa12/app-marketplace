@@ -12,8 +12,6 @@ import {
   Button,
   TextButton,
   ContentButtonCheckout,
-  ButtonRemove,
-  TextButtonRemove,
   PriceFinal,
 } from "./styles";
 
@@ -21,12 +19,13 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useEffect, useState, useCallback } from "react";
-import { FlatList } from "react-native";
+import { Alert, FlatList } from "react-native";
 
 import { useItemsSales } from "../../Contexts/ItemsSales";
 
 import { CartEmpty } from "../../Components/CartEmpty";
 import { QuantityProduct } from "../../Components/QuantityProduct";
+import { ModalMethodsPayments } from "../../Components/ModalMethodsPayments";
 
 import { ItemsSalesProps } from "../../Contexts/ItemsSales";
 
@@ -78,6 +77,24 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
 
   useEffect(() => {
     handleSaveNewQuantities();
+
+    if (quantity === 0) {
+      Alert.alert(
+        "Deseja realmente excluir este do produto do seu carrinho?",
+        "",
+        [
+          {
+            text: "Não",
+            onPress: () =>
+              setQuantity((currentQuantity) => currentQuantity + 1),
+          },
+          {
+            text: "Sim",
+            onPress: () => handleRemoveItem(),
+          },
+        ]
+      );
+    }
   }, [quantity]);
 
   return (
@@ -105,14 +122,6 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
             })}
           </PriceProduct>
         </ContentPriceAndQuantity>
-        <ButtonRemove>
-          <TextButtonRemove
-            style={{ fontFamily: "Lato_400Regular" }}
-            onPress={handleRemoveItem}
-          >
-            Remover este item
-          </TextButtonRemove>
-        </ButtonRemove>
       </ContentDescriptions>
     </Card>
   );
@@ -121,6 +130,8 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
 export const ProductSales = () => {
   const { itemsSales } = useItemsSales();
   const { navigate } = useNavigation() as any;
+  const [showMethodsPayments, setShowMethodsPayments] =
+    useState<boolean>(false);
 
   const totalAmount = itemsSales.reduce((total, item) => {
     return total + item.priceItem * item.quantity;
@@ -128,6 +139,10 @@ export const ProductSales = () => {
 
   return (
     <Container>
+      <ModalMethodsPayments
+        showModal={showMethodsPayments}
+        setShowModal={setShowMethodsPayments}
+      />
       <ContentCards>
         <FlatList
           data={itemsSales}
@@ -146,12 +161,12 @@ export const ProductSales = () => {
       ) : null}
       {itemsSales.length > 0 ? (
         <ContentButtonCheckout>
-          <Button color="#FF1493">
+          <Button color="#FF1493" onPress={() => setShowMethodsPayments(true)}>
             <TextButton style={{ fontFamily: "Lato_700Bold" }} color="#FFFFFF">
               Finalizar Compra
             </TextButton>
           </Button>
-          <Button color="transparent" onPress={() => navigate("home")}>
+          <Button color="#FFFFFF" onPress={() => navigate("home")}>
             <TextButton style={{ fontFamily: "Lato_700Bold" }} color="#FF1493">
               Comprar mais produtos
             </TextButton>
