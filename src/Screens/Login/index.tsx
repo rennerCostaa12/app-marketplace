@@ -60,7 +60,6 @@ export const Login = () => {
     try {
       setLoading(true);
       await signIn(data.email, data.password).then((response) => {
-        console.log(response);
         if (response.status) {
           navigate("tab_routes");
         } else {

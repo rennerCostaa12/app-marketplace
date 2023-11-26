@@ -2,8 +2,10 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Modal } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-root-toast";
 
 import { useState } from "react";
+import { Platform, ToastAndroid } from "react-native";
 
 import {
   Container,
@@ -62,6 +64,23 @@ export const ModalInformationPayments = ({
       case "pix":
         const handleCopyKeyPix = async () => {
           await Clipboard.setStringAsync(process.env.EXPO_PUBLIC_PIX_KEY);
+          if (Platform.OS === "android") {
+            ToastAndroid.show(
+              "Chave pix copiado com sucesso!",
+              ToastAndroid.SHORT
+            );
+          }
+
+          if (Platform.OS === "ios") {
+            Toast.show("Chave pix copiado com sucesso!", {
+              duration: Toast.durations.LONG,
+              position: Toast.positions.BOTTOM,
+              shadow: true,
+              animation: true,
+              hideOnPress: true,
+              delay: 0,
+            });
+          }
         };
 
         return (
