@@ -11,12 +11,12 @@ import { Camera as CameraExpo } from "expo-camera";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import { useState } from "react";
 import { KeyboardAvoidingView } from "react-native";
 
+import { ToastNotification } from "../../Components/ToastNotification";
 import { Button } from "../../Components/Button";
 import { ButtonPhoto } from "../../Components/ButtonPhoto";
 import { ModalSelectPhoto } from "../../Components/ModalSelectPhoto";
@@ -27,6 +27,7 @@ import { Loading } from "../../Components/Loading";
 import { Api } from "../../Configs/Api";
 
 import { DatasRegisterUser } from "./types";
+import { TypeNotification } from "../../Components/ToastNotification/types";
 
 const SchemaRegister = yup.object({
   username: yup.string().required("Campo nome de usuário é obrigatório"),
@@ -51,6 +52,11 @@ export const Register = () => {
     resolver: yupResolver(SchemaRegister),
   });
 
+  const [visibleNotification, setVisibleNotification] =
+    useState<boolean>(false);
+  const [titleNotification, setTitleNotification] = useState<string>("");
+  const [typeNotification, setTypeNotification] =
+    useState<TypeNotification>("success");
   const [loading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [startCamera, setStartCamera] = useState<boolean>(false);
@@ -92,24 +98,26 @@ export const Register = () => {
   };
 
   const handleRegisterUser = async (data: DatasRegisterUser) => {
-    const { address, email, password, username, password_confirm, complement } =
-      data;
+    const {
+      address,
+      email,
+      password,
+      username,
+      password_confirm,
+      complement_address,
+    } = data;
 
     if (!imgUser) {
-      Toast.show({
-        type: ALERT_TYPE.WARNING,
-        title: "Escolha uma foto",
-      });
-
+      setVisibleNotification(true);
+      setTitleNotification("Escolha uma foto");
+      setTypeNotification("warning");
       return;
     }
 
     if (password !== password_confirm) {
-      Toast.show({
-        type: ALERT_TYPE.WARNING,
-        title: "As senhas não são iguais!",
-      });
-
+      setVisibleNotification(true);
+      setTitleNotification("As senhas não são iguais!");
+      setTypeNotification("warning");
       return;
     }
 
@@ -121,25 +129,21 @@ export const Register = () => {
         password,
         profile_img: imgUser,
         address,
-        complement_address: complement,
+        complement_address: complement_address,
       });
 
       if (responseRegisterUser.status) {
-        Toast.show({
-          type: ALERT_TYPE.SUCCESS,
-          title: "Cadastra realizado com sucesso!",
-          autoClose: 2000,
-        });
+        setVisibleNotification(true);
+        setTitleNotification("Cadastro realizado com sucesso");
+        setTypeNotification("success");
         setTimeout(() => {
           goBack();
         }, 2000);
       }
     } catch (error) {
-      Toast.show({
-        type: ALERT_TYPE.DANGER,
-        title: error.response.data.message,
-        autoClose: 2000,
-      });
+      setVisibleNotification(true);
+      setTitleNotification(error.response.data.message);
+      setTypeNotification("success");
     } finally {
       setLoading(false);
     }
@@ -157,6 +161,14 @@ export const Register = () => {
             flex: 1,
           }}
         >
+          <ToastNotification
+            type={typeNotification}
+            title={titleNotification}
+            visible={visibleNotification}
+            setVisible={setVisibleNotification}
+            autoHide
+            duration={2000}
+          />
           <Container>
             <Loading visible={loading} />
             <ContainerInputs>

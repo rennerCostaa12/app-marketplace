@@ -2,7 +2,6 @@ import { Container } from "./styles";
 import { Routes } from "./src/Routes";
 
 import { StatusBar } from "expo-status-bar";
-import { AlertNotificationRoot } from "react-native-alert-notification";
 
 import {
   useFonts,
@@ -28,16 +27,14 @@ export default function App() {
 
   return (
     <Container>
-      <AlertNotificationRoot>
-        <StatusBar style="auto" />
-        <ItemsFavoritesContextProvider>
-          <ItemsSalesContextProvider>
-            <AuthContextProvider>
-              <Routes />
-            </AuthContextProvider>
-          </ItemsSalesContextProvider>
-        </ItemsFavoritesContextProvider>
-      </AlertNotificationRoot>
+      <StatusBar style="auto" />
+      <ItemsFavoritesContextProvider>
+        <ItemsSalesContextProvider>
+          <AuthContextProvider>
+            <Routes />
+          </AuthContextProvider>
+        </ItemsSalesContextProvider>
+      </ItemsFavoritesContextProvider>
     </Container>
   );
 }
