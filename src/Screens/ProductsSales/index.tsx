@@ -139,6 +139,7 @@ export const ProductSales = () => {
   return (
     <Container>
       <ModalMethodsPayments
+        totalPrices={totalAmount}
         showModal={showMethodsPayments}
         setShowModal={setShowMethodsPayments}
       />
