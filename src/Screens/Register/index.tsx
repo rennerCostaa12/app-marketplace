@@ -40,6 +40,9 @@ const SchemaRegister = yup.object({
     .string()
     .required("Campo confirmação de senha é obrigatório"),
   address: yup.string().required("Campo endereço é obrigatório"),
+  number_address: yup
+    .number()
+    .required("Campo número de endereço é obrigatório"),
   complement: yup.string(),
 });
 
@@ -105,6 +108,7 @@ export const Register = () => {
       username,
       password_confirm,
       complement_address,
+      number_address,
     } = data;
 
     if (!imgUser) {
@@ -129,6 +133,7 @@ export const Register = () => {
         password,
         profile_img: imgUser,
         address,
+        number_address: number_address,
         complement_address: complement_address,
       });
 
@@ -219,6 +224,16 @@ export const Register = () => {
                 labelText="Endereço"
                 onChangeText={(value) => setValue("address", value)}
                 error={errors.address?.message}
+              />
+
+              <Input
+                type="default"
+                labelText="Número de endereço"
+                keyboardType="numeric"
+                onChangeText={(value) =>
+                  setValue("number_address", Number(value))
+                }
+                error={errors.number_address?.message}
               />
 
               <Input

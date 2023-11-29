@@ -16,6 +16,7 @@ export interface DatasUserProps {
   email: string;
   profile_img: string;
   address: string;
+  number_address: number;
   complement_address: string;
 }
 

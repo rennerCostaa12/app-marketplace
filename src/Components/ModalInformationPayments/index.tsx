@@ -5,7 +5,7 @@ import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-root-toast";
 
 import { useState } from "react";
-import { Platform, ToastAndroid } from "react-native";
+import { Platform, ToastAndroid, Text } from "react-native";
 
 import {
   Container,
@@ -17,10 +17,13 @@ import {
   ContentBtnCloseModal,
   ContentMoney,
   ContainerAddress,
-  ContentAddress,
+  ContentDatas,
   LabelText,
   Section,
   ValueText,
+  TextPrice,
+  ContentTotalPrices,
+  Symbols,
 } from "./styles";
 
 import { Select } from "../Select";
@@ -35,6 +38,7 @@ interface ModalInformationPaymentsProps {
   visibleModal: boolean;
   setVisibleModal: (data: boolean) => void;
   typePayments: TypesPayments;
+  totalPrices: number;
 }
 
 const options = [
@@ -52,6 +56,7 @@ export const ModalInformationPayments = ({
   typePayments,
   setVisibleModal,
   visibleModal,
+  totalPrices,
 }: ModalInformationPaymentsProps) => {
   const [value, setValue] = useState<string>(null);
   const [optionsDeliverySelected, setOptionDeliverySelected] =
@@ -120,6 +125,7 @@ export const ModalInformationPayments = ({
                   width: "100%",
                 }}
                 defaultValue="0,00"
+                keyboardType="numeric"
                 value={value}
                 onChangeText={(money) => setValue(Masks.MaskMoney(money))}
               />
@@ -162,7 +168,7 @@ export const ModalInformationPayments = ({
             <Section>
               <TitleSection>Local de entrega</TitleSection>
               <ContainerAddress>
-                <ContentAddress>
+                <ContentDatas>
                   <LabelText
                     style={{
                       fontFamily: "Lato_700Bold",
@@ -177,8 +183,24 @@ export const ModalInformationPayments = ({
                   >
                     {dataUser?.address}
                   </ValueText>
-                </ContentAddress>
-                <ContentAddress>
+                </ContentDatas>
+                <ContentDatas>
+                  <LabelText
+                    style={{
+                      fontFamily: "Lato_700Bold",
+                    }}
+                  >
+                    Número:{" "}
+                  </LabelText>
+                  <ValueText
+                    style={{
+                      fontFamily: "Lato_400Regular",
+                    }}
+                  >
+                    {dataUser?.number_address}
+                  </ValueText>
+                </ContentDatas>
+                <ContentDatas>
                   <LabelText
                     style={{
                       fontFamily: "Lato_700Bold",
@@ -193,10 +215,52 @@ export const ModalInformationPayments = ({
                   >
                     {dataUser?.complement_address}
                   </ValueText>
-                </ContentAddress>
+                </ContentDatas>
               </ContainerAddress>
             </Section>
           )}
+
+          <ContentTotalPrices>
+            <ContentDatas>
+              <TextPrice
+                style={{
+                  fontFamily: "Lato_400Regular",
+                }}
+              >
+                {totalPrices.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </TextPrice>
+              {optionsDeliverySelected === 2 && (
+                <>
+                  <Symbols>+</Symbols>
+                  <TextPrice
+                    style={{
+                      fontFamily: "Lato_400Regular",
+                    }}
+                  >
+                    {Number(4).toLocaleString("pt-br", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </TextPrice>
+                  <Symbols>=</Symbols>
+                  <TextPrice
+                    style={{
+                      color: "#008140",
+                    }}
+                  >
+                    {(totalPrices + 4).toLocaleString("pt-br", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </TextPrice>
+                </>
+              )}
+            </ContentDatas>
+          </ContentTotalPrices>
+
           <ContentBtnCloseModal>
             <Button
               onPress={() => setVisibleModal(false)}

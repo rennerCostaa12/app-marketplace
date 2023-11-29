@@ -29,6 +29,7 @@ import { TypesPayments } from "../ModalInformationPayments";
 interface ModalMethodsPaymentsProps {
   showModal: boolean;
   setShowModal: (data: boolean) => void;
+  totalPrices: number;
 }
 
 const { height } = Dimensions.get("window");
@@ -42,6 +43,7 @@ const valueDefaultModal = {
 export const ModalMethodsPayments = ({
   showModal,
   setShowModal,
+  totalPrices,
 }: ModalMethodsPaymentsProps) => {
   const [formsPayments, setFormsPayments] = useState<MethodsPaymentsProps[]>(
     []
@@ -171,6 +173,7 @@ export const ModalMethodsPayments = ({
         </ContentButtonConfirm>
       </ContentModal>
       <ModalInformationPayments
+        totalPrices={totalPrices}
         visibleModal={visibleModalInformationPayments}
         setVisibleModal={setVisibleModalInformationsPayments}
         typePayments={formsPaymentsSelected?.type as TypesPayments}

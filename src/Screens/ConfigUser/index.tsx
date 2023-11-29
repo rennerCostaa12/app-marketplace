@@ -26,7 +26,7 @@ import { Loading } from "../../Components/Loading";
 import { Button } from "../../Components/Button";
 
 import { DatasRegisterUser } from "../Register/types";
-import { useAuthContext, DatasUserProps } from "../../Contexts/Auth";
+import { useAuthContext } from "../../Contexts/Auth";
 
 import { Api } from "../../Configs/Api";
 import { TypeNotification } from "../../Components/ToastNotification/types";
@@ -38,6 +38,9 @@ const SchemaRegister = yup.object({
     .email("Email inválido")
     .required("Campo email é obrigatório"),
   address: yup.string().required("Campo endereço é obrigatório"),
+  number_address: yup
+    .number()
+    .required("Campo número de endereço é obrigatório"),
   complement_address: yup.string(),
 });
 
@@ -102,25 +105,27 @@ export const ConfigUser = () => {
       setLoading(true);
 
       const objectNewDatas = {
+        id: dataUser.id,
         username: data.username,
         email: data.email,
         profile_img: imgUser,
         address: data.address,
+        number_address: data.number_address,
         complement_address: data.complement_address,
       };
 
+      const { id, ...rest } = objectNewDatas;
+
       const responseNewDatasUser = await Api.patch(
         `clients/${dataUser.id}`,
-        objectNewDatas
+        rest
       );
-
-      objectNewDatas["id"] = dataUser.id;
 
       if (responseNewDatasUser.status) {
         setVisibleNotification(true);
         setTypeNotification("success");
         setTitleNotification("Dados atualizados");
-        setDataUser(objectNewDatas as DatasUserProps);
+        setDataUser(objectNewDatas);
         await AsyncStorage.setItem(
           "@marketplace:user",
           JSON.stringify(objectNewDatas)
@@ -203,6 +208,17 @@ export const ConfigUser = () => {
                 defaultValue={dataUser.address}
                 onChangeText={(value) => setValue("address", value)}
                 error={errors.address?.message}
+              />
+
+              <Input
+                type="default"
+                labelText="Número de endereço"
+                keyboardType="numeric"
+                defaultValue={String(dataUser.number_address)}
+                onChangeText={(value) =>
+                  setValue("number_address", Number(value))
+                }
+                error={errors.number_address?.message}
               />
 
               <Input

@@ -58,7 +58,7 @@ export const ContainerAddress = styled.View`
   gap: ${RFValue(10)}px;
 `;
 
-export const ContentAddress = styled.View`
+export const ContentDatas = styled.View`
   flex-direction: row;
   align-items: center;
 `;
@@ -70,4 +70,22 @@ export const LabelText = styled.Text`
 
 export const ValueText = styled.Text`
   font-size: ${RFValue(12)}px;
+`;
+
+export const ContentTotalPrices = styled.View`
+  margin: ${RFValue(10)}px 0;
+  align-items: center;
+`;
+
+export const LabelTotalPrices = styled.Text`
+  font-size: ${RFValue(16)}px;
+`;
+
+export const TextPrice = styled.Text`
+  font-size: ${RFValue(16)}px;
+`;
+
+export const Symbols = styled.Text`
+  font-size: ${RFValue(16)}px;
+  margin: 0 ${RFValue(5)}px;
 `;
