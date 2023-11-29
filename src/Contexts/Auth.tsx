@@ -13,8 +13,7 @@ import { Api } from "../Configs/Api";
 export interface DatasUserProps {
   id: string;
   username: string;
-  email: string;
-  profile_img: string;
+  phone: string;
   address: string;
   number_address: number;
   complement_address: string;
@@ -26,7 +25,7 @@ interface SignInReturnProps {
 }
 
 interface AuthContextProps {
-  signIn: (email: string, password: string) => Promise<SignInReturnProps>;
+  signIn: (phone: string, password: string) => Promise<SignInReturnProps>;
   signOut: () => void;
   dataUser: DatasUserProps;
   setDataUser: (data: DatasUserProps | null) => void;
@@ -42,12 +41,12 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [dataUser, setDataUser] = useState<DatasUserProps | null>(null);
 
   const signIn = async (
-    email: string,
+    phone: string,
     password: string
   ): Promise<SignInReturnProps> => {
     try {
       const responseSignIn = await Api.post("auth/login-client", {
-        email,
+        phone,
         password,
       });
 

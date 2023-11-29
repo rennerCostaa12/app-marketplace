@@ -1,9 +1,8 @@
 export interface DatasRegisterUser {
   username: string;
-  email: string;
   password: string;
-  profile_img: string | null;
   address: string;
+  phone: string;
   number_address: number;
   password_confirm?: string | null | undefined;
   complement_address: string | null;

@@ -10,7 +10,7 @@ import {
   ContentTextNotAccount,
 } from "./styles";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Entypo, AntDesign } from "@expo/vector-icons";
@@ -24,15 +24,16 @@ import { Loading } from "../../Components/Loading";
 import { ToastNotification } from "../../Components/ToastNotification";
 
 import { useAuthContext } from "../../Contexts/Auth";
+import { Masks } from "../../Utils/Mask";
 
 import { UserLoginProps } from "./types";
 import { TypeNotification } from "../../Components/ToastNotification/types";
 
 const SchemaLogin = yup.object({
-  email: yup
+  phone: yup
     .string()
-    .email("Email inválido")
-    .required("Campo email é obrigatório"),
+    .min(14, "Telefone inválido")
+    .required("Campo telefone é obrigatório"),
   password: yup.string().required("Campo senha é obrigatório"),
 });
 
@@ -41,6 +42,7 @@ export const Login = () => {
     formState: { errors },
     handleSubmit,
     setValue,
+    control,
   } = useForm({
     resolver: yupResolver(SchemaLogin),
   });
@@ -59,7 +61,7 @@ export const Login = () => {
   const handleLogin = async (data: UserLoginProps) => {
     try {
       setLoading(true);
-      await signIn(data.email, data.password).then((response) => {
+      await signIn(data.phone, data.password).then((response) => {
         if (response.status) {
           navigate("tab_routes");
         } else {
@@ -94,12 +96,21 @@ export const Login = () => {
 
       <TitlePage style={{ fontFamily: "Lato_700Bold" }}>LOGIN</TitlePage>
 
-      <Input
-        type="default"
-        placeholder="Email"
-        icon={<Entypo name="email" size={24} color="black" />}
-        onChangeText={(value) => setValue("email", value)}
-        error={errors.email?.message}
+      <Controller
+        name="phone"
+        control={control}
+        render={({ field: { value } }) => (
+          <Input
+            type="default"
+            placeholder="Telefone"
+            keyboardType="numeric"
+            value={value}
+            maxLength={14}
+            icon={<Entypo name="phone" size={24} color="black" />}
+            onChangeText={(value) => setValue("phone", Masks.MaskPhone(value))}
+            error={errors.phone?.message}
+          />
+        )}
       />
 
       <Input
@@ -109,12 +120,12 @@ export const Login = () => {
         onChangeText={(value) => setValue("password", value)}
         error={errors.password?.message}
       />
-
+      {/* 
       <TextLink
         style={{ alignSelf: "flex-end", marginTop: 10, marginBottom: 10 }}
         color="#FF1493"
         text="Esqueci minha senha"
-      />
+      /> */}
 
       <ContentButton>
         <BtnLogin

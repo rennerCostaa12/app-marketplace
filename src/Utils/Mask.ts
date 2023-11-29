@@ -9,4 +9,12 @@ export class Masks {
     v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
     return v;
   }
+
+  static MaskPhone(phone: string): string {
+    if (!phone) return "";
+    let newValue = phone?.replace(/\D/g, "");
+    newValue = newValue?.replace(/(\d{2})(\d)/, "($1)$2");
+    newValue = newValue?.replace(/(\d)(\d{4})$/, "$1-$2");
+    return newValue;
+  }
 }
