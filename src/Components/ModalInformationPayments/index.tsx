@@ -3,9 +3,11 @@ import { Modal } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-root-toast";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { useState } from "react";
-import { Platform, ToastAndroid, Text } from "react-native";
+import { useEffect, useState } from "react";
+import { Platform, ToastAndroid, Alert } from "react-native";
 
 import {
   Container,
@@ -26,117 +28,225 @@ import {
   Symbols,
 } from "./styles";
 
+import { ToastNotification } from "../ToastNotification";
+
 import { Select } from "../Select";
+import { ActivityIndicator } from "../ActivityIndicator";
 import { Button } from "../Button";
+
 import { Masks } from "../../Utils/Mask";
 
+import { Api } from "../../Configs/Api";
+
 import { useAuthContext } from "../../Contexts/Auth";
+import { useItemsSales } from "../../Contexts/ItemsSales";
+
+import { TypeNotification } from "../ToastNotification/types";
+import { MethodsPaymentsProps } from "../ModalMethodsPayments/types";
+import { FormDeliveryProps } from "./types";
+import { ItemsProps } from "../Select/types";
 
 export type TypesPayments = "pix" | "money" | "credit-card";
 
 interface ModalInformationPaymentsProps {
   visibleModal: boolean;
   setVisibleModal: (data: boolean) => void;
-  typePayments: TypesPayments;
+  typePayments: MethodsPaymentsProps;
   totalPrices: number;
+  setShowModal: (data: boolean) => void;
 }
-
-const options = [
-  {
-    value: 1,
-    label: "Retirada",
-  },
-  {
-    value: 2,
-    label: "Entrega",
-  },
-];
 
 export const ModalInformationPayments = ({
   typePayments,
   setVisibleModal,
   visibleModal,
   totalPrices,
+  setShowModal,
 }: ModalInformationPaymentsProps) => {
+  const { goBack } = useNavigation();
+
   const [value, setValue] = useState<string>(null);
   const [optionsDeliverySelected, setOptionDeliverySelected] =
     useState<number>(1);
 
+  const [optionsDelivery, setOptionsDelivery] = useState<ItemsProps[]>([]);
+
+  const [visibleNotification, setVisibleNotification] =
+    useState<boolean>(false);
+  const [titleNotification, setTitleNotification] = useState<string>("");
+  const [typeNotification, setTypeNotification] =
+    useState<TypeNotification>("success");
+
+  const [loading, setLoading] = useState<boolean>(false);
+
   const { dataUser } = useAuthContext();
+  const { itemsSales, setItemsSales } = useItemsSales();
 
-  const switchLayoutModal = () => {
-    switch (typePayments) {
-      case "pix":
-        const handleCopyKeyPix = async () => {
-          await Clipboard.setStringAsync(process.env.EXPO_PUBLIC_PIX_KEY);
-          if (Platform.OS === "android") {
-            ToastAndroid.show(
-              "Chave pix copiado com sucesso!",
-              ToastAndroid.SHORT
-            );
-          }
-
-          if (Platform.OS === "ios") {
-            Toast.show("Chave pix copiado com sucesso!", {
-              duration: Toast.durations.LONG,
-              position: Toast.positions.BOTTOM,
-              shadow: true,
-              animation: true,
-              hideOnPress: true,
-              delay: 0,
-            });
-          }
-        };
-
-        return (
-          <>
-            <TitleSection
-              style={{
-                fontFamily: "Lato_700Bold",
-              }}
-            >
-              Chave do pix
-            </TitleSection>
-            <ContentKeyPix>
-              <InputText
-                editable={false}
-                value={process.env.EXPO_PUBLIC_PIX_KEY}
-              />
-              <ButtonCopyKeyPix onPress={handleCopyKeyPix}>
-                <Feather name="copy" size={RFValue(20)} color="#ffffff" />
-              </ButtonCopyKeyPix>
-            </ContentKeyPix>
-          </>
-        );
-
-      case "money":
-        return (
-          <>
-            <TitleSection
-              style={{
-                fontFamily: "Lato_700Bold",
-              }}
-            >
-              Troco pra quanto?
-            </TitleSection>
-            <ContentMoney>
-              <InputText
-                style={{
-                  width: "100%",
-                }}
-                defaultValue="0,00"
-                keyboardType="numeric"
-                value={value}
-                onChangeText={(money) => setValue(Masks.MaskMoney(money))}
-              />
-            </ContentMoney>
-          </>
-        );
-
+  const switchMessagesFeedback = (typeDelivery: number) => {
+    switch (typeDelivery) {
+      case 1:
+        return "Logo, logo enviaremos uma notificação avisando que o seu pedido está pronto.";
+      case 2:
+        return "Enviaremos uma notificação para você quando o pedido estiver à caminho.";
       default:
         return undefined;
     }
   };
+
+  const getOptionsDelivery = async () => {
+    try {
+      const responseOptionsDelivery = await Api.get("form-delivery/find-all");
+
+      if (responseOptionsDelivery.status) {
+        const listOptionsDelivery: FormDeliveryProps[] =
+          responseOptionsDelivery.data;
+
+        const listOptionsDeliveryFormated = listOptionsDelivery.map((value) => {
+          return {
+            value: value.id,
+            label: value.name,
+          };
+        });
+
+        setOptionsDelivery(listOptionsDeliveryFormated);
+      }
+    } catch (error) {
+      setVisibleModal(false);
+      setTypeNotification("error");
+      setTitleNotification("Erro ao pegar tipos de entregas");
+    }
+  };
+
+  const switchLayoutModal = () => {
+    if (typePayments) {
+      switch (typePayments.type) {
+        case "pix":
+          const handleCopyKeyPix = async () => {
+            await Clipboard.setStringAsync(process.env.EXPO_PUBLIC_PIX_KEY);
+            if (Platform.OS === "android") {
+              ToastAndroid.show(
+                "Chave pix copiado com sucesso!",
+                ToastAndroid.SHORT
+              );
+            }
+
+            if (Platform.OS === "ios") {
+              Toast.show("Chave pix copiado com sucesso!", {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+              });
+            }
+          };
+
+          return (
+            <>
+              <TitleSection
+                style={{
+                  fontFamily: "Lato_700Bold",
+                }}
+              >
+                Chave do pix
+              </TitleSection>
+              <ContentKeyPix>
+                <InputText
+                  editable={false}
+                  value={process.env.EXPO_PUBLIC_PIX_KEY}
+                />
+                <ButtonCopyKeyPix onPress={handleCopyKeyPix}>
+                  <Feather name="copy" size={RFValue(20)} color="#ffffff" />
+                </ButtonCopyKeyPix>
+              </ContentKeyPix>
+            </>
+          );
+
+        case "money":
+          return (
+            <>
+              <TitleSection
+                style={{
+                  fontFamily: "Lato_700Bold",
+                }}
+              >
+                Troco pra quanto?
+              </TitleSection>
+              <ContentMoney>
+                <InputText
+                  style={{
+                    width: "100%",
+                  }}
+                  defaultValue="0,00"
+                  keyboardType="numeric"
+                  value={value}
+                  onChangeText={(money) => setValue(Masks.MaskMoney(money))}
+                />
+              </ContentMoney>
+            </>
+          );
+
+        default:
+          return undefined;
+      }
+    }
+  };
+
+  const handleRedirectHome = () => {
+    setValue("0,00");
+    setOptionDeliverySelected(1);
+    setVisibleModal(false);
+    goBack();
+  };
+
+  const handlePlaceOrder = async () => {
+    const totalPricesProducts =
+      optionsDeliverySelected === 2 ? totalPrices + 4 : totalPrices;
+
+    if (Masks.RemoveMaskMoney(value) < totalPricesProducts) {
+      setVisibleNotification(true);
+      setTypeNotification("warning");
+      setTitleNotification(
+        "O valor do troco não pode ser maior que o valor total dos produto(s)"
+      );
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const responsePlaceOrder = await Api.post("sales/create-sale", {
+        client: dataUser.id,
+        status: 4,
+        delivery: optionsDeliverySelected,
+        payments: typePayments.id,
+        list_products: JSON.stringify(itemsSales),
+        total: optionsDeliverySelected === 2 ? totalPrices + 4 : totalPrices,
+        change_money: Masks.RemoveMaskMoney(value),
+        installments: null,
+      });
+      if (responsePlaceOrder.status) {
+        Alert.alert(
+          "Pedido realizado com sucesso",
+          switchMessagesFeedback(optionsDeliverySelected),
+          [{ text: "Ok", onPress: () => handleRedirectHome() }]
+        );
+        setItemsSales([]);
+        await AsyncStorage.removeItem("@marketplace:items_sales");
+        setShowModal(false);
+      }
+    } catch (error) {
+      setVisibleModal(false);
+      setTypeNotification("error");
+      setTitleNotification("Erro ao realizar pedido");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getOptionsDelivery();
+  }, []);
 
   return (
     <Modal
@@ -146,20 +256,22 @@ export const ModalInformationPayments = ({
       onRequestClose={() => {
         setVisibleModal(false);
       }}
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "red",
-      }}
     >
       <Container>
+        <ToastNotification
+          visible={visibleNotification}
+          setVisible={setVisibleNotification}
+          title={titleNotification}
+          type={typeNotification}
+          autoHide
+          duration={6000}
+        />
         <Content>
           {switchLayoutModal()}
           <Section>
             <TitleSection>Como você quer receber o pedido?</TitleSection>
             <Select
-              items={options}
+              items={optionsDelivery}
               setValue={setOptionDeliverySelected}
               value={optionsDeliverySelected}
             />
@@ -261,22 +373,26 @@ export const ModalInformationPayments = ({
             </ContentDatas>
           </ContentTotalPrices>
 
-          <ContentBtnCloseModal>
-            <Button
-              onPress={() => setVisibleModal(false)}
-              textButton="Efetuar pedido"
-              color="#ff1493"
-              textColor="#ffffff"
-              fontSize={13}
-            />
-            <Button
-              onPress={() => setVisibleModal(false)}
-              textButton="Cancelar"
-              color="#ffffff"
-              textColor="#ff1493"
-              fontSize={13}
-            />
-          </ContentBtnCloseModal>
+          <ActivityIndicator size="large" visible={loading} color="#ff1493" />
+
+          {!loading && (
+            <ContentBtnCloseModal>
+              <Button
+                onPress={handlePlaceOrder}
+                textButton="Efetuar pedido"
+                color="#ff1493"
+                textColor="#ffffff"
+                fontSize={13}
+              />
+              <Button
+                onPress={() => setVisibleModal(false)}
+                textButton="Cancelar"
+                color="#ffffff"
+                textColor="#ff1493"
+                fontSize={13}
+              />
+            </ContentBtnCloseModal>
+          )}
         </Content>
       </Container>
     </Modal>

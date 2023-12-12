@@ -1,14 +1,7 @@
-import {
-  Container,
-  ContentInput,
-  ContentButton,
-  ContainerInputs,
-} from "./styles";
+import { Container, ContentButton, ContainerInputs } from "./styles";
 
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from "expo-image-picker";
-import { Camera as CameraExpo } from "expo-camera";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -18,11 +11,10 @@ import { KeyboardAvoidingView } from "react-native";
 
 import { ToastNotification } from "../../Components/ToastNotification";
 import { Button } from "../../Components/Button";
-import { ButtonPhoto } from "../../Components/ButtonPhoto";
-import { ModalSelectPhoto } from "../../Components/ModalSelectPhoto";
 import { Input } from "../../Components/Input";
-import { Camera } from "../../Components/Camera";
 import { Loading } from "../../Components/Loading";
+
+import { Masks } from "../../Utils/Mask";
 
 import { Api } from "../../Configs/Api";
 
@@ -31,10 +23,10 @@ import { TypeNotification } from "../../Components/ToastNotification/types";
 
 const SchemaRegister = yup.object({
   username: yup.string().required("Campo nome de usuário é obrigatório"),
-  email: yup
+  phone: yup
     .string()
-    .email("Email inválido")
-    .required("Campo email é obrigatório"),
+    .min(14, "Número de telefone inválido")
+    .required("O campo telefone é obrigatório"),
   password: yup.string().required("Campo senha é obrigatório"),
   password_confirm: yup
     .string()
@@ -51,6 +43,7 @@ export const Register = () => {
     formState: { errors },
     handleSubmit,
     setValue,
+    control,
   } = useForm({
     resolver: yupResolver(SchemaRegister),
   });
@@ -61,62 +54,61 @@ export const Register = () => {
   const [typeNotification, setTypeNotification] =
     useState<TypeNotification>("success");
   const [loading, setLoading] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [startCamera, setStartCamera] = useState<boolean>(false);
+  // const [startCamera, setStartCamera] = useState<boolean>(false);
 
-  const [imgUser, setImgUser] = useState<string | null>(null);
+  // const [imgUser, setImgUser] = useState<string | null>(null);
 
-  const [permission] = CameraExpo.useCameraPermissions();
+  // const [permission] = CameraExpo.useCameraPermissions();
 
   const { goBack } = useNavigation();
 
-  const handleGetPermissionsCamera = async () => {
-    try {
-      if (!permission.granted) {
-        let { status } = await CameraExpo.requestCameraPermissionsAsync();
+  // const handleGetPermissionsCamera = async () => {
+  //   try {
+  //     if (!permission.granted) {
+  //       let { status } = await CameraExpo.requestCameraPermissionsAsync();
 
-        if (status !== "granted") {
-          alert("Não tem permissão");
-        }
-      } else {
-        setStartCamera(true);
-        setShowModal(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //       if (status !== "granted") {
+  //         alert("Não tem permissão");
+  //       }
+  //     } else {
+  //       setStartCamera(true);
+  //       setShowModal(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const handleOpenGallery = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      quality: 1,
-    });
+  // const handleOpenGallery = async () => {
+  //   const result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     quality: 1,
+  //   });
 
-    if (!result.canceled) {
-      setImgUser(result.assets[0].uri);
-      setShowModal(false);
-    }
-  };
+  //   if (!result.canceled) {
+  //     setImgUser(result.assets[0].uri);
+  //     setShowModal(false);
+  //   }
+  // };
 
   const handleRegisterUser = async (data: DatasRegisterUser) => {
     const {
       address,
-      email,
       password,
       username,
       password_confirm,
       complement_address,
       number_address,
+      phone,
     } = data;
 
-    if (!imgUser) {
-      setVisibleNotification(true);
-      setTitleNotification("Escolha uma foto");
-      setTypeNotification("warning");
-      return;
-    }
+    // if (!imgUser) {
+    //   setVisibleNotification(true);
+    //   setTitleNotification("Escolha uma foto");
+    //   setTypeNotification("warning");
+    //   return;
+    // }
 
     if (password !== password_confirm) {
       setVisibleNotification(true);
@@ -129,9 +121,8 @@ export const Register = () => {
       setLoading(true);
       const responseRegisterUser = await Api.post("clients", {
         username,
-        email,
         password,
-        profile_img: imgUser,
+        phone: phone,
         address,
         number_address: number_address,
         complement_address: complement_address,
@@ -147,7 +138,7 @@ export const Register = () => {
       }
     } catch (error) {
       setVisibleNotification(true);
-      setTitleNotification(error.response.data.message);
+      setTitleNotification(error.response.data.message[0]);
       setTypeNotification("success");
     } finally {
       setLoading(false);
@@ -155,114 +146,116 @@ export const Register = () => {
   };
 
   return (
-    <>
-      {startCamera ? (
-        <Camera setImg={setImgUser} setVisibleCamera={setStartCamera} />
-      ) : (
-        <KeyboardAvoidingView
-          behavior="padding"
-          keyboardVerticalOffset={RFValue(-200)}
-          style={{
-            flex: 1,
-          }}
-        >
-          <ToastNotification
-            type={typeNotification}
-            title={titleNotification}
-            visible={visibleNotification}
-            setVisible={setVisibleNotification}
-            autoHide
-            duration={2000}
-          />
-          <Container>
-            <Loading visible={loading} />
-            <ContainerInputs>
-              <ContentInput
-                style={{
-                  alignItems: "center",
-                  marginBottom: 30,
-                }}
-              >
-                <ButtonPhoto
-                  urlImg={imgUser}
-                  background="#FF1493"
-                  enableIcon={true}
-                  onPress={() => setShowModal(true)}
-                />
-              </ContentInput>
-
-              <Input
-                type="default"
-                labelText="Nome de usuário"
-                onChangeText={(value) => setValue("username", value)}
-                error={errors.address?.message}
-              />
-
-              <Input
-                type="default"
-                labelText="Email"
-                onChangeText={(value) => setValue("email", value)}
-                error={errors.email?.message}
-              />
-
-              <Input
-                type="password"
-                labelText="Senha"
-                onChangeText={(value) => setValue("password", value)}
-                error={errors.password?.message}
-              />
-
-              <Input
-                type="password"
-                labelText="Confirmação de senha"
-                onChangeText={(value) => setValue("password_confirm", value)}
-                error={errors.password_confirm?.message}
-              />
-
-              <Input
-                type="default"
-                labelText="Endereço"
-                onChangeText={(value) => setValue("address", value)}
-                error={errors.address?.message}
-              />
-
-              <Input
-                type="default"
-                labelText="Número de endereço"
-                keyboardType="numeric"
-                onChangeText={(value) =>
-                  setValue("number_address", Number(value))
-                }
-                error={errors.number_address?.message}
-              />
-
-              <Input
-                type="default"
-                labelText="Complemento"
-                onChangeText={(value) => setValue("complement", value)}
-                error={errors.address?.message}
-              />
-            </ContainerInputs>
-
-            <ContentButton>
-              <Button
-                onPress={handleSubmit(handleRegisterUser)}
-                color="#FF1493"
-                textColor="#ffffff"
-                textButton="Cadastrar"
-              />
-            </ContentButton>
-
-            <ModalSelectPhoto
-              handleGetPermissionsCamera={handleGetPermissionsCamera}
-              handleOpenGallery={handleOpenGallery}
-              title="Seleção de imagem"
-              showModal={showModal}
-              setShowModal={setShowModal}
+    <KeyboardAvoidingView
+      behavior="padding"
+      keyboardVerticalOffset={RFValue(-200)}
+      style={{
+        flex: 1,
+      }}
+    >
+      <ToastNotification
+        type={typeNotification}
+        title={titleNotification}
+        visible={visibleNotification}
+        setVisible={setVisibleNotification}
+        autoHide
+        duration={2000}
+      />
+      <Container>
+        <Loading visible={loading} />
+        <ContainerInputs>
+          {/* <ContentInput
+            style={{
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <ButtonPhoto
+              urlImg={imgUser}
+              background="#FF1493"
+              enableIcon={true}
+              onPress={() => setShowModal(true)}
             />
-          </Container>
-        </KeyboardAvoidingView>
-      )}
-    </>
+          </ContentInput> */}
+
+          <Input
+            type="default"
+            labelText="Nome de usuário"
+            onChangeText={(value) => setValue("username", value)}
+            error={errors.username?.message}
+          />
+
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field: { value } }) => (
+              <Input
+                type="default"
+                labelText="Telefone"
+                keyboardType="numeric"
+                value={value}
+                maxLength={14}
+                onChangeText={(value) =>
+                  setValue("phone", Masks.MaskPhone(value))
+                }
+                error={errors.phone?.message}
+              />
+            )}
+          />
+
+          {/* <Input
+            type="default"
+            labelText="Email"
+            onChangeText={(value) => setValue("email", value)}
+            error={errors.email?.message}
+          /> */}
+
+          <Input
+            type="password"
+            labelText="Senha"
+            onChangeText={(value) => setValue("password", value)}
+            error={errors.password?.message}
+          />
+
+          <Input
+            type="password"
+            labelText="Confirmação de senha"
+            onChangeText={(value) => setValue("password_confirm", value)}
+            error={errors.password_confirm?.message}
+          />
+
+          <Input
+            type="default"
+            labelText="Endereço"
+            onChangeText={(value) => setValue("address", value)}
+            error={errors.address?.message}
+          />
+
+          <Input
+            type="default"
+            labelText="Número de endereço"
+            keyboardType="numeric"
+            onChangeText={(value) => setValue("number_address", Number(value))}
+            error={errors.number_address?.message}
+          />
+
+          <Input
+            type="default"
+            labelText="Complemento"
+            onChangeText={(value) => setValue("complement", value)}
+            error={errors.address?.message}
+          />
+        </ContainerInputs>
+
+        <ContentButton>
+          <Button
+            onPress={handleSubmit(handleRegisterUser)}
+            color="#FF1493"
+            textColor="#ffffff"
+            textButton="Cadastrar"
+          />
+        </ContentButton>
+      </Container>
+    </KeyboardAvoidingView>
   );
 };

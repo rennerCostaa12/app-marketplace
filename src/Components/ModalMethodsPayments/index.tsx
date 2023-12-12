@@ -173,10 +173,11 @@ export const ModalMethodsPayments = ({
         </ContentButtonConfirm>
       </ContentModal>
       <ModalInformationPayments
+        setShowModal={setShowModal}
         totalPrices={totalPrices}
         visibleModal={visibleModalInformationPayments}
         setVisibleModal={setVisibleModalInformationsPayments}
-        typePayments={formsPaymentsSelected?.type as TypesPayments}
+        typePayments={formsPaymentsSelected as MethodsPaymentsProps}
       />
     </Animated.View>
   );
