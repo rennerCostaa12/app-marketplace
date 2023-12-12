@@ -4,6 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-root-toast";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useEffect, useState } from "react";
 import { Platform, ToastAndroid, Alert } from "react-native";
@@ -52,6 +53,7 @@ interface ModalInformationPaymentsProps {
   setVisibleModal: (data: boolean) => void;
   typePayments: MethodsPaymentsProps;
   totalPrices: number;
+  setShowModal: (data: boolean) => void;
 }
 
 export const ModalInformationPayments = ({
@@ -59,6 +61,7 @@ export const ModalInformationPayments = ({
   setVisibleModal,
   visibleModal,
   totalPrices,
+  setShowModal,
 }: ModalInformationPaymentsProps) => {
   const { goBack } = useNavigation();
 
@@ -77,7 +80,7 @@ export const ModalInformationPayments = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const { dataUser } = useAuthContext();
-  const { itemsSales } = useItemsSales();
+  const { itemsSales, setItemsSales } = useItemsSales();
 
   const switchMessagesFeedback = (typeDelivery: number) => {
     switch (typeDelivery) {
@@ -228,6 +231,9 @@ export const ModalInformationPayments = ({
           switchMessagesFeedback(optionsDeliverySelected),
           [{ text: "Ok", onPress: () => handleRedirectHome() }]
         );
+        setItemsSales([]);
+        await AsyncStorage.removeItem("@marketplace:items_sales");
+        setShowModal(false);
       }
     } catch (error) {
       setVisibleModal(false);

@@ -173,6 +173,7 @@ export const ModalMethodsPayments = ({
         </ContentButtonConfirm>
       </ContentModal>
       <ModalInformationPayments
+        setShowModal={setShowModal}
         totalPrices={totalPrices}
         visibleModal={visibleModalInformationPayments}
         setVisibleModal={setVisibleModalInformationsPayments}
