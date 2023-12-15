@@ -18,6 +18,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { ItemProps } from "../../Types/products";
 import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 import { useItemsSales } from "../../Contexts/ItemsSales";
+import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 
 export const CardItem = ({
   urlImg,
@@ -114,10 +115,7 @@ export const CardItem = ({
             <FontAwesome name="cart-plus" size={RFValue(30)} color="#008000" />
           </ButtonAddProduct>
           <PriceItem style={{ fontFamily: "Lato_700Bold" }}>
-            {priceItem.toLocaleString("pt-br", {
-              style: "currency",
-              currency: "BRL",
-            })}
+            {ConvertMoneyBrl(priceItem)}
           </PriceItem>
         </ContentPricesAndSale>
       </ContentDescriptionsItem>

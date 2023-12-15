@@ -45,6 +45,7 @@ import { TypeNotification } from "../ToastNotification/types";
 import { MethodsPaymentsProps } from "../ModalMethodsPayments/types";
 import { FormDeliveryProps } from "./types";
 import { ItemsProps } from "../Select/types";
+import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 
 export type TypesPayments = "pix" | "money" | "credit-card";
 
@@ -339,10 +340,7 @@ export const ModalInformationPayments = ({
                   fontFamily: "Lato_400Regular",
                 }}
               >
-                {totalPrices.toLocaleString("pt-br", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {ConvertMoneyBrl(totalPrices)}
               </TextPrice>
               {optionsDeliverySelected === 2 && (
                 <>
@@ -352,10 +350,7 @@ export const ModalInformationPayments = ({
                       fontFamily: "Lato_400Regular",
                     }}
                   >
-                    {Number(4).toLocaleString("pt-br", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
+                    {ConvertMoneyBrl(Number(4))}
                   </TextPrice>
                   <Symbols>=</Symbols>
                   <TextPrice
@@ -363,10 +358,7 @@ export const ModalInformationPayments = ({
                       color: "#008140",
                     }}
                   >
-                    {(totalPrices + 4).toLocaleString("pt-br", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
+                    {ConvertMoneyBrl(totalPrices + 4)}
                   </TextPrice>
                 </>
               )}

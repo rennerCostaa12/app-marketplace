@@ -22,6 +22,8 @@ import { ItemProps } from "../../Types/products";
 
 import { CartEmpty } from "../../Components/CartEmpty";
 
+import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
+
 interface CardProductsFavoritesProps {
   dataProduct: ItemProps;
 }
@@ -55,10 +57,7 @@ const CardProductsFavorites = ({ dataProduct }: CardProductsFavoritesProps) => {
           {dataProduct.nameItem}
         </TitleProduct>
         <PriceProduct style={{ fontFamily: "Lato_400Regular" }}>
-          {dataProduct.priceItem.toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
+          {ConvertMoneyBrl(dataProduct.priceItem)}
         </PriceProduct>
         <CategoryProduct style={{ fontFamily: "Lato_400Regular" }}>
           {dataProduct.typeItem.toLocaleUpperCase()}
