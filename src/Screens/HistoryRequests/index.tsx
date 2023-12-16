@@ -13,7 +13,7 @@ import {
 
 import { useState, useCallback } from "react";
 import { FlatList } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { Api } from "../../Configs/Api";
 
@@ -26,6 +26,7 @@ import { useAuthContext } from "../../Contexts/Auth";
 
 import { Collapse } from "../../Components/Collapse";
 import { Loading } from "../../Components/Loading";
+import { ActivityIndicator } from "../../Components/ActivityIndicator";
 import { Button } from "../../Components/Button";
 
 interface ProductRenderProps {
@@ -34,6 +35,9 @@ interface ProductRenderProps {
 
 const ProductRender = ({ data }: ProductRenderProps) => {
   const productsFormated = JSON.parse(data.sales_list_products);
+
+  const { navigate } = useNavigation() as any;
+
   return (
     <ContentCards>
       <Collapse
@@ -45,23 +49,30 @@ const ProductRender = ({ data }: ProductRenderProps) => {
       >
         {productsFormated.map((value) => {
           return (
-            <>
-              <CardRequests key={value.id}>
-                <ContentImgAndDescriptionRequests>
-                  <ImgRequests source={{ uri: value.urlImg }} />
-                  <ContentDescriptionRequests>
-                    <TitleRequests>{value.nameItem}</TitleRequests>
-                    <PriceRequests>
-                      {ConvertMoneyBrl(Number(value.priceItem))}
-                    </PriceRequests>
-                  </ContentDescriptionRequests>
-                </ContentImgAndDescriptionRequests>
-                <QuantityRequests>{value.quantity}X</QuantityRequests>
-              </CardRequests>
-            </>
+            <CardRequests key={value.id}>
+              <ContentImgAndDescriptionRequests>
+                <ImgRequests source={{ uri: value.urlImg }} />
+                <ContentDescriptionRequests>
+                  <TitleRequests>{value.nameItem}</TitleRequests>
+                  <PriceRequests>
+                    {ConvertMoneyBrl(Number(value.priceItem))}
+                  </PriceRequests>
+                </ContentDescriptionRequests>
+              </ContentImgAndDescriptionRequests>
+              <QuantityRequests>{value.quantity}X</QuantityRequests>
+            </CardRequests>
           );
         })}
-        <Button textButton="VER DETALHES" textColor="#ffffff" color="#FF1493" />
+        <Button
+          textButton="VER DETALHES"
+          textColor="#ffffff"
+          color="#FF1493"
+          onPress={() =>
+            navigate("details_requests", {
+              itemId: data.sales_id,
+            })
+          }
+        />
       </Collapse>
     </ContentCards>
   );
@@ -98,14 +109,16 @@ export const HistoryRequests = () => {
 
   return (
     <Container>
-      <Loading visible={loading} />
-      <ContainerCards>
-        <FlatList
-          data={products}
-          renderItem={({ item }) => <ProductRender data={item} />}
-          keyExtractor={(item) => item.sales_id}
-        />
-      </ContainerCards>
+      <ActivityIndicator size="large" visible={loading} color="#ff1493" />
+      {!loading && (
+        <ContainerCards>
+          <FlatList
+            data={products}
+            renderItem={({ item }) => <ProductRender data={item} />}
+            keyExtractor={(item) => item.sales_id}
+          />
+        </ContainerCards>
+      )}
     </Container>
   );
 };
