@@ -1,7 +1,7 @@
 import { useState, ReactNode } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 
-import { Container, HeaderCollapse, TextHeader } from "./styles";
+import { Container, HeaderCollapse, TextHeader, StatusTitle } from "./styles";
 
 import Animated, {
   useAnimatedStyle,
@@ -12,9 +12,16 @@ import Animated, {
 interface CollapseProps {
   children: ReactNode;
   titleHeader: string;
+  status?: string | undefined;
+  colorStatus?: string | undefined;
 }
 
-export const Collapse = ({ children, titleHeader }: CollapseProps) => {
+export const Collapse = ({
+  children,
+  titleHeader,
+  status,
+  colorStatus,
+}: CollapseProps) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [height, setHeight] = useState<number>(0);
   const animatedHeight = useSharedValue<number>(0);
@@ -39,9 +46,16 @@ export const Collapse = ({ children, titleHeader }: CollapseProps) => {
     <Container>
       <HeaderCollapse onPress={() => setExpanded(!expanded)}>
         <TextHeader>{titleHeader}</TextHeader>
+        <StatusTitle backgroundStatus={colorStatus}>{status}</StatusTitle>
       </HeaderCollapse>
       <Animated.View style={[collapsableStyle, { overflow: "hidden" }]}>
-        <View style={{ position: "absolute" }} onLayout={onLayout}>
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+          }}
+          onLayout={onLayout}
+        >
           {children}
         </View>
       </Animated.View>

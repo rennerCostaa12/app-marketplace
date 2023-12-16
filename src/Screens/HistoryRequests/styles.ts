@@ -18,7 +18,7 @@ export const TitleCardRequest = styled.Text`
 `;
 
 export const CardRequests = styled.View`
-  width: 85%;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;

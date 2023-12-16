@@ -9,8 +9,6 @@ import {
   ContentDescriptionRequests,
   QuantityRequests,
   ContentImgAndDescriptionRequests,
-  HeaderCards,
-  TitleCardRequest,
 } from "./styles";
 
 import { useState, useCallback } from "react";
@@ -20,6 +18,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Api } from "../../Configs/Api";
 
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
+import { SwitchColorStatus } from "../../Utils/Helper/SwitchColorStatus";
 
 import { ProductsRequestsProps } from "./types";
 
@@ -27,6 +26,7 @@ import { useAuthContext } from "../../Contexts/Auth";
 
 import { Collapse } from "../../Components/Collapse";
 import { Loading } from "../../Components/Loading";
+import { Button } from "../../Components/Button";
 
 interface ProductRenderProps {
   data: ProductsRequestsProps;
@@ -34,30 +34,34 @@ interface ProductRenderProps {
 
 const ProductRender = ({ data }: ProductRenderProps) => {
   const productsFormated = JSON.parse(data.sales_list_products);
-
   return (
     <ContentCards>
       <Collapse
         titleHeader={`${new Date(
           data.sales_created_at
         ).toLocaleString()} - ${ConvertMoneyBrl(data.sales_total)}`}
+        status={data.status_name}
+        colorStatus={SwitchColorStatus(data.status_name)}
       >
         {productsFormated.map((value) => {
           return (
-            <CardRequests key={value.id}>
-              <ContentImgAndDescriptionRequests>
-                <ImgRequests source={{ uri: value.urlImg }} />
-                <ContentDescriptionRequests>
-                  <TitleRequests>{value.nameItem}</TitleRequests>
-                  <PriceRequests>
-                    {ConvertMoneyBrl(Number(value.priceItem))}
-                  </PriceRequests>
-                </ContentDescriptionRequests>
-              </ContentImgAndDescriptionRequests>
-              <QuantityRequests>{value.quantity}X</QuantityRequests>
-            </CardRequests>
+            <>
+              <CardRequests key={value.id}>
+                <ContentImgAndDescriptionRequests>
+                  <ImgRequests source={{ uri: value.urlImg }} />
+                  <ContentDescriptionRequests>
+                    <TitleRequests>{value.nameItem}</TitleRequests>
+                    <PriceRequests>
+                      {ConvertMoneyBrl(Number(value.priceItem))}
+                    </PriceRequests>
+                  </ContentDescriptionRequests>
+                </ContentImgAndDescriptionRequests>
+                <QuantityRequests>{value.quantity}X</QuantityRequests>
+              </CardRequests>
+            </>
           );
         })}
+        <Button textButton="VER DETALHES" textColor="#ffffff" color="#FF1493" />
       </Collapse>
     </ContentCards>
   );
