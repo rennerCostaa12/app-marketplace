@@ -37,16 +37,16 @@ export const ImageProduct = styled.Image`
 export const ContentDescriptions = styled.View``;
 
 export const TitleProduct = styled.Text`
-  font-size: ${RFValue(24)}px;
+  font-size: ${RFValue(16)}px;
 `;
 export const CategoryProduct = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(10)}px;
   color: gray;
   margin: ${RFValue(10)}px 0;
 `;
 
 export const PriceProduct = styled.Text`
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(16)}px;
 `;
 
 export const ContentPriceAndQuantity = styled.View`
@@ -75,7 +75,7 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
 
 export const TextButton = styled.Text<TextButtonProps>`
   color: ${({ color }) => color};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(14)}px;
   text-align: center;
 `;
 
@@ -88,7 +88,7 @@ export const ButtonRemove = styled.TouchableOpacity`
 `;
 
 export const PriceFinal = styled.Text`
-  font-size: ${RFValue(30)}px;
+  font-size: ${RFValue(25)}px;
   text-align: center;
   margin: ${RFValue(30)}px 0;
   color: #ff1493;

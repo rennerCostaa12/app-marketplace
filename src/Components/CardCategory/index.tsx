@@ -28,26 +28,26 @@ export const CardCategory = ({
         return (
           <MaterialIcons
             name="dry-cleaning"
-            size={RFValue(24)}
+            size={RFValue(20)}
             color="#FFFFFFFF"
           />
         );
       case "drink":
-        return <Entypo name="drink" size={RFValue(24)} color="#FFFFFFFF" />;
+        return <Entypo name="drink" size={RFValue(20)} color="#FFFFFFFF" />;
       case "food":
         return (
           <MaterialCommunityIcons
             name="food-turkey"
-            size={RFValue(24)}
+            size={RFValue(20)}
             color="#FFFFFFFF"
           />
         );
       case "toys":
         return (
-          <MaterialIcons name="toys" size={RFValue(24)} color="#FFFFFFFF" />
+          <MaterialIcons name="toys" size={RFValue(20)} color="#FFFFFFFF" />
         );
       default:
-        return <Entypo name="drink" size={RFValue(24)} color="#FFFFFFFF" />;
+        return <Entypo name="drink" size={RFValue(20)} color="#FFFFFFFF" />;
     }
   };
 

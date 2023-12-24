@@ -24,7 +24,7 @@ export const ImageItem = styled.Image`
 `;
 
 export const NameItem = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(14)}px;
 `;
 
 export const ContentPricesAndSale = styled.View`
@@ -37,13 +37,13 @@ export const ContentPricesAndSale = styled.View`
 export const ButtonAddProduct = styled.TouchableOpacity``;
 
 export const PriceItem = styled.Text`
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(14)}px;
   text-align: right;
   color: #649a8c;
   margin: ${RFValue(5)}px 0;
 `;
 export const CategoryItem = styled.Text`
-  font-size: ${RFValue(13)}px;
+  font-size: ${RFValue(10)}px;
   color: gray;
 `;
 

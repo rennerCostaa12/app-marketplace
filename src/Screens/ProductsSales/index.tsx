@@ -28,6 +28,8 @@ import { CartEmpty } from "../../Components/CartEmpty";
 import { QuantityProduct } from "../../Components/QuantityProduct";
 import { ModalMethodsPayments } from "../../Components/ModalMethodsPayments";
 
+import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
+
 interface CardProductSales {
   dataProduct: ItemsSalesProps;
 }
@@ -115,10 +117,7 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
             colorButtons="#FF1493"
           />
           <PriceProduct style={{ fontFamily: "Lato_400Regular" }}>
-            {getPriceProduct().toLocaleString("pt-br", {
-              style: "currency",
-              currency: "BRL",
-            })}
+            {ConvertMoneyBrl(getPriceProduct())}
           </PriceProduct>
         </ContentPriceAndQuantity>
       </ContentDescriptions>
@@ -153,10 +152,7 @@ export const ProductSales = () => {
       </ContentCards>
       {itemsSales.length > 0 ? (
         <PriceFinal style={{ fontFamily: "Lato_700Bold" }}>
-          {totalAmount.toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
+          {ConvertMoneyBrl(totalAmount)}
         </PriceFinal>
       ) : null}
       {itemsSales.length > 0 ? (

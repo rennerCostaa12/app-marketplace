@@ -27,11 +27,11 @@ export const QuantityProduct = ({
   return (
     <Container>
       <Button onPress={handleRemoveQuantity}>
-        <Ionicons name="remove" size={RFValue(24)} color={colorButtons} />
+        <Ionicons name="remove" size={RFValue(20)} color={colorButtons} />
       </Button>
       <Quantity>{quantity}</Quantity>
       <Button onPress={handleAddQuantity}>
-        <Ionicons name="add" size={RFValue(24)} color={colorButtons} />
+        <Ionicons name="add" size={RFValue(20)} color={colorButtons} />
       </Button>
     </Container>
   );

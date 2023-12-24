@@ -8,10 +8,11 @@ import { Cleaning } from "../Screens/Cleaning";
 import { Toys } from "../Screens/Toys";
 import { ProductSales } from "../Screens/ProductsSales";
 import { SearchProducts } from "../Screens/SearchProducts";
-
-import { TabsRoutes } from "./tabs.routes";
 import { Login } from "../Screens/Login";
 import { Register } from "../Screens/Register";
+import { DetailsRequests } from "../Screens/DetailsRequests";
+
+import { TabsRoutes } from "./tabs.routes";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -149,6 +150,23 @@ export const StackRoutes = () => {
         component={SearchProducts}
         options={{
           headerShown: false,
+        }}
+      />
+
+      <Screen
+        name="details_requests"
+        component={DetailsRequests}
+        options={{
+          headerShown: true,
+          title: "Detalhes do pedido",
+          headerStyle: {
+            backgroundColor: "#FF1493",
+          },
+          headerTitleStyle: {
+            color: "#FFFFFF",
+            fontWeight: "bold",
+          },
+          headerTintColor: "#FFFFFF",
         }}
       />
     </Navigator>
