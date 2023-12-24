@@ -112,7 +112,7 @@ export const CardItem = ({
         <NameItem style={{ fontFamily: "Lato_700Bold" }}>{nameItem}</NameItem>
         <ContentPricesAndSale>
           <ButtonAddProduct onPress={handleAddItemSales}>
-            <FontAwesome name="cart-plus" size={RFValue(30)} color="#008000" />
+            <FontAwesome name="cart-plus" size={RFValue(25)} color="#008000" />
           </ButtonAddProduct>
           <PriceItem style={{ fontFamily: "Lato_700Bold" }}>
             {ConvertMoneyBrl(priceItem)}

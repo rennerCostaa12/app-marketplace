@@ -28,13 +28,36 @@ import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 import { Loading } from "../../Components/Loading";
 import { Button } from "../../Components/Button";
 
-import { StatusProps, DetailsRequestProps } from "./types";
+import { DetailsRequestProps } from "./types";
+
+const status = [
+  {
+    id: 4,
+    name: "AGUARDANDO VISUALIZAÇÃO",
+    checked: false,
+  },
+  {
+    id: 3,
+    name: "PREPARANDO PEDIDO",
+    checked: false,
+  },
+  {
+    id: 2,
+    name: "A CAMINHO",
+    checked: false,
+  },
+  {
+    id: 1,
+    name: "FINALIZADO",
+    checked: false,
+  },
+];
 
 export const DetailsRequests = ({ route }) => {
   const [datasRequest, setDatasRequest] = useState<DetailsRequestProps | null>(
     null
   );
-  const [allStatus, setAllStatus] = useState<StatusProps[]>([]);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const { itemId } = route.params;
@@ -48,21 +71,6 @@ export const DetailsRequests = ({ route }) => {
 
       if (responseInformationsRequest.status) {
         setDatasRequest(responseInformationsRequest.data[0]);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getAllStatus = async () => {
-    try {
-      setLoading(true);
-      const responseAllStatus = await Api.get("status-sales");
-
-      if (responseAllStatus.status) {
-        setAllStatus(responseAllStatus.data.reverse());
       }
     } catch (error) {
       console.error(error);
@@ -90,9 +98,21 @@ export const DetailsRequests = ({ route }) => {
   };
 
   useEffect(() => {
-    getAllStatus();
     getInformationRequest();
   }, []);
+
+  useEffect(() => {
+    if (datasRequest) {
+      for (let x = 0; x <= status.length - 1; x++) {
+        status[x].checked = true;
+
+        if (status[x].name === datasRequest.status_name.toLocaleUpperCase()) {
+          status[x].checked = true;
+          break;
+        }
+      }
+    }
+  }, [datasRequest]);
 
   return (
     <Container>
@@ -147,16 +167,16 @@ export const DetailsRequests = ({ route }) => {
 
       <TitleInformations>Status do pedido</TitleInformations>
       <FlatList
-        data={allStatus}
+        data={status}
         renderItem={({ item }) => {
           return (
             <ContentStatus>
               <SituationStatus>
-                {datasRequest?.status_id === item.id ? (
+                {item.checked ? (
                   <AntDesign
                     name="checkcircle"
                     size={RFValue(20)}
-                    color="#656993"
+                    color="#00E200"
                   />
                 ) : (
                   <AntDesign

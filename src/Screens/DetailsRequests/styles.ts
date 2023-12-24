@@ -26,7 +26,7 @@ export const TextAcknowledgment = styled.Text`
 `;
 
 export const TitleInformations = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(14)}px;
   font-family: Lato_700Bold;
   text-align: center;
   margin: ${RFValue(10)}px 0;
@@ -48,12 +48,12 @@ export const ContentInformation = styled.View`
 `;
 
 export const LabelTextInformation = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(12)}px;
   font-family: Lato_700Bold;
 `;
 
 export const TextInformation = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(12)}px;
   font-family: Lato_400Regular;
 `;
 
@@ -62,14 +62,14 @@ export const ContentStatus = styled.View`
   margin: ${RFValue(5)}px 0;
   padding: ${RFValue(10)}px;
   border-radius: ${RFValue(50)}px;
-  elevation: 5;
+  elevation: 3;
   flex-direction: row;
   align-items: center;
   gap: ${RFValue(15)}px;
 `;
 
 export const TitleStatus = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(12)}px;
   font-family: Lato_400Regular;
 `;
 
@@ -80,7 +80,7 @@ export const ContentBtnSendAvaliation = styled.TouchableOpacity`
   align-items: center;
   background-color: #ffffff;
   align-self: center;
-  padding: ${RFValue(15)}px;
+  padding: ${RFValue(10)}px;
   gap: ${RFValue(10)}px;
   margin: ${RFValue(5)}px 0;
   border-radius: ${RFValue(5)}px;
@@ -88,6 +88,6 @@ export const ContentBtnSendAvaliation = styled.TouchableOpacity`
 `;
 
 export const TextAvaliation = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(12)}px;
   font-family: Lato_700Bold;
 `;
