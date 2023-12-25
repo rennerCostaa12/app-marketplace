@@ -1,3 +1,8 @@
+import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
+
+import { Modal } from "react-native";
+
 import {
   Container,
   Content,
@@ -5,11 +10,6 @@ import {
   ButtonOptions,
   TextButtonOptions,
 } from "./styles";
-
-import { Modal } from "react-native";
-
-import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
-import { RFValue } from "react-native-responsive-fontsize";
 
 interface ModalSelectPhotoProps {
   showModal: boolean;

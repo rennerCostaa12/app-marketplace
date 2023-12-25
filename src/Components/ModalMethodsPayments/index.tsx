@@ -24,7 +24,6 @@ import { ModalInformationPayments } from "../ModalInformationPayments";
 import { Api } from "../../Configs/Api";
 
 import { MethodsPaymentsProps } from "./types";
-import { TypesPayments } from "../ModalInformationPayments";
 
 interface ModalMethodsPaymentsProps {
   showModal: boolean;
@@ -153,9 +152,7 @@ export const ModalMethodsPayments = ({
                     selected={formsPaymentsSelected?.id === item.id}
                     onPress={() => setFormsPaymentsSelected(item)}
                   >
-                    <TextOptions style={{ fontFamily: "Lato_400Regular" }}>
-                      {item.name}
-                    </TextOptions>
+                    <TextOptions>{item.name}</TextOptions>
                   </Options>
                 );
               }}

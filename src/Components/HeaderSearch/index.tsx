@@ -1,3 +1,8 @@
+import { AntDesign } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { RFValue } from "react-native-responsive-fontsize";
+
 import {
   Container,
   ContentIcons,
@@ -7,14 +12,12 @@ import {
   ContentSearch,
 } from "./styles";
 
-import { AntDesign } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
 import { IconsBadge } from "../IconsBadge";
 
 import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 import { useItemsSales } from "../../Contexts/ItemsSales";
+
+import { Theme } from "../../Theme";
 
 export const HeaderSearch = () => {
   const { itemsFavorites } = useItemsFavorites();
@@ -35,21 +38,37 @@ export const HeaderSearch = () => {
           />
         </TouchableOpacity>
         <ContentSearch>
-          <AntDesign name="search1" size={20} color="#8a8a8a" />
+          <AntDesign
+            name="search1"
+            size={RFValue(20)}
+            color={Theme.colors.gray_dark}
+          />
         </ContentSearch>
       </ContentInputSearch>
 
       <ContentIcons>
         <ButtonIcon onPress={() => navigate("sales")}>
           <IconsBadge
-            icon={<AntDesign name="shoppingcart" size={30} color="black" />}
+            icon={
+              <AntDesign
+                name="shoppingcart"
+                size={RFValue(30)}
+                color={Theme.colors.text_black}
+              />
+            }
             quantity={itemsSales.length}
           />
         </ButtonIcon>
 
         <ButtonIcon onPress={() => navigate("productsFavorites")}>
           <IconsBadge
-            icon={<AntDesign name="hearto" size={30} color="black" />}
+            icon={
+              <AntDesign
+                name="hearto"
+                size={RFValue(30)}
+                color={Theme.colors.text_black}
+              />
+            }
             quantity={itemsFavorites.length}
           />
         </ButtonIcon>

@@ -1,3 +1,11 @@
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Entypo, AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useState } from "react";
+
 import {
   Container,
   BtnLogin,
@@ -10,14 +18,6 @@ import {
   ContentTextNotAccount,
 } from "./styles";
 
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Entypo, AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-
-import { useState } from "react";
-
 import { Input } from "../../Components/Input";
 import { TextLink } from "../../Components/TextLink";
 import { Loading } from "../../Components/Loading";
@@ -28,6 +28,8 @@ import { Masks } from "../../Utils/Mask";
 
 import { UserLoginProps } from "./types";
 import { TypeNotification } from "../../Components/ToastNotification/types";
+
+import { Theme } from "../../Theme";
 
 const SchemaLogin = yup.object({
   phone: yup
@@ -94,7 +96,7 @@ export const Login = () => {
         />
       </ContentImg>
 
-      <TitlePage style={{ fontFamily: "Lato_700Bold" }}>LOGIN</TitlePage>
+      <TitlePage>LOGIN</TitlePage>
 
       <Controller
         name="phone"
@@ -106,7 +108,13 @@ export const Login = () => {
             keyboardType="numeric"
             value={value}
             maxLength={14}
-            icon={<Entypo name="phone" size={24} color="black" />}
+            icon={
+              <Entypo
+                name="phone"
+                size={RFValue(24)}
+                color={Theme.colors.text_black}
+              />
+            }
             onChangeText={(value) => setValue("phone", Masks.MaskPhone(value))}
             error={errors.phone?.message}
           />
@@ -116,35 +124,36 @@ export const Login = () => {
       <Input
         type="password"
         placeholder="Senha"
-        icon={<AntDesign name="lock" size={24} color="black" />}
+        icon={
+          <AntDesign
+            name="lock"
+            size={RFValue(24)}
+            color={Theme.colors.text_black}
+          />
+        }
         onChangeText={(value) => setValue("password", value)}
         error={errors.password?.message}
       />
       {/* 
       <TextLink
         style={{ alignSelf: "flex-end", marginTop: 10, marginBottom: 10 }}
-        color="#FF1493"
+        color={Theme.colors.primary}
         text="Esqueci minha senha"
       /> */}
 
       <ContentButton>
         <BtnLogin
-          backgroundButton="#FF1493"
+          backgroundButton={Theme.colors.primary}
           onPress={handleSubmit(handleLogin)}
         >
-          <TextBtnLogin
-            color="#ffffff"
-            style={{ fontFamily: "Lato_400Regular" }}
-          >
-            Entrar
-          </TextBtnLogin>
+          <TextBtnLogin color={Theme.colors.text_white}>Entrar</TextBtnLogin>
         </BtnLogin>
       </ContentButton>
 
       <ContentTextNotAccount>
         <TextNotAccount>Não possui conta? {""}</TextNotAccount>
         <TextLink
-          color="#FF1493"
+          color={Theme.colors.primary}
           text="Registre-se"
           onPress={() => navigate("register")}
         />

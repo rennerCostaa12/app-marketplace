@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 interface TextPreviewImgProps {
   color: string;
 }
@@ -9,7 +11,7 @@ export const ContentOptionsCamera = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: #000000;
+  background-color: ${Theme.colors.background_dark};
   height: ${RFValue(100)}px;
   padding: 0 ${RFValue(20)}px;
 `;
@@ -18,7 +20,7 @@ export const ContentIconClose = styled.TouchableOpacity``;
 
 export const ContentIconCapture = styled.TouchableOpacity`
   border-width: 3px;
-  border-color: #ffffff;
+  border-color: ${Theme.colors.text_white};
   border-radius: ${RFValue(360)}px;
   padding: ${RFValue(15)}px;
 `;

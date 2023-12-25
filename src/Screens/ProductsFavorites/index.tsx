@@ -1,3 +1,8 @@
+import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FlatList } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+
 import {
   Container,
   ContentCard,
@@ -12,17 +17,15 @@ import {
   ButtonRemoveFavorite,
 } from "./styles";
 
-import { AntDesign } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FlatList } from "react-native";
+import { CartEmpty } from "../../Components/CartEmpty";
 
 import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 
 import { ItemProps } from "../../Types/products";
 
-import { CartEmpty } from "../../Components/CartEmpty";
-
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
+
+import { Theme } from "../../Theme";
 
 interface CardProductsFavoritesProps {
   dataProduct: ItemProps;
@@ -56,16 +59,18 @@ const CardProductsFavorites = ({ dataProduct }: CardProductsFavoritesProps) => {
         <TitleProduct style={{ fontFamily: "Lato_700Bold" }}>
           {dataProduct.nameItem}
         </TitleProduct>
-        <PriceProduct style={{ fontFamily: "Lato_400Regular" }}>
-          {ConvertMoneyBrl(dataProduct.priceItem)}
-        </PriceProduct>
-        <CategoryProduct style={{ fontFamily: "Lato_400Regular" }}>
+        <PriceProduct>{ConvertMoneyBrl(dataProduct.priceItem)}</PriceProduct>
+        <CategoryProduct>
           {dataProduct.typeItem.toLocaleUpperCase()}
         </CategoryProduct>
       </ContentDescription>
       <ContentIcon>
         <ButtonRemoveFavorite onPress={handleRemoveFavorite}>
-          <AntDesign name="heart" size={23} color="#FF1493" />
+          <AntDesign
+            name="heart"
+            size={RFValue(23)}
+            color={Theme.colors.primary}
+          />
         </ButtonRemoveFavorite>
       </ContentIcon>
     </ContentCard>

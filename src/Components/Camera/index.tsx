@@ -1,4 +1,9 @@
 import { Camera as CameraExpo, CameraType } from "expo-camera";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
+
+import { useState, useRef } from "react";
+
 import {
   ContentIconCapture,
   ContentIconChangePositionCamera,
@@ -10,11 +15,10 @@ import {
   ButtonPreviewImg,
   TextPreviewImg,
 } from "./styles";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
 
 import { PhotoCapturedProps } from "./types";
 
-import { useState, useRef } from "react";
+import { Theme } from "../../Theme";
 
 interface CameraProps {
   setVisibleCamera: (data: boolean) => void;
@@ -60,13 +64,25 @@ export const Camera = ({ setVisibleCamera, setImg }: CameraProps) => {
           <ImagePreview source={{ uri: photoCaptured.uri }} />
           <ContentButtons>
             <ButtonPreviewImg onPress={handleAcceptPhoto}>
-              <AntDesign name="check" size={30} color="#419B45" />
-              <TextPreviewImg color="#419B45">Aceitar</TextPreviewImg>
+              <AntDesign
+                name="check"
+                size={RFValue(30)}
+                color={Theme.colors.green_dark}
+              />
+              <TextPreviewImg color={Theme.colors.green_dark}>
+                Aceitar
+              </TextPreviewImg>
             </ButtonPreviewImg>
 
             <ButtonPreviewImg onPress={handleRecusePhoto}>
-              <AntDesign name="close" size={30} color="#DC143C" />
-              <TextPreviewImg color="#DC143C">Recusar</TextPreviewImg>
+              <AntDesign
+                name="close"
+                size={RFValue(30)}
+                color={Theme.colors.red_crimson}
+              />
+              <TextPreviewImg color={Theme.colors.red_crimson}>
+                Recusar
+              </TextPreviewImg>
             </ButtonPreviewImg>
           </ContentButtons>
         </ContainerImagePreview>
@@ -86,15 +102,27 @@ export const Camera = ({ setVisibleCamera, setImg }: CameraProps) => {
 
           <ContentOptionsCamera>
             <ContentIconClose onPress={() => setVisibleCamera(false)}>
-              <AntDesign name="close" size={40} color="#ffffff" />
+              <AntDesign
+                name="close"
+                size={RFValue(40)}
+                color={Theme.colors.background_color}
+              />
             </ContentIconClose>
 
             <ContentIconCapture onPress={handleCapturePhoto}>
-              <AntDesign name="camera" size={30} color="#ffffff" />
+              <AntDesign
+                name="camera"
+                size={RFValue(30)}
+                color={Theme.colors.background_color}
+              />
             </ContentIconCapture>
 
             <ContentIconChangePositionCamera onPress={handleChangeTypeCamera}>
-              <FontAwesome name="exchange" size={30} color="#ffffff" />
+              <FontAwesome
+                name="exchange"
+                size={RFValue(30)}
+                color={Theme.colors.background_color}
+              />
             </ContentIconChangePositionCamera>
           </ContentOptionsCamera>
         </>

@@ -1,11 +1,10 @@
-import { Container } from "./styles";
-
-import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import LottiView from "lottie-react-native";
+import { useEffect } from "react";
+
+import { Container } from "./styles";
 
 export const ApresentationApp = () => {
   const { navigate } = useNavigation() as any;

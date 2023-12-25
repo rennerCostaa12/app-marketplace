@@ -1,3 +1,8 @@
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState, useCallback } from "react";
+import { Alert, FlatList } from "react-native";
+
 import {
   Container,
   Card,
@@ -15,12 +20,6 @@ import {
   PriceFinal,
 } from "./styles";
 
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { useEffect, useState, useCallback } from "react";
-import { Alert, FlatList } from "react-native";
-
 import { useItemsSales } from "../../Contexts/ItemsSales";
 import { ItemsSalesProps } from "../../Contexts/ItemsSales";
 
@@ -29,6 +28,8 @@ import { QuantityProduct } from "../../Components/QuantityProduct";
 import { ModalMethodsPayments } from "../../Components/ModalMethodsPayments";
 
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
+
+import { Theme } from "../../Theme";
 
 interface CardProductSales {
   dataProduct: ItemsSalesProps;
@@ -107,18 +108,16 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
         <TitleProduct style={{ fontFamily: "Lato_700Bold" }}>
           {dataProduct.nameItem}
         </TitleProduct>
-        <CategoryProduct style={{ fontFamily: "Lato_400Regular" }}>
+        <CategoryProduct>
           {dataProduct.typeItem.toLocaleUpperCase()}
         </CategoryProduct>
         <ContentPriceAndQuantity>
           <QuantityProduct
             quantity={quantity}
             setQuantity={setQuantity}
-            colorButtons="#FF1493"
+            colorButtons={Theme.colors.primary}
           />
-          <PriceProduct style={{ fontFamily: "Lato_400Regular" }}>
-            {ConvertMoneyBrl(getPriceProduct())}
-          </PriceProduct>
+          <PriceProduct>{ConvertMoneyBrl(getPriceProduct())}</PriceProduct>
         </ContentPriceAndQuantity>
       </ContentDescriptions>
     </Card>
@@ -157,13 +156,25 @@ export const ProductSales = () => {
       ) : null}
       {itemsSales.length > 0 ? (
         <ContentButtonCheckout>
-          <Button color="#FF1493" onPress={() => setShowMethodsPayments(true)}>
-            <TextButton style={{ fontFamily: "Lato_700Bold" }} color="#FFFFFF">
+          <Button
+            color={Theme.colors.primary}
+            onPress={() => setShowMethodsPayments(true)}
+          >
+            <TextButton
+              style={{ fontFamily: "Lato_700Bold" }}
+              color={Theme.colors.text_white}
+            >
               Finalizar Compra
             </TextButton>
           </Button>
-          <Button color="#FFFFFF" onPress={() => navigate("home")}>
-            <TextButton style={{ fontFamily: "Lato_700Bold" }} color="#FF1493">
+          <Button
+            color={Theme.colors.background_color}
+            onPress={() => navigate("home")}
+          >
+            <TextButton
+              style={{ fontFamily: "Lato_700Bold" }}
+              color={Theme.colors.primary}
+            >
               Comprar mais produtos
             </TextButton>
           </Button>

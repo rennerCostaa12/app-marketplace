@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 interface BtnLoginProps {
   backgroundButton: string;
 }
@@ -14,7 +16,7 @@ export const Container = styled.View`
   padding: 0 ${RFValue(20)}px;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
 `;
 
 export const ContentImg = styled.View`
@@ -29,7 +31,8 @@ export const Image = styled.Image`
 
 export const TitlePage = styled.Text`
   text-align: center;
-  font-size: ${RFValue(32)}px;
+  font-size: ${Theme.fontSize.big}px;
+  font-family: Lato_700Bold;
 `;
 
 export const ContentInput = styled.View`
@@ -54,7 +57,8 @@ export const BtnLogin = styled.TouchableOpacity<BtnLoginProps>`
 `;
 
 export const TextBtnLogin = styled.Text<TextBtnLoginProps>`
-  font-size: ${RFValue(18)}px;
+  font-size: ${Theme.fontSize.medium}px;
+  font-family: Lato_400Regular;
   color: ${({ color }) => color};
   text-align: center;
 `;
@@ -65,7 +69,7 @@ export const ContentTextNotAccount = styled.View`
 `;
 
 export const TextNotAccount = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.small}px;
   text-align: center;
   margin: ${RFValue(20)}px 0;
 `;

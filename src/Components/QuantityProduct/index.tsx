@@ -1,7 +1,7 @@
-import { Container, Quantity, Button } from "./styles";
-
 import { Ionicons } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
+
+import { Container, Quantity, Button } from "./styles";
 
 interface QuantityProductProps {
   quantity: number;

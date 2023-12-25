@@ -1,21 +1,22 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
+import { useState } from "react";
 
 import {
   Container,
   ContentInput,
   ContainerInput,
   TextInput,
-  ContentItems,
   Items,
   TextItem,
   ContainerItems,
 } from "./styles";
 
 import { OptionsProps } from "./types";
-import { RFValue } from "react-native-responsive-fontsize";
-import { useState } from "react";
+
+import { Theme } from "../../Theme";
 
 interface SelectDropdownProps {
   options: OptionsProps[];
@@ -45,7 +46,7 @@ export const SelectDropdown = ({
           <MaterialIcons
             name={showList ? "arrow-drop-up" : "arrow-drop-down"}
             size={RFValue(20)}
-            color="black"
+            color={Theme.colors.text_black}
           />
         </ContentInput>
         {showList && (

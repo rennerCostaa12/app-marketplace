@@ -1,7 +1,7 @@
-import { Container, ContentCategories, ContentItems, Content } from "./styles";
-
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
+
+import { Container, ContentCategories, ContentItems, Content } from "./styles";
 
 import { HeaderSearch } from "../../Components/HeaderSearch";
 import { CardCategory } from "../../Components/CardCategory";
@@ -13,6 +13,8 @@ import { Api } from "../../Configs/Api";
 
 import { TypeNotification } from "../../Components/ToastNotification/types";
 import { ProductsProps } from "../../Types/products";
+
+import { Theme } from "../../Theme";
 
 const categories = [
   {
@@ -63,7 +65,6 @@ export const Home = () => {
       setProducts([...products, ...response.data.items]);
       setPage(page + 1);
     } catch (error) {
-      console.log(error);
       setVisibleNotification(true);
       setTypeNotification("warning");
       setTitleNotification("Erro ao buscar dados");
@@ -125,7 +126,7 @@ export const Home = () => {
             onEndReachedThreshold={0.1}
             ListFooterComponent={
               <ActivityIndicator
-                color="#FF1493"
+                color={Theme.colors.primary}
                 size="large"
                 visible={loading}
               />

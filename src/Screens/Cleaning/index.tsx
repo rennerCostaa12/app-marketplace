@@ -1,8 +1,8 @@
-import { Container, ContentClean } from "./styles";
-
-import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { useEffect, useState } from "react";
+
+import { Container, ContentClean } from "./styles";
 
 import { CardItem } from "../../Components/CardItem";
 import { CartEmpty } from "../../Components/CartEmpty";

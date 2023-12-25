@@ -1,10 +1,12 @@
-import styled from 'styled-components/native';
+import { RFValue } from "react-native-responsive-fontsize";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
-    align-items: center;
+  align-items: center;
 `;
 
 export const Text = styled.Text`
-    font-size: 20px;
-    text-align: center;
+  font-size: ${RFValue(20)}px;
+  text-align: center;
+  font-family: Lato_400Regular;
 `;

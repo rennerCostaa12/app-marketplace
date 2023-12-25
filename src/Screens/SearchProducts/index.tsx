@@ -1,3 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
+import { AntDesign, Entypo } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useEffect, useState } from "react";
+import { FlatList, View, Keyboard } from "react-native";
+
 import {
   Container,
   ContentHeader,
@@ -12,14 +19,6 @@ import {
   ContentInputSearch,
 } from "./styles";
 
-import { useEffect, useState } from "react";
-import { FlatList, View, Keyboard } from "react-native";
-
-import { useNavigation } from "@react-navigation/native";
-import { AntDesign, Entypo } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RFValue } from "react-native-responsive-fontsize";
-
 import { InputSearch } from "../../Components/InputSearch";
 import { CardItem } from "../../Components/CardItem";
 import { ActivityIndicator } from "../../Components/ActivityIndicator";
@@ -31,6 +30,8 @@ import { ProductsProps } from "../../Types/products";
 
 import { Api } from "../../Configs/Api";
 import { TypeNotification } from "../../Components/ToastNotification/types";
+
+import { Theme } from "../../Theme";
 
 let configPagination;
 
@@ -161,10 +162,18 @@ export const SearchProducts = () => {
         }}
       >
         <ContentTextResearche>
-          <Entypo name="back-in-time" size={RFValue(24)} color="black" />
+          <Entypo
+            name="back-in-time"
+            size={RFValue(24)}
+            color={Theme.colors.text_black}
+          />
           <TextResearche>{nameResearche}</TextResearche>
         </ContentTextResearche>
-        <AntDesign name="arrowright" size={RFValue(24)} color="black" />
+        <AntDesign
+          name="arrowright"
+          size={RFValue(24)}
+          color={Theme.colors.text_black}
+        />
       </ContentResearches>
     );
   };
@@ -204,8 +213,8 @@ export const SearchProducts = () => {
       <ContentHeader>
         <AntDesign
           name="arrowleft"
-          size={24}
-          color="#000000"
+          size={RFValue(24)}
+          color={Theme.colors.text_black}
           onPress={() => goBack()}
         />
 
@@ -219,19 +228,29 @@ export const SearchProducts = () => {
           />
           {nameProduct.length > 0 && (
             <ContentIconClearText onPress={() => setNameProduct("")}>
-              <AntDesign name="close" size={RFValue(16)} color="black" />
+              <AntDesign
+                name="close"
+                size={RFValue(16)}
+                color={Theme.colors.text_black}
+              />
             </ContentIconClearText>
           )}
         </ContentInputSearch>
 
         {/* 
         <ContentIcon onPress={handleOpenSpokenSearch}>
-          <FontAwesome5 name="microphone" size={RFValue(24)} color="#000000" />
+          <FontAwesome5 name="microphone" size={RFValue(24)} color={Theme.colors.text_black} />
         </ContentIcon> */}
 
         <ContentIcon onPress={() => navigate("sales")}>
           <IconsBadge
-            icon={<AntDesign name="shoppingcart" size={30} color="black" />}
+            icon={
+              <AntDesign
+                name="shoppingcart"
+                size={RFValue(30)}
+                color={Theme.colors.text_black}
+              />
+            }
             quantity={itemsSales.length}
           />
         </ContentIcon>
@@ -251,7 +270,7 @@ export const SearchProducts = () => {
               data={products}
               renderItem={({ item }) => {
                 return (
-                  <View style={{ margin: 10 }}>
+                  <View style={{ margin: RFValue(10) }}>
                     <CardItem
                       key={item.id}
                       id={item.id}
@@ -270,7 +289,7 @@ export const SearchProducts = () => {
               onEndReachedThreshold={0.1}
               ListFooterComponent={
                 <ActivityIndicator
-                  color="#FF1493"
+                  color={Theme.colors.primary}
                   size="large"
                   visible={loading}
                 />
@@ -281,7 +300,7 @@ export const SearchProducts = () => {
                     style={{
                       width: "100%",
                       borderWidth: 2,
-                      borderColor: "#000000",
+                      borderColor: Theme.colors.text_black,
                     }}
                   ></View>
                 );

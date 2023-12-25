@@ -1,6 +1,8 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
+import { Theme } from "../../Theme";
+
 export const Container = styled.View`
   width: 100%;
   position: relative;
@@ -17,7 +19,7 @@ export const ContentInput = styled.TouchableOpacity`
   padding: ${RFValue(5)}px;
   border-width: ${RFValue(1)}px;
   border-radius: 5px;
-  font-size: ${RFValue(11)}px;
+  font-size: ${Theme.fontSize.medium}px;
 `;
 
 export const TextInput = styled.Text``;
@@ -30,16 +32,16 @@ export const ContentItems = styled.ScrollView`
 
 export const ContainerItems = styled.View`
   max-height: 100px;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
 `;
 
 export const Items = styled.TouchableOpacity`
   margin: ${RFValue(2)}px 0;
   padding: ${RFValue(5)}px 0;
   border-bottom-width: ${RFValue(1)}px;
-  border-color: gray;
+  border-color: ${Theme.colors.gray_normal};
 `;
 
 export const TextItem = styled.Text`
-  font-size: ${RFValue(12)}px;
+  font-size: ${Theme.fontSize.tiny}px;
 `;

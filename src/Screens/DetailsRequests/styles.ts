@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 export const Container = styled.View`
   flex: 1;
   padding: 0 ${RFValue(10)}px;
@@ -14,19 +16,19 @@ export const ContentCode = styled.View`
 `;
 
 export const TextCodeRequest = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
   font-family: Lato_700Bold;
   text-align: center;
 `;
 
 export const TextAcknowledgment = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
   font-family: Lato_400Regular;
   text-align: center;
 `;
 
 export const TitleInformations = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
   font-family: Lato_700Bold;
   text-align: center;
   margin: ${RFValue(10)}px 0;
@@ -48,17 +50,17 @@ export const ContentInformation = styled.View`
 `;
 
 export const LabelTextInformation = styled.Text`
-  font-size: ${RFValue(12)}px;
+  font-size: ${Theme.fontSize.tiny}px;
   font-family: Lato_700Bold;
 `;
 
 export const TextInformation = styled.Text`
-  font-size: ${RFValue(12)}px;
+  font-size: ${Theme.fontSize.tiny}px;
   font-family: Lato_400Regular;
 `;
 
 export const ContentStatus = styled.View`
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
   margin: ${RFValue(5)}px 0;
   padding: ${RFValue(10)}px;
   border-radius: ${RFValue(50)}px;
@@ -69,7 +71,7 @@ export const ContentStatus = styled.View`
 `;
 
 export const TitleStatus = styled.Text`
-  font-size: ${RFValue(12)}px;
+  font-size: ${Theme.fontSize.tiny}px;
   font-family: Lato_400Regular;
 `;
 
@@ -78,7 +80,7 @@ export const SituationStatus = styled.View``;
 export const ContentBtnSendAvaliation = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
   align-self: center;
   padding: ${RFValue(10)}px;
   gap: ${RFValue(10)}px;
@@ -88,6 +90,6 @@ export const ContentBtnSendAvaliation = styled.TouchableOpacity`
 `;
 
 export const TextAvaliation = styled.Text`
-  font-size: ${RFValue(12)}px;
+  font-size: ${Theme.fontSize.tiny}px;
   font-family: Lato_700Bold;
 `;

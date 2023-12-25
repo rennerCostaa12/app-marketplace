@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -10,7 +12,7 @@ export const Container = styled.View`
 export const Content = styled.View`
   width: ${RFValue(320)}px;
   margin: 0 ${RFValue(10)}px;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
   padding: ${RFValue(20)}px;
   border-radius: ${RFValue(5)}px;
   elevation: ${RFValue(40)};
@@ -21,7 +23,8 @@ export const Section = styled.View`
 `;
 
 export const TitleSection = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
+  font-family: Lato_700Bold;
   margin: ${RFValue(10)}px 0;
 `;
 
@@ -36,13 +39,13 @@ export const InputText = styled.TextInput`
   width: 83%;
   border-width: ${RFValue(1)}px;
   border-radius: ${RFValue(4)}px;
-  border-color: gray;
-  font-size: ${RFValue(14)}px;
+  border-color: ${Theme.colors.gray_normal};
+  font-size: ${Theme.fontSize.tiny}px;
   padding: ${RFValue(10)}px ${RFValue(10)}px;
 `;
 
 export const ButtonCopyKeyPix = styled.TouchableOpacity`
-  background-color: #ff1493;
+  background-color: ${Theme.colors.primary};
   padding: ${RFValue(12)}px;
   border-radius: ${RFValue(5)}px;
 `;
@@ -64,12 +67,14 @@ export const ContentDatas = styled.View`
 `;
 
 export const LabelText = styled.Text`
-  font-size: ${RFValue(12)}px;
+  font-size: ${Theme.fontSize.tiny}px;
+  font-family: Lato_700Bold;
   margin-right: ${RFValue(5)}px;
 `;
 
 export const ValueText = styled.Text`
-  font-size: ${RFValue(12)}px;
+  font-size: ${Theme.fontSize.tiny}px;
+  font-family: Lato_400Regular;
 `;
 
 export const ContentTotalPrices = styled.View`
@@ -78,14 +83,14 @@ export const ContentTotalPrices = styled.View`
 `;
 
 export const LabelTotalPrices = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
 `;
 
 export const TextPrice = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
 `;
 
 export const Symbols = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
   margin: 0 ${RFValue(5)}px;
 `;

@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 interface ButtonProps {
   color?: string;
 }
@@ -22,7 +24,7 @@ export const Card = styled.View`
   align-items: center;
   gap: ${RFValue(30)}px;
   padding: ${RFValue(20)}px ${RFValue(10)}px;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
   margin-bottom: ${RFValue(15)}px;
   elevation: 5;
 `;
@@ -37,16 +39,19 @@ export const ImageProduct = styled.Image`
 export const ContentDescriptions = styled.View``;
 
 export const TitleProduct = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
+  font-family: Lato_400Regular;
 `;
 export const CategoryProduct = styled.Text`
-  font-size: ${RFValue(10)}px;
-  color: gray;
+  font-size: ${Theme.fontSize.tiny}px;
+  font-family: Lato_400Regular;
+  color: ${Theme.colors.gray_normal};
   margin: ${RFValue(10)}px 0;
 `;
 
 export const PriceProduct = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
+  font-family: Lato_400Regular;
 `;
 
 export const ContentPriceAndQuantity = styled.View`
@@ -75,12 +80,12 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
 
 export const TextButton = styled.Text<TextButtonProps>`
   color: ${({ color }) => color};
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
   text-align: center;
 `;
 
 export const ButtonRemove = styled.TouchableOpacity`
-  border: ${RFValue(1)}px solid #ff1493;
+  border: ${RFValue(1)}px solid ${Theme.colors.primary};
   border-radius: ${RFValue(5)}px;
   padding: ${RFValue(5)}px ${RFValue(10)}px;
   align-self: flex-start;
@@ -88,13 +93,13 @@ export const ButtonRemove = styled.TouchableOpacity`
 `;
 
 export const PriceFinal = styled.Text`
-  font-size: ${RFValue(25)}px;
+  font-size: ${Theme.fontSize.big}px;
   text-align: center;
   margin: ${RFValue(30)}px 0;
-  color: #ff1493;
+  color: ${Theme.colors.primary};
 `;
 
 export const TextButtonRemove = styled.Text`
-  font-size: ${RFValue(16)}px;
-  color: #ff1493;
+  font-size: ${Theme.fontSize.medium}px;
+  color: ${Theme.colors.primary};
 `;

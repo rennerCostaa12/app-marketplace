@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { FlatList, Platform, ToastAndroid } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-root-toast";
+import { useState, useEffect } from "react";
+import { FlatList, Platform, ToastAndroid } from "react-native";
 
 import {
   Container,
@@ -28,35 +28,15 @@ import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 import { Loading } from "../../Components/Loading";
 import { Button } from "../../Components/Button";
 
-import { DetailsRequestProps } from "./types";
+import { DetailsRequestProps, StatusProps } from "./types";
 
-const status = [
-  {
-    id: 4,
-    name: "AGUARDANDO VISUALIZAÇÃO",
-    checked: false,
-  },
-  {
-    id: 3,
-    name: "PREPARANDO PEDIDO",
-    checked: false,
-  },
-  {
-    id: 2,
-    name: "A CAMINHO",
-    checked: false,
-  },
-  {
-    id: 1,
-    name: "FINALIZADO",
-    checked: false,
-  },
-];
+import { Theme } from "../../Theme";
 
 export const DetailsRequests = ({ route }) => {
   const [datasRequest, setDatasRequest] = useState<DetailsRequestProps | null>(
     null
   );
+  const [statusRequests, setStatusRequests] = useState<StatusProps[]>([]);
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -97,20 +77,47 @@ export const DetailsRequests = ({ route }) => {
     }
   };
 
+  const statusList: StatusProps[] = [
+    {
+      id: 4,
+      name: "AGUARDANDO VISUALIZAÇÃO",
+      checked: false,
+    },
+    {
+      id: 3,
+      name: "PREPARANDO PEDIDO",
+      checked: false,
+    },
+    {
+      id: 2,
+      name: "A CAMINHO",
+      checked: false,
+    },
+    {
+      id: 1,
+      name: "FINALIZADO",
+      checked: false,
+    },
+  ];
+
   useEffect(() => {
     getInformationRequest();
   }, []);
 
   useEffect(() => {
     if (datasRequest) {
-      for (let x = 0; x <= status.length - 1; x++) {
-        status[x].checked = true;
+      for (let x = 0; x <= statusList.length - 1; x++) {
+        statusList[x].checked = true;
 
-        if (status[x].name === datasRequest.status_name.toLocaleUpperCase()) {
-          status[x].checked = true;
+        if (
+          statusList[x].name === datasRequest.status_name.toLocaleUpperCase()
+        ) {
+          statusList[x].checked = true;
           break;
         }
       }
+
+      setStatusRequests(statusList);
     }
   }, [datasRequest]);
 
@@ -122,9 +129,9 @@ export const DetailsRequests = ({ route }) => {
         <TextCodeRequest>{datasRequest?.sales_id}</TextCodeRequest>
         <Button
           textButton="COPIAR CÓDIGO"
-          color="#FF1493"
-          textColor="#FFFFFF"
-          fontSize={14}
+          color={Theme.colors.primary}
+          textColor={Theme.colors.text_white}
+          fontSize={RFValue(14)}
           onPress={handleCopyCode}
         />
       </ContentCode>
@@ -134,7 +141,11 @@ export const DetailsRequests = ({ route }) => {
       </TextAcknowledgment> */}
 
       <ContentBtnSendAvaliation>
-        <AntDesign name="star" size={RFValue(20)} color="#E6A23C" />
+        <AntDesign
+          name="star"
+          size={RFValue(20)}
+          color={Theme.colors.yellow_vibrant}
+        />
         <TextAvaliation>AVALIAR SEU PEDIDO</TextAvaliation>
       </ContentBtnSendAvaliation>
 
@@ -167,7 +178,7 @@ export const DetailsRequests = ({ route }) => {
 
       <TitleInformations>Status do pedido</TitleInformations>
       <FlatList
-        data={status}
+        data={statusRequests}
         renderItem={({ item }) => {
           return (
             <ContentStatus>
@@ -176,13 +187,13 @@ export const DetailsRequests = ({ route }) => {
                   <AntDesign
                     name="checkcircle"
                     size={RFValue(20)}
-                    color="#00E200"
+                    color={Theme.colors.green_dark}
                   />
                 ) : (
                   <AntDesign
                     name="minuscircle"
                     size={RFValue(20)}
-                    color="#E6A23C"
+                    color={Theme.colors.yellow_vibrant}
                   />
                 )}
               </SituationStatus>

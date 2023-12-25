@@ -1,3 +1,7 @@
+import { useState, useCallback } from "react";
+import { FlatList } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+
 import {
   Container,
   CardRequests,
@@ -11,9 +15,9 @@ import {
   ContentImgAndDescriptionRequests,
 } from "./styles";
 
-import { useState, useCallback } from "react";
-import { FlatList } from "react-native";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { Collapse } from "../../Components/Collapse";
+import { ActivityIndicator } from "../../Components/ActivityIndicator";
+import { Button } from "../../Components/Button";
 
 import { Api } from "../../Configs/Api";
 
@@ -24,10 +28,7 @@ import { ProductsRequestsProps } from "./types";
 
 import { useAuthContext } from "../../Contexts/Auth";
 
-import { Collapse } from "../../Components/Collapse";
-import { Loading } from "../../Components/Loading";
-import { ActivityIndicator } from "../../Components/ActivityIndicator";
-import { Button } from "../../Components/Button";
+import { Theme } from "../../Theme";
 
 interface ProductRenderProps {
   data: ProductsRequestsProps;
@@ -65,8 +66,8 @@ const ProductRender = ({ data }: ProductRenderProps) => {
         })}
         <Button
           textButton="VER DETALHES"
-          textColor="#ffffff"
-          color="#FF1493"
+          color={Theme.colors.primary}
+          textColor={Theme.colors.text_white}
           onPress={() =>
             navigate("details_requests", {
               itemId: data.sales_id,
@@ -109,7 +110,11 @@ export const HistoryRequests = () => {
 
   return (
     <Container>
-      <ActivityIndicator size="large" visible={loading} color="#ff1493" />
+      <ActivityIndicator
+        size="large"
+        visible={loading}
+        color={Theme.colors.primary}
+      />
       {!loading && (
         <ContainerCards>
           <FlatList

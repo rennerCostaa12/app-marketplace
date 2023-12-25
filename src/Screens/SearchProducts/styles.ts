@@ -1,6 +1,8 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
+import { Theme } from "../../Theme";
+
 export const Container = styled.View``;
 
 export const ContentHeader = styled.View`
@@ -8,7 +10,7 @@ export const ContentHeader = styled.View`
   flex-direction: row;
   align-items: center;
   gap: ${RFValue(15)}px;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
 `;
 
 export const Body = styled.View`
@@ -37,7 +39,7 @@ export const ContentResearches = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   gap: ${RFValue(10)}px;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
   padding: ${RFValue(15)}px;
 `;
 
@@ -48,5 +50,5 @@ export const ContentTextResearche = styled.View`
 `;
 
 export const TextResearche = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
 `;

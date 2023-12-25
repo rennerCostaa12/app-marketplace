@@ -19,9 +19,7 @@ export const CartEmpty = ({ text }: CartEmptyProps) => {
         autoPlay
         loop
       />
-      {text ? (
-        <Text style={{ fontFamily: "Lato_400Regular" }}>{text}</Text>
-      ) : null}
+      {text ? <Text>{text}</Text> : null}
     </Container>
   );
 };

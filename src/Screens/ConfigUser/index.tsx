@@ -1,14 +1,14 @@
-import { Container, ContentButton, ContainerInputs, Content } from "./styles";
-
-import { useEffect, useState } from "react";
-import { KeyboardAvoidingView } from "react-native";
-
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { useEffect, useState } from "react";
+import { KeyboardAvoidingView } from "react-native";
+
+import { Container, ContentButton, ContainerInputs } from "./styles";
 
 import { ToastNotification } from "../../Components/ToastNotification";
 import { Input } from "../../Components/Input";
@@ -22,6 +22,8 @@ import { Masks } from "../../Utils/Mask";
 
 import { Api } from "../../Configs/Api";
 import { TypeNotification } from "../../Components/ToastNotification/types";
+
+import { Theme } from "../../Theme";
 
 const SchemaRegister = yup.object({
   username: yup.string().required("Campo nome de usuário é obrigatório"),
@@ -168,7 +170,7 @@ export const ConfigUser = () => {
         {/* <ContentButtonPhoto>
               <ButtonPhoto
                 enableIcon={true}
-                background="#FF1493"
+                background={Theme.colors.primary}
                 onPress={() => setShowModal(true)}
                 urlImg={imgUser}
               />
@@ -230,14 +232,14 @@ export const ConfigUser = () => {
 
         <ContentButton>
           <Button
-            color="#FF1493"
-            textColor="#ffffff"
+            color={Theme.colors.primary}
+            textColor={Theme.colors.text_white}
             textButton="Salvar"
             onPress={handleSubmit(handleSaveDatas)}
           />
           <Button
-            color="#ffffff"
-            textColor="#FF1493"
+            color={Theme.colors.background_color}
+            textColor={Theme.colors.primary}
             textButton="Sair"
             onPress={handleSignOut}
           />

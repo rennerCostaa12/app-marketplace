@@ -1,6 +1,8 @@
 import { styled } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 export const Container = styled.View``;
 
 export const ContentIcon = styled.View``;
@@ -8,7 +10,7 @@ export const ContentIcon = styled.View``;
 export const ContentBadge = styled.View`
   align-items: center;
   justify-content: center;
-  background-color: #ff1493;
+  background-color: ${Theme.colors.primary};
   position: absolute;
   right: ${RFValue(-10)}px;
   top: ${RFValue(-10)}px;
@@ -19,6 +21,6 @@ export const ContentBadge = styled.View`
 
 export const Badge = styled.Text`
   text-align: center;
-  color: #ffffff;
+  color: ${Theme.colors.text_white};
   font-size: ${RFValue(13)}px;
 `;

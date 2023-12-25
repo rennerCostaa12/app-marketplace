@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
-import { RFValue } from "react-native-responsive-fontsize";
+
+import { Theme } from "../../Theme";
 
 interface TextProps {
   color: string;
@@ -8,6 +9,7 @@ interface TextProps {
 export const ButtonLink = styled.TouchableOpacity``;
 
 export const Text = styled.Text<TextProps>`
-  font-size: ${RFValue(16)}px;
+  font-size: ${Theme.fontSize.medium}px;
+  font-family: Lato_700Bold;
   color: ${({ color }) => color};
 `;

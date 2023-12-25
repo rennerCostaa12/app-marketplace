@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 interface InputProps {
   colorBorderBottom?: string;
 }
@@ -22,20 +24,22 @@ export const ContentInput = styled.View`
 export const ContentIcon = styled.View``;
 
 export const LabelInput = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
+  font-family: Lato_400Regular;
 `;
 
 export const Input = styled.TextInput<InputProps>`
   border-bottom-width: ${RFValue(1.2)}px;
   border-bottom-color: ${({ colorBorderBottom }) =>
-    colorBorderBottom ? colorBorderBottom : "#000000"};
-  font-size: ${RFValue(12)}px;
+    colorBorderBottom ? colorBorderBottom : Theme.colors.text_black};
+  font-size: ${Theme.fontSize.tiny}px;
 `;
 
 export const MessageError = styled.Text`
   margin-top: ${RFValue(5)}px;
-  font-size: ${RFValue(12)}px;
-  color: #dc143c;
+  font-size: ${Theme.fontSize.tiny}px;
+  font-family: Lato_400Regular;
+  color: ${Theme.colors.red_crimson};
 `;
 
 export const ButtonPasswordIcon = styled.TouchableOpacity`

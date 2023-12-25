@@ -22,4 +22,5 @@ export const TextButton = styled.Text<TextButtonProps>`
     size ? `${RFValue(size)}px` : `${RFValue(18)}px`};
   color: ${({ color }) => color};
   text-align: center;
+  font-family: Lato_400Regular;
 `;

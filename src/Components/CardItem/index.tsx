@@ -20,6 +20,8 @@ import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 import { useItemsSales } from "../../Contexts/ItemsSales";
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 
+import { Theme } from "../../Theme";
+
 export const CardItem = ({
   urlImg,
   nameItem,
@@ -106,17 +108,17 @@ export const CardItem = ({
         <ImageItem source={{ uri: urlImg }} />
       </ContentImg>
       <ContentDescriptionsItem>
-        <CategoryItem style={{ fontFamily: "Lato_400Regular" }}>
-          {typeItem.toLocaleUpperCase()}
-        </CategoryItem>
-        <NameItem style={{ fontFamily: "Lato_700Bold" }}>{nameItem}</NameItem>
+        <CategoryItem>{typeItem.toLocaleUpperCase()}</CategoryItem>
+        <NameItem>{nameItem}</NameItem>
         <ContentPricesAndSale>
           <ButtonAddProduct onPress={handleAddItemSales}>
-            <FontAwesome name="cart-plus" size={RFValue(25)} color="#008000" />
+            <FontAwesome
+              name="cart-plus"
+              size={RFValue(25)}
+              color={Theme.colors.vivid_green}
+            />
           </ButtonAddProduct>
-          <PriceItem style={{ fontFamily: "Lato_700Bold" }}>
-            {ConvertMoneyBrl(priceItem)}
-          </PriceItem>
+          <PriceItem>{ConvertMoneyBrl(priceItem)}</PriceItem>
         </ContentPricesAndSale>
       </ContentDescriptionsItem>
       <ContentIconFavorite
@@ -127,7 +129,7 @@ export const CardItem = ({
         <AntDesign
           name={isFavorited ? "heart" : "hearto"}
           size={RFValue(23)}
-          color="#FF1493"
+          color={Theme.colors.primary}
         />
       </ContentIconFavorite>
     </Container>

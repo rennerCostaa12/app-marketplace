@@ -47,6 +47,8 @@ import { FormDeliveryProps } from "./types";
 import { ItemsProps } from "../Select/types";
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 
+import { Theme } from "../../Theme";
+
 export type TypesPayments = "pix" | "money" | "credit-card";
 
 interface ModalInformationPaymentsProps {
@@ -145,20 +147,18 @@ export const ModalInformationPayments = ({
 
           return (
             <>
-              <TitleSection
-                style={{
-                  fontFamily: "Lato_700Bold",
-                }}
-              >
-                Chave do pix
-              </TitleSection>
+              <TitleSection>Chave do pix</TitleSection>
               <ContentKeyPix>
                 <InputText
                   editable={false}
                   value={process.env.EXPO_PUBLIC_PIX_KEY}
                 />
                 <ButtonCopyKeyPix onPress={handleCopyKeyPix}>
-                  <Feather name="copy" size={RFValue(20)} color="#ffffff" />
+                  <Feather
+                    name="copy"
+                    size={RFValue(20)}
+                    color={Theme.colors.text_white}
+                  />
                 </ButtonCopyKeyPix>
               </ContentKeyPix>
             </>
@@ -167,13 +167,7 @@ export const ModalInformationPayments = ({
         case "money":
           return (
             <>
-              <TitleSection
-                style={{
-                  fontFamily: "Lato_700Bold",
-                }}
-              >
-                Troco pra quanto?
-              </TitleSection>
+              <TitleSection>Troco pra quanto?</TitleSection>
               <ContentMoney>
                 <InputText
                   style={{
@@ -282,52 +276,16 @@ export const ModalInformationPayments = ({
               <TitleSection>Local de entrega</TitleSection>
               <ContainerAddress>
                 <ContentDatas>
-                  <LabelText
-                    style={{
-                      fontFamily: "Lato_700Bold",
-                    }}
-                  >
-                    Endereço:{" "}
-                  </LabelText>
-                  <ValueText
-                    style={{
-                      fontFamily: "Lato_400Regular",
-                    }}
-                  >
-                    {dataUser?.address}
-                  </ValueText>
+                  <LabelText>Endereço: </LabelText>
+                  <ValueText>{dataUser?.address}</ValueText>
                 </ContentDatas>
                 <ContentDatas>
-                  <LabelText
-                    style={{
-                      fontFamily: "Lato_700Bold",
-                    }}
-                  >
-                    Número:{" "}
-                  </LabelText>
-                  <ValueText
-                    style={{
-                      fontFamily: "Lato_400Regular",
-                    }}
-                  >
-                    {dataUser?.number_address}
-                  </ValueText>
+                  <LabelText>Número: </LabelText>
+                  <ValueText>{dataUser?.number_address}</ValueText>
                 </ContentDatas>
                 <ContentDatas>
-                  <LabelText
-                    style={{
-                      fontFamily: "Lato_700Bold",
-                    }}
-                  >
-                    Complemento:{" "}
-                  </LabelText>
-                  <ValueText
-                    style={{
-                      fontFamily: "Lato_400Regular",
-                    }}
-                  >
-                    {dataUser?.complement_address}
-                  </ValueText>
+                  <LabelText>Complemento: </LabelText>
+                  <ValueText>{dataUser?.complement_address}</ValueText>
                 </ContentDatas>
               </ContainerAddress>
             </Section>
@@ -335,27 +293,15 @@ export const ModalInformationPayments = ({
 
           <ContentTotalPrices>
             <ContentDatas>
-              <TextPrice
-                style={{
-                  fontFamily: "Lato_400Regular",
-                }}
-              >
-                {ConvertMoneyBrl(totalPrices)}
-              </TextPrice>
+              <TextPrice>{ConvertMoneyBrl(totalPrices)}</TextPrice>
               {optionsDeliverySelected === 2 && (
                 <>
                   <Symbols>+</Symbols>
-                  <TextPrice
-                    style={{
-                      fontFamily: "Lato_400Regular",
-                    }}
-                  >
-                    {ConvertMoneyBrl(Number(4))}
-                  </TextPrice>
+                  <TextPrice>{ConvertMoneyBrl(Number(4))}</TextPrice>
                   <Symbols>=</Symbols>
                   <TextPrice
                     style={{
-                      color: "#008140",
+                      color: Theme.colors.vivid_green,
                     }}
                   >
                     {ConvertMoneyBrl(totalPrices + 4)}
@@ -365,23 +311,27 @@ export const ModalInformationPayments = ({
             </ContentDatas>
           </ContentTotalPrices>
 
-          <ActivityIndicator size="large" visible={loading} color="#ff1493" />
+          <ActivityIndicator
+            size="large"
+            visible={loading}
+            color={Theme.colors.primary}
+          />
 
           {!loading && (
             <ContentBtnCloseModal>
               <Button
                 onPress={handlePlaceOrder}
                 textButton="Efetuar pedido"
-                color="#ff1493"
-                textColor="#ffffff"
-                fontSize={13}
+                color={Theme.colors.primary}
+                textColor={Theme.colors.text_white}
+                fontSize={RFValue(13)}
               />
               <Button
                 onPress={() => setVisibleModal(false)}
                 textButton="Cancelar"
-                color="#ffffff"
-                textColor="#ff1493"
-                fontSize={13}
+                color={Theme.colors.text_white}
+                textColor={Theme.colors.primary}
+                fontSize={RFValue(13)}
               />
             </ContentBtnCloseModal>
           )}

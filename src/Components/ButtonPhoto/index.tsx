@@ -1,7 +1,10 @@
-import { Container, ContentButton, Image, ContentIconAdd } from "./styles";
-
 import { TouchableOpacityProps } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
+
+import { Container, ContentButton, Image, ContentIconAdd } from "./styles";
+
+import { Theme } from "../../Theme";
 
 interface ButtonPhotoProps extends TouchableOpacityProps {
   background: string;
@@ -27,7 +30,11 @@ export const ButtonPhoto = ({
         />
         {enableIcon && (
           <ContentIconAdd>
-            <Ionicons name="add-circle" size={30} color="#ffffff" />
+            <Ionicons
+              name="add-circle"
+              size={RFValue(30)}
+              color={Theme.colors.background_color}
+            />
           </ContentIconAdd>
         )}
       </ContentButton>

@@ -18,11 +18,7 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <ButtonStyles color={color} {...props}>
-      <TextButton
-        size={fontSize}
-        color={textColor}
-        style={{ fontFamily: "Lato_400Regular" }}
-      >
+      <TextButton size={fontSize} color={textColor}>
         {textButton}
       </TextButton>
     </ButtonStyles>

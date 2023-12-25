@@ -9,6 +9,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 import { useNavigation } from "@react-navigation/native";
 
+import { Theme } from "../../Theme";
+
 interface CardCategoryProps {
   nameCategory: string;
   value: string;
@@ -29,34 +31,48 @@ export const CardCategory = ({
           <MaterialIcons
             name="dry-cleaning"
             size={RFValue(20)}
-            color="#FFFFFFFF"
+            color={Theme.colors.text_white}
           />
         );
       case "drink":
-        return <Entypo name="drink" size={RFValue(20)} color="#FFFFFFFF" />;
+        return (
+          <Entypo
+            name="drink"
+            size={RFValue(20)}
+            color={Theme.colors.text_white}
+          />
+        );
       case "food":
         return (
           <MaterialCommunityIcons
             name="food-turkey"
             size={RFValue(20)}
-            color="#FFFFFFFF"
+            color={Theme.colors.text_white}
           />
         );
       case "toys":
         return (
-          <MaterialIcons name="toys" size={RFValue(20)} color="#FFFFFFFF" />
+          <MaterialIcons
+            name="toys"
+            size={RFValue(20)}
+            color={Theme.colors.text_white}
+          />
         );
       default:
-        return <Entypo name="drink" size={RFValue(20)} color="#FFFFFFFF" />;
+        return (
+          <Entypo
+            name="drink"
+            size={RFValue(20)}
+            color={Theme.colors.text_white}
+          />
+        );
     }
   };
 
   return (
     <Container onPress={() => navigate(value)}>
       <ContentIcon>{switchIcon()}</ContentIcon>
-      <TextCategory style={{ fontFamily: "Lato_400Regular" }}>
-        {nameCategory}
-      </TextCategory>
+      <TextCategory>{nameCategory}</TextCategory>
     </Container>
   );
 };

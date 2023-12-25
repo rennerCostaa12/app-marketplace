@@ -1,13 +1,12 @@
-import { Container, ContentButton, ContainerInputs } from "./styles";
-
 import { useNavigation } from "@react-navigation/native";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { RFValue } from "react-native-responsive-fontsize";
-
 import { useState } from "react";
 import { KeyboardAvoidingView } from "react-native";
+
+import { Container, ContentButton, ContainerInputs } from "./styles";
 
 import { ToastNotification } from "../../Components/ToastNotification";
 import { Button } from "../../Components/Button";
@@ -20,6 +19,8 @@ import { Api } from "../../Configs/Api";
 
 import { DatasRegisterUser } from "./types";
 import { TypeNotification } from "../../Components/ToastNotification/types";
+
+import { Theme } from "../../Theme";
 
 const SchemaRegister = yup.object({
   username: yup.string().required("Campo nome de usuário é obrigatório"),
@@ -172,7 +173,7 @@ export const Register = () => {
           >
             <ButtonPhoto
               urlImg={imgUser}
-              background="#FF1493"
+              background={Theme.colors.primary}
               enableIcon={true}
               onPress={() => setShowModal(true)}
             />
@@ -250,8 +251,8 @@ export const Register = () => {
         <ContentButton>
           <Button
             onPress={handleSubmit(handleRegisterUser)}
-            color="#FF1493"
-            textColor="#ffffff"
+            color={Theme.colors.primary}
+            textColor={Theme.colors.text_white}
             textButton="Cadastrar"
           />
         </ContentButton>

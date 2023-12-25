@@ -1,12 +1,14 @@
 import { styled } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 export const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: ${RFValue(20)}px ${RFValue(15)}px;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
   margin-top: ${RFValue(20)}px;
 `;
 
@@ -19,7 +21,7 @@ export const ContentIcons = styled.View`
 
 export const InputSearch = styled.TextInput`
   width: ${RFValue(240)}px;
-  border: ${RFValue(1)}px solid #8a8a8a;
+  border: ${RFValue(1)}px solid ${Theme.colors.gray_dark};
   border-radius: ${RFValue(5)}px;
   padding: ${RFValue(8)}px;
   padding-left: ${RFValue(35)}px;

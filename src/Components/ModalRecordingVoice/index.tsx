@@ -7,6 +7,8 @@ import { Audio } from "expo-av";
 import { Modal, TouchableWithoutFeedback } from "react-native";
 import { useState } from "react";
 
+import { Theme } from "../../Theme";
+
 interface ModalRecordingVoiceProps {
   visible: boolean;
   transparent: boolean;
@@ -78,7 +80,9 @@ export const ModalRecordingVoice = ({
           <MaterialCommunityIcons
             name="microphone"
             size={RFValue(30)}
-            color={isRecording ? "#ffffff" : "#000000"}
+            color={
+              isRecording ? Theme.colors.text_white : Theme.colors.text_black
+            }
           />
         </ContentIcon>
         {isRecording && <TextVoice>Falar agora</TextVoice>}

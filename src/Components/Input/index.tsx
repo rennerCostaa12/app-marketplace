@@ -1,3 +1,9 @@
+import { Ionicons } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
+
+import { TextInputProps } from "react-native";
+import { ReactNode, useState } from "react";
+
 import {
   Input as InputStyles,
   ContentInput,
@@ -8,11 +14,8 @@ import {
   Container,
   ContainerInput,
 } from "./styles";
-import { TextInputProps } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
-
-import { ReactNode, useState } from "react";
+import { Theme } from "../../Theme";
 
 interface InputProps extends TextInputProps {
   labelText?: string;
@@ -38,34 +41,26 @@ export const Input = ({
     <Container>
       {icon && <ContentIcon>{icon}</ContentIcon>}
       <ContainerInput>
-        {labelText && (
-          <LabelInput style={{ fontFamily: "Lato_400Regular" }}>
-            {labelText}
-          </LabelInput>
-        )}
+        {labelText && <LabelInput>{labelText}</LabelInput>}
         <ContentInput>
           <InputStyles
             secureTextEntry={type === "default" ? false : showPassword}
             colorBorderBottom={colorBorder}
             {...props}
-            onFocus={() => setColorBorder("#FF1493")}
+            onFocus={() => setColorBorder(Theme.colors.primary)}
             onBlur={() => setColorBorder(null)}
           />
           {type === "password" && (
             <ButtonPasswordIcon onPress={handleChangeShowPassword}>
               <Ionicons
                 name={!showPassword ? "eye" : "eye-off"}
-                size={24}
-                color={colorBorder ? colorBorder : "#000000"}
+                size={RFValue(24)}
+                color={colorBorder ? colorBorder : Theme.colors.text_black}
               />
             </ButtonPasswordIcon>
           )}
         </ContentInput>
-        {error && (
-          <MessageError style={{ fontFamily: "Lato_400Regular" }}>
-            {error}
-          </MessageError>
-        )}
+        {error && <MessageError>{error}</MessageError>}
       </ContainerInput>
     </Container>
   );

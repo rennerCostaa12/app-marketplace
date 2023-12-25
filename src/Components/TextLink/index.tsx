@@ -9,9 +9,7 @@ interface TextLinkProps extends TouchableOpacityProps {
 export const TextLink = ({ text, color, ...props }: TextLinkProps) => {
   return (
     <ButtonLink {...props}>
-      <Text color={color} style={{ fontFamily: "Lato_700Bold" }}>
-        {text}
-      </Text>
+      <Text color={color}>{text}</Text>
     </ButtonLink>
   );
 };

@@ -18,6 +18,8 @@ import {
 
 import { TypeNotification } from "./types";
 
+import { Theme } from "../../Theme";
+
 interface ToastNotificationProps {
   visible: boolean;
   setVisible: (data: boolean) => void;
@@ -40,15 +42,15 @@ export const ToastNotification = ({
   const switchTypeNotification = () => {
     switch (type) {
       case "success":
-        return "#007C00";
+        return Theme.colors.green_dark;
       case "error":
-        return "#DC143C";
+        return Theme.colors.red_crimson;
       case "info":
-        return "#1AA3E8";
+        return Theme.colors.blue_bright;
       case "warning":
-        return "#FFCC00";
+        return Theme.colors.yellow_vibrant;
       default:
-        return "#007C00";
+        return Theme.colors.green_dark;
     }
   };
 
@@ -102,13 +104,7 @@ export const ToastNotification = ({
         <Content>
           <BrandColor color={switchTypeNotification()} />
           <ContentDescriptionNotification>
-            <Title
-              style={{
-                fontFamily: "Lato_700Bold",
-              }}
-            >
-              {title}
-            </Title>
+            <Title>{title}</Title>
             {text && <Text>{text}</Text>}
           </ContentDescriptionNotification>
         </Content>

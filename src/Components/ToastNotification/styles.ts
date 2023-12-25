@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Theme } from "../../Theme";
+
 interface BrandColorProps {
   color?: string;
 }
@@ -14,13 +16,13 @@ export const Content = styled.View`
   flex-direction: row;
   border-width: 0.5px;
   width: ${RFValue(250)}px;
-  background-color: #ffffff;
+  background-color: ${Theme.colors.background_color};
   elevation: ${RFValue(10)};
 `;
 
 export const BrandColor = styled.View<BrandColorProps>`
   width: ${RFValue(5)}px;
-  background-color: ${({ color }) => (color ? color : "#007C00")};
+  background-color: ${({ color }) => (color ? color : Theme.colors.green_dark)};
 `;
 
 export const ContentDescriptionNotification = styled.View`
@@ -29,7 +31,8 @@ export const ContentDescriptionNotification = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
+  font-family: Lato_700Bold;
 `;
 
 export const Text = styled.Text``;
