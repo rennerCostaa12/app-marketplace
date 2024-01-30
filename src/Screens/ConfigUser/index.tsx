@@ -134,9 +134,20 @@ export const ConfigUser = () => {
     }
   };
 
-  const handleSignOut = () => {
-    signOut();
-    navigate("login");
+  const handleSignOut = async () => {
+    const deviceToken = await AsyncStorage.getItem(
+      "@marketplace:token_push_notification"
+    );
+
+    await signOut(JSON.parse(deviceToken), dataUser.phone).then((response) => {
+      if (response.status) {
+        navigate("login");
+      } else {
+        setVisibleNotification(true);
+        setTypeNotification("error");
+        setTitleNotification(response.message);
+      }
+    });
   };
 
   useEffect(() => {

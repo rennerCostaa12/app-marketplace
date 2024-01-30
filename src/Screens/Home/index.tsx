@@ -15,6 +15,7 @@ import { TypeNotification } from "../../Components/ToastNotification/types";
 import { ProductsProps } from "../../Types/products";
 
 import { Theme } from "../../Theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const categories = [
   {

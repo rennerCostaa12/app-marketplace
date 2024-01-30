@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "android-build-prod": "eas build --platform android --profile production --local"
   },
   "dependencies": {
     "@expo-google-fonts/lato": "^0.2.3",
@@ -36,7 +37,10 @@
     "react-native-root-toast": "^3.5.1",
     "styled-components": "^6.0.1",
     "typescript": "^4.9.4",
-    "yup": "^1.3.2"
+    "yup": "^1.3.2",
+    "expo-notifications": "~0.18.1",
+    "expo-device": "~5.2.1",
+    "expo-constants": "~14.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

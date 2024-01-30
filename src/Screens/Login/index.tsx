@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 
 import {
@@ -62,16 +63,22 @@ export const Login = () => {
 
   const handleLogin = async (data: UserLoginProps) => {
     try {
+      const deviceToken = await AsyncStorage.getItem(
+        "@marketplace:token_push_notification"
+      );
+
       setLoading(true);
-      await signIn(data.phone, data.password).then((response) => {
-        if (response.status) {
-          navigate("tab_routes");
-        } else {
-          setVisibleNotification(true);
-          setTypeNotification("error");
-          setTitleNotification(response.message);
+      await signIn(data.phone, data.password, JSON.parse(deviceToken)).then(
+        (response) => {
+          if (response.status) {
+            navigate("tab_routes");
+          } else {
+            setVisibleNotification(true);
+            setTypeNotification("error");
+            setTitleNotification(response.message);
+          }
         }
-      });
+      );
     } finally {
       setLoading(false);
     }

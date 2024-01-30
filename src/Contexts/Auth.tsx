@@ -19,14 +19,18 @@ export interface DatasUserProps {
   complement_address: string;
 }
 
-interface SignInReturnProps {
+interface ReturnAuthProps {
   status: boolean;
   message: any;
 }
 
 interface AuthContextProps {
-  signIn: (phone: string, password: string) => Promise<SignInReturnProps>;
-  signOut: () => void;
+  signIn: (
+    phone: string,
+    password: string,
+    deviceToken: string
+  ) => Promise<ReturnAuthProps>;
+  signOut: (tokenDevice: string, phone: string) => Promise<ReturnAuthProps>;
   dataUser: DatasUserProps;
   setDataUser: (data: DatasUserProps | null) => void;
 }
@@ -40,14 +44,30 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [dataUser, setDataUser] = useState<DatasUserProps | null>(null);
 
+  const updateHeaderCredential = async (token?: string | undefined) => {
+    const tokenStoraged = await AsyncStorage.getItem("@marketplace:tokenUser");
+
+    if (tokenStoraged) {
+      Api.defaults.headers.authorization = `Bearer ${JSON.parse(
+        tokenStoraged
+      )}`;
+    }
+
+    if (token) {
+      Api.defaults.headers.authorization = `Bearer ${token}`;
+    }
+  };
+
   const signIn = async (
     phone: string,
-    password: string
-  ): Promise<SignInReturnProps> => {
+    password: string,
+    deviceToken: string
+  ): Promise<ReturnAuthProps> => {
     try {
       const responseSignIn = await Api.post("auth/login-client", {
         phone,
         password,
+        listDevicesToken: [deviceToken],
       });
 
       if (responseSignIn.status) {
@@ -60,6 +80,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
           JSON.stringify(responseSignIn.data.user)
         );
         setDataUser(responseSignIn.data.user);
+
+        updateHeaderCredential(responseSignIn.data.access_token);
         return {
           status: true,
           message: "TUDO OK",
@@ -74,9 +96,31 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     }
   };
 
-  const signOut = async () => {
-    await AsyncStorage.removeItem("@marketplace:tokenUser");
-    await AsyncStorage.removeItem("@marketplace:user");
+  const signOut = async (
+    tokenDevice: string,
+    phone: string
+  ): Promise<ReturnAuthProps> => {
+    try {
+      const responseSignout = await Api.post("auth/signout-client", {
+        tokenDevice,
+        phone,
+      });
+
+      if (responseSignout.status) {
+        await AsyncStorage.removeItem("@marketplace:tokenUser");
+        await AsyncStorage.removeItem("@marketplace:user");
+
+        return {
+          status: true,
+          message: "TUDO OK",
+        };
+      }
+    } catch (error) {
+      return {
+        status: false,
+        message: error.response.data.message,
+      };
+    }
   };
 
   useEffect(() => {
@@ -89,6 +133,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     };
 
     getDatasUser();
+
+    updateHeaderCredential();
   }, []);
 
   return (
