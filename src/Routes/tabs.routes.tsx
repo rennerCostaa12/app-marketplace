@@ -3,9 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 
 import { Home } from "../Screens/Home";
-import { Doubt } from "../Screens/Doubt";
 import { ConfigUser } from "../Screens/ConfigUser";
 import { HistoryRequests } from "../Screens/HistoryRequests";
+
+import { Theme } from "../Theme";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -14,7 +15,7 @@ export const TabsRoutes = () => {
     <Navigator
       initialRouteName="home"
       screenOptions={{
-        tabBarActiveTintColor: "#FF1493",
+        tabBarActiveTintColor: Theme.colors.primary,
         headerShown: false,
       }}
     >
@@ -39,11 +40,11 @@ export const TabsRoutes = () => {
           headerShown: true,
           title: "Pedidos",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
             width: "100%",
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
           },
           headerTitleAlign: "center",
           tabBarLabel: "Pedidos",
@@ -56,7 +57,7 @@ export const TabsRoutes = () => {
           ),
         }}
       />
-      <Screen
+      {/* <Screen
         name="doubt"
         component={Doubt}
         options={{
@@ -69,7 +70,7 @@ export const TabsRoutes = () => {
             <Entypo name="help" size={size} color={color} />
           ),
         }}
-      />
+      /> */}
       <Screen
         name="configUser"
         component={ConfigUser}

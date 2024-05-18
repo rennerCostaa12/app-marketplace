@@ -16,19 +16,19 @@ export const HeaderCollapse = styled.TouchableOpacity`
   padding: ${RFValue(20)}px ${RFValue(10)}px;
   background-color: ${Theme.colors.background_color};
   elevation: 5;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   border-bottom-width: 1px;
+  gap: ${RFValue(5)}px;
 `;
 
 export const TextHeader = styled.Text`
-  font-size: ${RFValue(11)}px;
+  font-size: ${Theme.fontSize.small}px;
   font-family: Lato_700Bold;
 `;
 
 export const StatusTitle = styled.Text<StatusTitleProps>`
-  font-size: ${RFValue(11)}px;
+  font-size: ${Theme.fontSize.small}px;
   font-family: Lato_400Regular;
   background-color: ${({ backgroundStatus }) =>
     backgroundStatus ? backgroundStatus : Theme.colors.gray_normal};

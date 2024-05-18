@@ -4,10 +4,11 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Theme } from "../../Theme";
 
 export const Container = styled.View`
-  width: ${RFValue(155)}px;
+  width: ${RFValue(150)}px;
   background-color: ${Theme.colors.background_color};
   padding: ${RFValue(1)}px;
   elevation: 5;
+  border-radius: ${RFValue(15)}px;
 `;
 
 export const ContentDescriptionsItem = styled.View`
@@ -17,7 +18,8 @@ export const ContentDescriptionsItem = styled.View`
 export const ContentImg = styled.View`
   justify-content: center;
   align-items: center;
-  background-color: ${Theme.colors.white_ligth};
+  border-bottom-width: ${RFValue(1)}px;
+  border-bottom-color: ${Theme.colors.gray_light};
 `;
 
 export const ImageItem = styled.Image`
@@ -26,28 +28,25 @@ export const ImageItem = styled.Image`
 `;
 
 export const NameItem = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
   font-family: Lato_700Bold;
 `;
 
 export const ContentPricesAndSale = styled.View`
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column-reverse;
   justify-content: space-between;
   margin: ${RFValue(10)}px 0px;
 `;
 
-export const ButtonAddProduct = styled.TouchableOpacity``;
-
 export const PriceItem = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${Theme.fontSize.small}px;
   font-family: Lato_700Bold;
-  text-align: right;
+  text-align: center;
   color: ${Theme.colors.bluish_green};
   margin: ${RFValue(5)}px 0;
 `;
 export const CategoryItem = styled.Text`
-  font-size: ${RFValue(10)}px;
+  font-size: ${Theme.fontSize.tiny}px;
   font-family: Lato_400Regular;
   color: ${Theme.colors.gray_normal};
 `;

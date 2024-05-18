@@ -16,7 +16,7 @@ export const Container = styled.View`
 `;
 
 export const ContentCards = styled.SafeAreaView`
-  height: ${RFValue(410)}px;
+  height: ${RFValue(450)}px;
 `;
 
 export const Card = styled.View`
@@ -36,7 +36,9 @@ export const ImageProduct = styled.Image`
   height: ${RFValue(100)}px;
 `;
 
-export const ContentDescriptions = styled.View``;
+export const ContentDescriptions = styled.View`
+  width: 60%;
+`;
 
 export const TitleProduct = styled.Text`
   font-size: ${Theme.fontSize.medium}px;
@@ -51,14 +53,15 @@ export const CategoryProduct = styled.Text`
 
 export const PriceProduct = styled.Text`
   font-size: ${Theme.fontSize.medium}px;
-  font-family: Lato_400Regular;
+  font-family: Lato_700Bold;
+  color: ${Theme.colors.bluish_green};
 `;
 
 export const ContentPriceAndQuantity = styled.View`
   margin: ${RFValue(10)}px 0;
   flex-direction: row;
   align-items: center;
-  gap: ${RFValue(25)}px;
+  gap: ${RFValue(15)}px;
 `;
 
 export const ContentButtonCheckout = styled.View`
@@ -95,7 +98,7 @@ export const ButtonRemove = styled.TouchableOpacity`
 export const PriceFinal = styled.Text`
   font-size: ${Theme.fontSize.big}px;
   text-align: center;
-  margin: ${RFValue(30)}px 0;
+  margin: ${RFValue(20)}px 0;
   color: ${Theme.colors.primary};
 `;
 

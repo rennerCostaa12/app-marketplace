@@ -14,7 +14,7 @@ export const InputSearch = ({ ...props }: InputSearchProps) => {
       <ContentIcon>
         <AntDesign
           name="search1"
-          size={RFValue(20)}
+          size={RFValue(15)}
           color={Theme.colors.gray_dark}
         />
       </ContentIcon>

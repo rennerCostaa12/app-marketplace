@@ -111,33 +111,20 @@ export const Login = () => {
         render={({ field: { value } }) => (
           <Input
             type="default"
-            placeholder="Telefone"
+            placeholder="(00)00000-0000"
             keyboardType="numeric"
             value={value}
             maxLength={14}
-            icon={
-              <Entypo
-                name="phone"
-                size={RFValue(24)}
-                color={Theme.colors.text_black}
-              />
-            }
             onChangeText={(value) => setValue("phone", Masks.MaskPhone(value))}
             error={errors.phone?.message}
+            labelText="Telefone"
           />
         )}
       />
 
       <Input
         type="password"
-        placeholder="Senha"
-        icon={
-          <AntDesign
-            name="lock"
-            size={RFValue(24)}
-            color={Theme.colors.text_black}
-          />
-        }
+        labelText="Senha"
         onChangeText={(value) => setValue("password", value)}
         error={errors.password?.message}
       />

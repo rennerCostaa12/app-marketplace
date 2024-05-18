@@ -14,7 +14,6 @@ interface TextBtnLoginProps {
 export const Container = styled.View`
   flex: 1;
   padding: 0 ${RFValue(20)}px;
-  align-items: center;
   justify-content: center;
   background-color: ${Theme.colors.background_color};
 `;
@@ -48,8 +47,8 @@ export const ContentButton = styled.View`
 export const BtnLogin = styled.TouchableOpacity<BtnLoginProps>`
   background-color: ${({ backgroundButton }) => backgroundButton};
   padding: ${RFValue(15)}px ${RFValue(20)}px;
-  border-radius: ${RFValue(5)}px;
-  width: ${RFValue(320)}px;
+  border-radius: ${RFValue(30)}px;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -66,6 +65,7 @@ export const TextBtnLogin = styled.Text<TextBtnLoginProps>`
 export const ContentTextNotAccount = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 `;
 
 export const TextNotAccount = styled.Text`

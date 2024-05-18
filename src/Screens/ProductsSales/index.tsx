@@ -14,8 +14,6 @@ import {
   PriceProduct,
   CategoryProduct,
   ContentPriceAndQuantity,
-  Button,
-  TextButton,
   ContentButtonCheckout,
   PriceFinal,
 } from "./styles";
@@ -30,6 +28,7 @@ import { ModalMethodsPayments } from "../../Components/ModalMethodsPayments";
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 
 import { Theme } from "../../Theme";
+import { Button } from "../../Components/Button";
 
 interface CardProductSales {
   dataProduct: ItemsSalesProps;
@@ -158,26 +157,17 @@ export const ProductSales = () => {
         <ContentButtonCheckout>
           <Button
             color={Theme.colors.primary}
+            textColor={Theme.colors.text_white}
+            textButton="Finalizar Compra"
             onPress={() => setShowMethodsPayments(true)}
-          >
-            <TextButton
-              style={{ fontFamily: "Lato_700Bold" }}
-              color={Theme.colors.text_white}
-            >
-              Finalizar Compra
-            </TextButton>
-          </Button>
+          />
+
           <Button
-            color={Theme.colors.background_color}
+            color={Theme.colors.white_ligth}
+            textColor={Theme.colors.primary}
+            textButton="Comprar mais produtos"
             onPress={() => navigate("home")}
-          >
-            <TextButton
-              style={{ fontFamily: "Lato_700Bold" }}
-              color={Theme.colors.primary}
-            >
-              Comprar mais produtos
-            </TextButton>
-          </Button>
+          />
         </ContentButtonCheckout>
       ) : null}
     </Container>

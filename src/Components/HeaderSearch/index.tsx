@@ -40,7 +40,7 @@ export const HeaderSearch = () => {
         <ContentSearch>
           <AntDesign
             name="search1"
-            size={RFValue(20)}
+            size={RFValue(15)}
             color={Theme.colors.gray_dark}
           />
         </ContentSearch>
@@ -52,7 +52,7 @@ export const HeaderSearch = () => {
             icon={
               <AntDesign
                 name="shoppingcart"
-                size={RFValue(30)}
+                size={RFValue(20)}
                 color={Theme.colors.text_black}
               />
             }
@@ -65,7 +65,7 @@ export const HeaderSearch = () => {
             icon={
               <AntDesign
                 name="hearto"
-                size={RFValue(30)}
+                size={RFValue(20)}
                 color={Theme.colors.text_black}
               />
             }

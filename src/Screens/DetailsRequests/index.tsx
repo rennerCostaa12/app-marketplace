@@ -131,7 +131,7 @@ export const DetailsRequests = ({ route }) => {
           textButton="COPIAR CÓDIGO"
           color={Theme.colors.primary}
           textColor={Theme.colors.text_white}
-          fontSize={RFValue(14)}
+          fontSize={Theme.fontSize.tiny}
           onPress={handleCopyCode}
         />
       </ContentCode>

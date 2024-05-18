@@ -14,7 +14,7 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
   elevation: 3;
   background-color: ${({ color }) => color};
   padding: ${RFValue(10)}px ${RFValue(15)}px;
-  border-radius: 5px;
+  border-radius: ${RFValue(20)}px;
 `;
 
 export const TextButton = styled.Text<TextButtonProps>`

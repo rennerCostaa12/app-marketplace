@@ -13,6 +13,7 @@ import {
   ContentDescriptionRequests,
   QuantityRequests,
   ContentImgAndDescriptionRequests,
+  ContentButtonDetails,
 } from "./styles";
 
 import { Collapse } from "../../Components/Collapse";
@@ -64,16 +65,19 @@ const ProductRender = ({ data }: ProductRenderProps) => {
             </CardRequests>
           );
         })}
-        <Button
-          textButton="VER DETALHES"
-          color={Theme.colors.primary}
-          textColor={Theme.colors.text_white}
-          onPress={() =>
-            navigate("details_requests", {
-              itemId: data.sales_id,
-            })
-          }
-        />
+        <ContentButtonDetails>
+          <Button
+            textButton="VER DETALHES"
+            color={Theme.colors.primary}
+            textColor={Theme.colors.text_white}
+            fontSize={Theme.fontSize.tiny}
+            onPress={() =>
+              navigate("details_requests", {
+                itemId: data.sales_id,
+              })
+            }
+          />
+        </ContentButtonDetails>
       </Collapse>
     </ContentCards>
   );

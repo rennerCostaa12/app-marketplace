@@ -38,7 +38,7 @@ export const ContentKeyPix = styled.View`
 export const InputText = styled.TextInput`
   width: 83%;
   border-width: ${RFValue(1)}px;
-  border-radius: ${RFValue(4)}px;
+  border-radius: ${RFValue(20)}px;
   border-color: ${Theme.colors.gray_normal};
   font-size: ${Theme.fontSize.tiny}px;
   padding: ${RFValue(10)}px ${RFValue(10)}px;
@@ -47,7 +47,7 @@ export const InputText = styled.TextInput`
 export const ButtonCopyKeyPix = styled.TouchableOpacity`
   background-color: ${Theme.colors.primary};
   padding: ${RFValue(12)}px;
-  border-radius: ${RFValue(5)}px;
+  border-radius: ${RFValue(20)}px;
 `;
 
 export const ContentBtnCloseModal = styled.View`

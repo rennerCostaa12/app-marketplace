@@ -20,6 +20,7 @@ export const Content = styled.View`
 
 export const ContentItems = styled.SafeAreaView`
   width: 100%;
-  height: ${RFValue(600)}px;
   align-items: center;
+  height: 75%;
+  padding-bottom: ${RFValue(20)}px;
 `;

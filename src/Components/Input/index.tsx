@@ -54,7 +54,7 @@ export const Input = ({
             <ButtonPasswordIcon onPress={handleChangeShowPassword}>
               <Ionicons
                 name={!showPassword ? "eye" : "eye-off"}
-                size={RFValue(24)}
+                size={RFValue(20)}
                 color={colorBorder ? colorBorder : Theme.colors.text_black}
               />
             </ButtonPasswordIcon>

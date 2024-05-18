@@ -230,7 +230,7 @@ export const SearchProducts = () => {
             <ContentIconClearText onPress={() => setNameProduct("")}>
               <AntDesign
                 name="close"
-                size={RFValue(16)}
+                size={RFValue(15)}
                 color={Theme.colors.text_black}
               />
             </ContentIconClearText>
@@ -247,7 +247,7 @@ export const SearchProducts = () => {
             icon={
               <AntDesign
                 name="shoppingcart"
-                size={RFValue(30)}
+                size={RFValue(20)}
                 color={Theme.colors.text_black}
               />
             }
@@ -270,7 +270,7 @@ export const SearchProducts = () => {
               data={products}
               renderItem={({ item }) => {
                 return (
-                  <View style={{ margin: RFValue(10) }}>
+                  <View style={{ margin: RFValue(3) }}>
                     <CardItem
                       key={item.id}
                       id={item.id}

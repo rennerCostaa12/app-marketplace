@@ -46,7 +46,7 @@ export const Options = styled.TouchableOpacity<OptionsProps>`
   border-width: ${RFValue(1)}px;
   border-color: ${({ selected }) =>
     selected ? Theme.colors.primary : Theme.colors.text_black};
-  border-radius: ${RFValue(5)}px;
+  border-radius: ${RFValue(30)}px;
   padding: ${RFValue(10)}px;
   margin: ${RFValue(5)}px 0;
 `;
@@ -60,18 +60,4 @@ export const ContentButtonConfirm = styled.View`
   width: 100%;
   align-self: center;
   margin: ${RFValue(10)}px 0;
-`;
-
-export const ButtonConfirm = styled.TouchableOpacity<ButtonConfirmProps>`
-  width: 100%;
-  background: ${({ disabled }) =>
-    disabled ? Theme.colors.gray_light : Theme.colors.primary};
-  padding: ${RFValue(10)}px;
-  border-radius: ${RFValue(5)}px;
-`;
-
-export const TextButtonConfirm = styled.Text`
-  text-align: center;
-  font-size: ${Theme.fontSize.medium}px;
-  color: ${Theme.colors.text_white};
 `;

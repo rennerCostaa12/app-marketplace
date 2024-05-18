@@ -14,6 +14,8 @@ import { Api } from "../../Configs/Api";
 import { ProductsProps } from "../../Types/products";
 import { TypeNotification } from "../../Components/ToastNotification/types";
 
+import { categories_products } from "../../Constants/CategoriesProducts";
+
 export const Cleaning = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cleaning, setCleaning] = useState<ProductsProps[]>([]);
@@ -26,7 +28,7 @@ export const Cleaning = () => {
   const filterByCategory = async () => {
     setLoading(true);
     try {
-      const responseCleaning = await Api.get(`products/findByCategory/4`);
+      const responseCleaning = await Api.get(`products/findByCategory/${categories_products.cleaning}`);
       setCleaning(responseCleaning.data.items);
     } catch (error) {
       console.log(error);
@@ -57,7 +59,7 @@ export const Cleaning = () => {
           data={cleaning}
           renderItem={({ item }) => {
             return (
-              <View style={{ margin: RFValue(10) }}>
+              <View style={{ margin: RFValue(3) }}>
                 <CardItem
                   id={item.id}
                   nameItem={item.name}

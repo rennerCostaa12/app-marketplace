@@ -1,15 +1,12 @@
 import { styled } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const Container = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: space-between;
-  padding: ${RFValue(40)}px ${RFValue(20)}px ${RFValue(20)}px ${RFValue(20)}px;
-`;
+import { Theme } from "../../Theme";
 
-export const Content = styled.ScrollView`
+export const Container = styled.ScrollView`
   flex: 1;
+  padding: ${RFValue(20)}px ${RFValue(20)}px;
+  background-color: ${Theme.colors.background_color};
 `;
 
 export const ContainerInputs = styled.View`
@@ -23,5 +20,6 @@ export const ContentButtonPhoto = styled.View`
 export const ContentButton = styled.View`
   width: 100%;
   flex-direction: column;
-  gap: ${RFValue(20)}px;
+  gap: ${RFValue(10)}px;
+  margin: ${RFValue(10)}px 0;
 `;

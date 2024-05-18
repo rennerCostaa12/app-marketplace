@@ -6,10 +6,10 @@ import { Theme } from "../../Theme";
 export const Container = styled.View``;
 
 export const ContentHeader = styled.View`
-  padding: ${RFValue(40)}px ${RFValue(20)}px ${RFValue(20)}px ${RFValue(20)}px;
+  padding: ${RFValue(35)}px ${RFValue(12)}px ${RFValue(12)}px ${RFValue(12)}px;
   flex-direction: row;
   align-items: center;
-  gap: ${RFValue(15)}px;
+  justify-content: space-between;
   background-color: ${Theme.colors.background_color};
 `;
 

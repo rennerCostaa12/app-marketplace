@@ -36,6 +36,10 @@ const SchemaRegister = yup.object({
     .number()
     .required("Campo número de endereço é obrigatório"),
   complement_address: yup.string(),
+  email: yup
+    .string()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Este campo é do tipo email")
+    .required("Campo email é obrigatório"),
 });
 
 export const ConfigUser = () => {
@@ -105,6 +109,7 @@ export const ConfigUser = () => {
         address: data.address,
         number_address: data.number_address,
         complement_address: data.complement_address,
+        email: data.email,
       };
 
       const { id, ...rest } = objectNewDatas;
@@ -152,14 +157,14 @@ export const ConfigUser = () => {
 
   useEffect(() => {
     // setImgUser(dataUser.profile_img);
-    // setValue("email", dataUser.email);
+    setValue("email", dataUser.email);
     setValue("address", dataUser.address);
     setValue("phone", dataUser.phone);
     setValue("username", dataUser.username);
     setValue("complement_address", dataUser.complement_address);
     setValue("number_address", dataUser.number_address);
   }, []);
-
+  
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -213,6 +218,14 @@ export const ConfigUser = () => {
                 error={errors.phone?.message}
               />
             )}
+          />
+
+          <Input
+            type="default"
+            labelText="Email"
+            defaultValue={dataUser.email}
+            onChangeText={(value) => setValue("email", value)}
+            error={errors.email?.message}
           />
 
           <Input

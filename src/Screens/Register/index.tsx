@@ -36,7 +36,11 @@ const SchemaRegister = yup.object({
   number_address: yup
     .number()
     .required("Campo número de endereço é obrigatório"),
-  complement: yup.string(),
+  complement_address: yup.string(),
+  email: yup
+    .string()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Este campo é do tipo email")
+    .required("Campo email é obrigatório"),
 });
 
 export const Register = () => {
@@ -45,6 +49,7 @@ export const Register = () => {
     handleSubmit,
     setValue,
     control,
+    getValues
   } = useForm({
     resolver: yupResolver(SchemaRegister),
   });
@@ -102,6 +107,7 @@ export const Register = () => {
       complement_address,
       number_address,
       phone,
+      email,
     } = data;
 
     // if (!imgUser) {
@@ -127,6 +133,7 @@ export const Register = () => {
         address,
         number_address: number_address,
         complement_address: complement_address,
+        email: email,
       });
 
       if (responseRegisterUser.status) {
@@ -138,9 +145,10 @@ export const Register = () => {
         }, 2000);
       }
     } catch (error) {
+      console.log(error.response.data.message);
       setVisibleNotification(true);
-      setTitleNotification(error.response.data.message[0]);
-      setTypeNotification("success");
+      setTitleNotification(error.response.data.message);
+      setTypeNotification("error");
     } finally {
       setLoading(false);
     }
@@ -204,12 +212,12 @@ export const Register = () => {
             )}
           />
 
-          {/* <Input
+          <Input
             type="default"
             labelText="Email"
             onChangeText={(value) => setValue("email", value)}
             error={errors.email?.message}
-          /> */}
+          />
 
           <Input
             type="password"
@@ -243,7 +251,7 @@ export const Register = () => {
           <Input
             type="default"
             labelText="Complemento"
-            onChangeText={(value) => setValue("complement", value)}
+            onChangeText={(value) => setValue("complement_address", value)}
             error={errors.address?.message}
           />
         </ContainerInputs>

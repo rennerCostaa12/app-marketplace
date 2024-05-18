@@ -67,3 +67,7 @@ export const QuantityRequests = styled.Text`
 export const Line = styled.View`
   margin: ${RFValue(1)}px 0;
 `;
+
+export const ContentButtonDetails = styled.View`
+  padding: ${RFValue(15)}px;
+`;

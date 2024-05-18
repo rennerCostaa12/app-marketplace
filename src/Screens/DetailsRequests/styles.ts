@@ -16,7 +16,7 @@ export const ContentCode = styled.View`
 `;
 
 export const TextCodeRequest = styled.Text`
-  font-size: ${Theme.fontSize.medium}px;
+  font-size: ${Theme.fontSize.small}px;
   font-family: Lato_700Bold;
   text-align: center;
 `;

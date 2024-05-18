@@ -156,7 +156,7 @@ export const ModalInformationPayments = ({
                 <ButtonCopyKeyPix onPress={handleCopyKeyPix}>
                   <Feather
                     name="copy"
-                    size={RFValue(20)}
+                    size={RFValue(15)}
                     color={Theme.colors.text_white}
                   />
                 </ButtonCopyKeyPix>

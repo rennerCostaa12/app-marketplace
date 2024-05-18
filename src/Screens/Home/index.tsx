@@ -15,26 +15,26 @@ import { TypeNotification } from "../../Components/ToastNotification/types";
 import { ProductsProps } from "../../Types/products";
 
 import { Theme } from "../../Theme";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const categories = [
   {
-    icon: "drink",
+    icon: require("./../../assets/images/icon-drink.png"),
     nameCategory: "Bebidas",
     value: "drinks",
   },
   {
-    icon: "food",
+    icon: require("./../../assets/images/icon-food.png"),
     nameCategory: "Comidas",
     value: "foods",
   },
   {
-    icon: "cleaning",
+    icon: require("./../../assets/images/icon-clean.png"),
     nameCategory: "Limpeza",
     value: "cleaning",
   },
   {
-    icon: "toys",
+    icon: require("./../../assets/images/icon-toys.png"),
     nameCategory: "Brinquedos",
     value: "toys",
   },
@@ -108,7 +108,7 @@ export const Home = () => {
             data={products}
             renderItem={({ item }) => {
               return (
-                <View style={{ margin: 10 }}>
+                <View style={{ margin: RFValue(3) }}>
                   <CardItem
                     key={item.id}
                     id={item.id}

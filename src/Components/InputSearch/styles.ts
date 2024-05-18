@@ -9,14 +9,14 @@ export const Container = styled.View`
 
 export const ContentIcon = styled.View`
   position: absolute;
-  left: ${RFValue(5)}px;
-  margin: ${RFValue(10)}px ${RFValue(5)}px;
+  left: ${RFValue(10)}px;
+  margin: ${RFValue(11)}px ${RFValue(5)}px;
 `;
 
 export const Input = styled.TextInput`
   width: ${RFValue(220)}px;
   border: ${RFValue(1)}px solid ${Theme.colors.gray_dark};
-  border-radius: ${RFValue(5)}px;
-  padding: ${RFValue(5)}px;
+  border-radius: ${RFValue(20)}px;
+  padding: ${RFValue(8)}px;
   padding-left: ${RFValue(35)}px;
 `;

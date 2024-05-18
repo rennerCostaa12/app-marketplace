@@ -17,6 +17,7 @@ export interface DatasUserProps {
   address: string;
   number_address: number;
   complement_address: string;
+  email: string;
 }
 
 interface ReturnAuthProps {

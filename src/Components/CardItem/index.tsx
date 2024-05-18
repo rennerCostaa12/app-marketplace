@@ -8,10 +8,9 @@ import {
   ContentIconFavorite,
   CategoryItem,
   ContentPricesAndSale,
-  ButtonAddProduct,
 } from "./styles";
 
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -19,6 +18,8 @@ import { ItemProps } from "../../Types/products";
 import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
 import { useItemsSales } from "../../Contexts/ItemsSales";
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
+
+import { Button } from "../Button";
 
 import { Theme } from "../../Theme";
 
@@ -111,13 +112,14 @@ export const CardItem = ({
         <CategoryItem>{typeItem.toLocaleUpperCase()}</CategoryItem>
         <NameItem>{nameItem}</NameItem>
         <ContentPricesAndSale>
-          <ButtonAddProduct onPress={handleAddItemSales}>
-            <FontAwesome
-              name="cart-plus"
-              size={RFValue(25)}
-              color={Theme.colors.vivid_green}
-            />
-          </ButtonAddProduct>
+          <Button
+            textButton="Comprar"
+            textColor={Theme.colors.text_white}
+            color={Theme.colors.primary}
+            onPress={handleAddItemSales}
+            fontSize={Theme.fontSize.tiny - 5}
+          />
+
           <PriceItem>{ConvertMoneyBrl(priceItem)}</PriceItem>
         </ContentPricesAndSale>
       </ContentDescriptionsItem>

@@ -38,30 +38,28 @@ export default function App() {
   });
 
   const getTokenPushNotification = async () => {
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
 
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-
-      if (finalStatus !== "granted") {
-        Alert.alert("Falha ao pegar o token do push notification");
-        return;
-      }
-
-      const token = await Notifications.getExpoPushTokenAsync({
-        projectId: Constants.expoConfig.extra.eas.projectId,
-      });
-
-      await AsyncStorage.setItem(
-        "@marketplace:token_push_notification",
-        JSON.stringify(token.data)
-      );
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
     }
+
+    if (finalStatus !== "granted") {
+      Alert.alert("Falha ao pegar o token do push notification");
+      return;
+    }
+
+    const token = await Notifications.getExpoPushTokenAsync({
+      projectId: Constants.expoConfig.extra.eas.projectId,
+    });
+
+    await AsyncStorage.setItem(
+      "@marketplace:token_push_notification",
+      JSON.stringify(token.data)
+    );
   };
 
   useEffect(() => {

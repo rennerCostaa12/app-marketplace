@@ -14,6 +14,8 @@ import { Api } from "../../Configs/Api";
 import { ProductsProps } from "../../Types/products";
 import { TypeNotification } from "../../Components/ToastNotification/types";
 
+import { categories_products } from "../../Constants/CategoriesProducts";
+
 export const Foods = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [foods, setFoods] = useState<ProductsProps[]>([]);
@@ -26,7 +28,7 @@ export const Foods = () => {
   const filterByCategory = async () => {
     setLoading(true);
     try {
-      const responseFoods = await Api.get(`products/findByCategory/1`);
+      const responseFoods = await Api.get(`products/findByCategory/${categories_products.food}`);
       setFoods(responseFoods.data.items);
     } catch (error) {
       console.log(error);
@@ -57,7 +59,7 @@ export const Foods = () => {
           data={foods}
           renderItem={({ item }) => {
             return (
-              <View style={{ margin: RFValue(10) }}>
+              <View style={{ margin: RFValue(3) }}>
                 <CardItem
                   id={item?.id}
                   nameItem={item?.name}

@@ -14,9 +14,7 @@ import {
   ContentOptions,
   Options,
   TextOptions,
-  ButtonConfirm,
   ContentButtonConfirm,
-  TextButtonConfirm,
 } from "./styles";
 
 import { ModalInformationPayments } from "../ModalInformationPayments";
@@ -24,6 +22,8 @@ import { ModalInformationPayments } from "../ModalInformationPayments";
 import { Api } from "../../Configs/Api";
 
 import { MethodsPaymentsProps } from "./types";
+import { Button } from "../Button";
+import { Theme } from "../../Theme";
 
 interface ModalMethodsPaymentsProps {
   showModal: boolean;
@@ -161,12 +161,13 @@ export const ModalMethodsPayments = ({
           </ContentOptions>
         </View>
         <ContentButtonConfirm>
-          <ButtonConfirm
+          <Button
+            textButton="Escolher"
+            color={Theme.colors.primary}
+            textColor={Theme.colors.text_white}
             onPress={handleConfirmPayment}
             disabled={!formsPaymentsSelected}
-          >
-            <TextButtonConfirm>Escolher</TextButtonConfirm>
-          </ButtonConfirm>
+          />
         </ContentButtonConfirm>
       </ContentModal>
       <ModalInformationPayments

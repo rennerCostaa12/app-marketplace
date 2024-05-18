@@ -14,6 +14,8 @@ import { DetailsRequests } from "../Screens/DetailsRequests";
 
 import { TabsRoutes } from "./tabs.routes";
 
+import { Theme } from "../Theme";
+
 const { Navigator, Screen } = createStackNavigator();
 
 export const StackRoutes = () => {
@@ -32,13 +34,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Cadastro",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
       <Screen name="apresentation_app" component={ApresentationApp} />
@@ -50,13 +52,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Favoritos",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
 
@@ -67,13 +69,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Bebidas",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
 
@@ -84,13 +86,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Alimentos",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
 
@@ -101,13 +103,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Limpeza",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
 
@@ -118,13 +120,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Brinquedos",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
 
@@ -135,13 +137,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Sacola",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
 
@@ -160,13 +162,13 @@ export const StackRoutes = () => {
           headerShown: true,
           title: "Detalhes do pedido",
           headerStyle: {
-            backgroundColor: "#FF1493",
+            backgroundColor: Theme.colors.primary,
           },
           headerTitleStyle: {
-            color: "#FFFFFF",
+            color: Theme.colors.text_white,
             fontWeight: "bold",
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: Theme.colors.text_white,
         }}
       />
     </Navigator>

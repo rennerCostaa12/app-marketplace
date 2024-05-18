@@ -10,27 +10,31 @@ export const Container = styled.View`
   padding: ${RFValue(20)}px ${RFValue(15)}px;
   background-color: ${Theme.colors.background_color};
   margin-top: ${RFValue(20)}px;
+  gap: ${RFValue(10)}px;
 `;
 
-export const ContentInputSearch = styled.View``;
+export const ContentInputSearch = styled.View`
+  flex: 1;
+`;
 
 export const ContentIcons = styled.View`
+  flex: 0.2;
   flex-direction: row;
-  gap: ${RFValue(15)}px;
+  gap: ${RFValue(10)}px;
 `;
 
 export const InputSearch = styled.TextInput`
-  width: ${RFValue(240)}px;
+  width: 100%;
   border: ${RFValue(1)}px solid ${Theme.colors.gray_dark};
-  border-radius: ${RFValue(5)}px;
+  border-radius: ${RFValue(20)}px;
   padding: ${RFValue(8)}px;
   padding-left: ${RFValue(35)}px;
 `;
 
 export const ContentSearch = styled.View`
   position: absolute;
-  left: ${RFValue(5)}px;
-  margin: ${RFValue(13)}px ${RFValue(5)}px;
+  left: ${RFValue(10)}px;
+  margin: ${RFValue(11)}px ${RFValue(5)}px;
 `;
 
 export const ButtonIcon = styled.TouchableOpacity``;

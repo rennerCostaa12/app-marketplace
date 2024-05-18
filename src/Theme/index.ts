@@ -11,7 +11,7 @@ export const Theme = {
     white_ligth: "#F1EFF1",
     vivid_green: "#008000",
     bluish_green: "#649a8c",
-    gray_light: "#ccc",
+    gray_light: "#E5E4E2",
     gray_normal: "#808080",
     gray_dark: "#8a8a8a",
     green_dark: "#007C00",
@@ -20,7 +20,7 @@ export const Theme = {
     yellow_vibrant: "#FFCC00",
   },
   fontSize: {
-    tiny: RFValue(12),
+    tiny: RFValue(11),
     small: RFValue(14),
     medium: RFValue(18),
     big: RFValue(24),
