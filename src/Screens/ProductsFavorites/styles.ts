@@ -9,15 +9,20 @@ export const Container = styled.View`
 
 export const ContentProducts = styled.SafeAreaView``;
 
-export const ContentCard = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+export const ContainerCard = styled.View`
+  flex-direction: column;
   gap: ${RFValue(10)}px;
   padding: ${RFValue(20)}px ${RFValue(10)}px;
   background-color: ${Theme.colors.background_color};
   margin-bottom: ${RFValue(15)}px;
   elevation: 5;
+`;
+
+export const ContentCard = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: ${RFValue(10)}px;
 `;
 
 export const ContentImgProduct = styled.View``;

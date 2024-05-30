@@ -39,7 +39,6 @@ import { Masks } from "../../Utils/Mask";
 import { Api } from "../../Configs/Api";
 
 import { useAuthContext } from "../../Contexts/Auth";
-import { useItemsSales } from "../../Contexts/ItemsSales";
 
 import { TypeNotification } from "../ToastNotification/types";
 import { MethodsPaymentsProps } from "../ModalMethodsPayments/types";
@@ -48,6 +47,7 @@ import { ItemsProps } from "../Select/types";
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 
 import { Theme } from "../../Theme";
+import { useCacheItemsUser } from "../../Contexts/CacheItemsUser";
 
 export type TypesPayments = "pix" | "money" | "credit-card";
 
@@ -83,7 +83,9 @@ export const ModalInformationPayments = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const { dataUser } = useAuthContext();
-  const { itemsSales, setItemsSales } = useItemsSales();
+  const { cacheItemsUser, setCacheItemsUser } = useCacheItemsUser();
+
+  const cacheUser = cacheItemsUser.find((data) => data.user.id === dataUser.id);
 
   const switchMessagesFeedback = (typeDelivery: number) => {
     switch (typeDelivery) {
@@ -215,7 +217,7 @@ export const ModalInformationPayments = ({
         status: 4,
         delivery: optionsDeliverySelected,
         payments: typePayments.id,
-        list_products: JSON.stringify(itemsSales),
+        list_products: JSON.stringify(cacheUser.itemsSales),
         total: optionsDeliverySelected === 2 ? totalPrices + 4 : totalPrices,
         change_money: Masks.RemoveMaskMoney(value),
         installments: null,
@@ -226,8 +228,21 @@ export const ModalInformationPayments = ({
           switchMessagesFeedback(optionsDeliverySelected),
           [{ text: "Ok", onPress: () => handleRedirectHome() }]
         );
-        setItemsSales([]);
-        await AsyncStorage.removeItem("@marketplace:items_sales");
+        const cacheUserUpdated = {
+          ...cacheUser,
+          itemsSales: [],
+        };
+
+        const updatedCacheItemsUser = cacheItemsUser.map((data) =>
+          data.user.id === dataUser.id ? cacheUserUpdated : data
+        );
+
+        setCacheItemsUser(updatedCacheItemsUser);
+
+        await AsyncStorage.setItem(
+          "@marketplace:cache_items_user",
+          JSON.stringify(updatedCacheItemsUser)
+        );
         setShowModal(false);
       }
     } catch (error) {

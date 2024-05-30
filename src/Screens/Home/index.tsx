@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 
-import { Container, ContentCategories, ContentItems, Content } from "./styles";
+import {
+  Container,
+  ContentCategories,
+  ContentItems,
+  Content,
+  TextWelcome,
+  SubtitleProducts,
+} from "./styles";
 
 import { HeaderSearch } from "../../Components/HeaderSearch";
 import { CardCategory } from "../../Components/CardCategory";
@@ -40,7 +47,7 @@ const categories = [
   },
 ];
 
-let configPagination;
+let lastPage: number | null = null;
 
 export const Home = () => {
   const [visibleNotification, setVisibleNotification] =
@@ -53,24 +60,25 @@ export const Home = () => {
   const [page, setPage] = useState<number>(1);
 
   const getAllProducts = async () => {
-    if (
-      configPagination !== undefined &&
-      products.length >= configPagination.totalItems
-    ) {
-      return null;
+    if (lastPage !== null && page > lastPage) {
+      return;
     }
-    setLoading(true);
     try {
-      const response = await Api.get(`products?page=${page}&limit=6`);
-      configPagination = response.data.meta;
-      setProducts([...products, ...response.data.items]);
-      setPage(page + 1);
+      setLoading(true);
+      const response = await Api.get(`products?page=${page}`);
+
+      if (response.status) {
+        lastPage = response.data.meta.totalPages;
+        setProducts([...products, ...response.data.items]);
+        setPage(page + 1);
+      }
     } catch (error) {
       setVisibleNotification(true);
       setTypeNotification("warning");
       setTitleNotification("Erro ao buscar dados");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -87,6 +95,7 @@ export const Home = () => {
         autoHide
         duration={2000}
       />
+      <TextWelcome>O que você gostaria de pedir?</TextWelcome>
       <HeaderSearch />
       <ContentCategories>
         <FlatList
@@ -103,6 +112,7 @@ export const Home = () => {
         />
       </ContentCategories>
       <Content>
+        <SubtitleProducts>Nossos Produtos</SubtitleProducts>
         <ContentItems>
           <FlatList
             data={products}

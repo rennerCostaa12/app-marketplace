@@ -15,9 +15,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import { ItemProps } from "../../Types/products";
-import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
-import { useItemsSales } from "../../Contexts/ItemsSales";
+import { useAuthContext } from "../../Contexts/Auth";
+import { useCacheItemsUser } from "../../Contexts/CacheItemsUser";
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
+import { CachesUserProps } from "../../Types/products";
 
 import { Button } from "../Button";
 
@@ -30,26 +31,32 @@ export const CardItem = ({
   typeItem,
   id,
 }: ItemProps) => {
-  const { setItemsFavorites, itemsFavorites } = useItemsFavorites();
-  const { setItemsSales, itemsSales } = useItemsSales();
+  const { dataUser } = useAuthContext();
+  const { cacheItemsUser, setCacheItemsUser } = useCacheItemsUser();
+
+  const cacheUser = cacheItemsUser.find((data) => data.user.id === dataUser.id);
 
   const handleAddItemSales = async () => {
-    try {
-      const findItem = itemsSales.filter((data) => data.id === id);
-      if (findItem.length >= 1) {
-        const newObject = itemsSales.map((value) => {
-          if (value.id === id) {
-            value.quantity++;
+    const isExistsCacheUser = cacheItemsUser.find(
+      (data) => data.user.id === dataUser.id
+    );
+
+    if (isExistsCacheUser) {
+      const existingItem = isExistsCacheUser.itemsSales?.find(
+        (item) => item.id === id
+      );
+
+      let updatedItemsSales;
+
+      if (existingItem) {
+        updatedItemsSales = isExistsCacheUser.itemsSales.map((item) => {
+          if (item.id === id) {
+            return { ...item, quantity: item.quantity + 1 };
           }
-          return value;
+          return item;
         });
-        setItemsSales(newObject);
-        await AsyncStorage.setItem(
-          "@marketplace:items_sales",
-          JSON.stringify(newObject)
-        );
       } else {
-        const objectSales = {
+        const newItem = {
           id,
           nameItem,
           priceItem,
@@ -58,50 +65,134 @@ export const CardItem = ({
           quantity: 1,
         };
 
-        setItemsSales([...itemsSales, objectSales]);
-        await AsyncStorage.setItem(
-          "@marketplace:items_sales",
-          JSON.stringify([...itemsSales, objectSales])
-        );
+        updatedItemsSales = isExistsCacheUser.itemsSales
+          ? [...isExistsCacheUser.itemsSales, newItem]
+          : [newItem];
       }
-    } catch (error) {
-      console.error(error);
+
+      const updatedCacheUser = {
+        ...isExistsCacheUser,
+        itemsSales: updatedItemsSales,
+      };
+
+      const updatedCacheItemsUser = cacheItemsUser.map((data) =>
+        data.user.id === dataUser.id ? updatedCacheUser : data
+      );
+
+      setCacheItemsUser(updatedCacheItemsUser);
+
+      await AsyncStorage.setItem(
+        "@marketplace:cache_items_user",
+        JSON.stringify(updatedCacheItemsUser)
+      );
+    } else {
+      const newCacheUser: CachesUserProps = {
+        user: dataUser,
+        itemsFavorites: [],
+        itemsSales: [
+          {
+            id,
+            nameItem,
+            priceItem,
+            typeItem,
+            urlImg,
+            quantity: 1,
+          },
+        ],
+      };
+
+      const updatedCacheItemsUser = [...cacheItemsUser, newCacheUser];
+
+      setCacheItemsUser(updatedCacheItemsUser);
+
+      await AsyncStorage.setItem(
+        "@marketplace:cache_items_user",
+        JSON.stringify(updatedCacheItemsUser)
+      );
     }
   };
 
   const handleAddFavorited = async () => {
-    try {
-      const objectFavorited = {
-        id,
-        nameItem,
-        priceItem,
-        typeItem,
-        urlImg,
-      };
-      setItemsFavorites([...itemsFavorites, objectFavorited]);
-      await AsyncStorage.setItem(
-        "@marketplace:items_favorites",
-        JSON.stringify([...itemsFavorites, objectFavorited])
+    const objectFavorited = {
+      id,
+      nameItem,
+      priceItem,
+      typeItem,
+      urlImg,
+    };
+
+    if (cacheUser) {
+      let updatedItemsFavorites;
+
+      const itemExists = cacheUser.itemsFavorites?.some(
+        (item) => item.id === id
       );
-    } catch (error) {
-      console.error(error);
+
+      if (itemExists) {
+        updatedItemsFavorites = cacheUser.itemsFavorites.filter(
+          (item) => item.id !== id
+        );
+      } else {
+        updatedItemsFavorites = cacheUser.itemsFavorites
+          ? [...cacheUser.itemsFavorites, objectFavorited]
+          : [objectFavorited];
+      }
+
+      const updatedCacheUser = {
+        ...cacheUser,
+        itemsFavorites: updatedItemsFavorites,
+      };
+
+      const updatedCacheItemsUser = cacheItemsUser.map((data) =>
+        data.user.id === dataUser.id ? updatedCacheUser : data
+      );
+
+      setCacheItemsUser(updatedCacheItemsUser);
+
+      await AsyncStorage.setItem(
+        "@marketplace:cache_items_user",
+        JSON.stringify(updatedCacheItemsUser)
+      );
+    } else {
+      const newCacheUser: CachesUserProps = {
+        user: dataUser,
+        itemsFavorites: [objectFavorited],
+        itemsSales: [],
+      };
+
+      const updatedCacheItemsUser = [...cacheItemsUser, newCacheUser];
+
+      setCacheItemsUser(updatedCacheItemsUser);
+
+      await AsyncStorage.setItem(
+        "@marketplace:cache_items_user",
+        JSON.stringify(updatedCacheItemsUser)
+      );
     }
   };
 
   const handleRemoveFavorited = async (id: string | number) => {
-    try {
-      const newItem = itemsFavorites.filter((data) => data.id !== id);
-      setItemsFavorites(newItem);
-      await AsyncStorage.setItem(
-        "@marketplace:items_favorites",
-        JSON.stringify(newItem)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    const updateItemsFavorites = cacheUser.itemsFavorites.filter(
+      (data) => data.id !== id
+    );
+
+    const cacheUserUpdated = {
+      ...cacheUser,
+      itemsFavorites: updateItemsFavorites,
+    };
+
+    const updatedCacheItemsUser = cacheItemsUser.map((data) =>
+      data.user.id === dataUser.id ? cacheUserUpdated : data
+    );
+
+    setCacheItemsUser(updatedCacheItemsUser);
+    await AsyncStorage.setItem(
+      "@marketplace:cache_items_user",
+      JSON.stringify(updatedCacheItemsUser)
+    );
   };
 
-  const isFavorited = itemsFavorites.some((data) => data.id === id);
+  const isFavorited = cacheUser ? cacheUser.itemsFavorites.some((data) => data.id === id) : false;
 
   return (
     <Container>

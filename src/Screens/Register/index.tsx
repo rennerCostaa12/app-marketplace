@@ -49,7 +49,6 @@ export const Register = () => {
     handleSubmit,
     setValue,
     control,
-    getValues
   } = useForm({
     resolver: yupResolver(SchemaRegister),
   });
@@ -252,7 +251,7 @@ export const Register = () => {
             type="default"
             labelText="Complemento"
             onChangeText={(value) => setValue("complement_address", value)}
-            error={errors.address?.message}
+            error={errors.complement_address?.message}
           />
         </ContainerInputs>
 

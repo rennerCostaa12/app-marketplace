@@ -1,9 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Entypo, AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 
@@ -17,6 +15,7 @@ import {
   TitlePage,
   TextNotAccount,
   ContentTextNotAccount,
+  ContentForm,
 } from "./styles";
 
 import { Input } from "../../Components/Input";
@@ -40,7 +39,7 @@ const SchemaLogin = yup.object({
   password: yup.string().required("Campo senha é obrigatório"),
 });
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
   const {
     formState: { errors },
     handleSubmit,
@@ -57,9 +56,12 @@ export const Login = () => {
   const [typeNotification, setTypeNotification] =
     useState<TypeNotification>("success");
 
-  const { navigate } = useNavigation() as any;
-
   const { signIn } = useAuthContext();
+
+  const clearInputs = () => {
+    setValue("phone", "");
+    setValue("password", "");
+  };
 
   const handleLogin = async (data: UserLoginProps) => {
     try {
@@ -71,7 +73,13 @@ export const Login = () => {
       await signIn(data.phone, data.password, JSON.parse(deviceToken)).then(
         (response) => {
           if (response.status) {
-            navigate("tab_routes");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "tab_routes" }],
+              })
+            );
+            clearInputs();
           } else {
             setVisibleNotification(true);
             setTypeNotification("error");
@@ -95,63 +103,64 @@ export const Login = () => {
         duration={2000}
       />
       <Loading visible={loading} />
+
       <ContentImg>
-        <Image
-          source={{
-            uri: "https://static.vecteezy.com/system/resources/previews/001/822/225/non_2x/group-of-business-people-showing-teamwork-free-vector.jpg",
-          }}
-        />
+        <Image source={require("../../assets/images/logo-samia-1.png")} />
       </ContentImg>
 
-      <TitlePage>LOGIN</TitlePage>
+      <ContentForm>
+        <TitlePage>LOGIN</TitlePage>
 
-      <Controller
-        name="phone"
-        control={control}
-        render={({ field: { value } }) => (
-          <Input
-            type="default"
-            placeholder="(00)00000-0000"
-            keyboardType="numeric"
-            value={value}
-            maxLength={14}
-            onChangeText={(value) => setValue("phone", Masks.MaskPhone(value))}
-            error={errors.phone?.message}
-            labelText="Telefone"
-          />
-        )}
-      />
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field: { value } }) => (
+            <Input
+              type="default"
+              placeholder="(00)00000-0000"
+              keyboardType="numeric"
+              value={value}
+              maxLength={14}
+              onChangeText={(value) =>
+                setValue("phone", Masks.MaskPhone(value))
+              }
+              error={errors.phone?.message}
+              labelText="Telefone"
+            />
+          )}
+        />
 
-      <Input
-        type="password"
-        labelText="Senha"
-        onChangeText={(value) => setValue("password", value)}
-        error={errors.password?.message}
-      />
-      {/* 
+        <Input
+          type="password"
+          labelText="Senha"
+          onChangeText={(value) => setValue("password", value)}
+          error={errors.password?.message}
+        />
+        {/* 
       <TextLink
         style={{ alignSelf: "flex-end", marginTop: 10, marginBottom: 10 }}
         color={Theme.colors.primary}
         text="Esqueci minha senha"
       /> */}
 
-      <ContentButton>
-        <BtnLogin
-          backgroundButton={Theme.colors.primary}
-          onPress={handleSubmit(handleLogin)}
-        >
-          <TextBtnLogin color={Theme.colors.text_white}>Entrar</TextBtnLogin>
-        </BtnLogin>
-      </ContentButton>
+        <ContentButton>
+          <BtnLogin
+            backgroundButton={Theme.colors.primary}
+            onPress={handleSubmit(handleLogin)}
+          >
+            <TextBtnLogin color={Theme.colors.text_white}>Entrar</TextBtnLogin>
+          </BtnLogin>
+        </ContentButton>
 
-      <ContentTextNotAccount>
-        <TextNotAccount>Não possui conta? {""}</TextNotAccount>
-        <TextLink
-          color={Theme.colors.primary}
-          text="Registre-se"
-          onPress={() => navigate("register")}
-        />
-      </ContentTextNotAccount>
+        <ContentTextNotAccount>
+          <TextNotAccount>Não possui conta? {""}</TextNotAccount>
+          <TextLink
+            color={Theme.colors.primary}
+            text="Registre-se"
+            onPress={() => navigation.navigate("register")}
+          />
+        </ContentTextNotAccount>
+      </ContentForm>
     </Container>
   );
 };

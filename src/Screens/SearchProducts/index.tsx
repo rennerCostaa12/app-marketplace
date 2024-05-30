@@ -3,7 +3,7 @@ import { AntDesign, Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useEffect, useState } from "react";
-import { FlatList, View, Keyboard } from "react-native";
+import { FlatList, View, Keyboard, SafeAreaView } from "react-native";
 
 import {
   Container,
@@ -25,7 +25,8 @@ import { ActivityIndicator } from "../../Components/ActivityIndicator";
 import { IconsBadge } from "../../Components/IconsBadge";
 import { ToastNotification } from "../../Components/ToastNotification";
 
-import { useItemsSales } from "../../Contexts/ItemsSales";
+import { useCacheItemsUser } from "../../Contexts/CacheItemsUser";
+import { useAuthContext } from "../../Contexts/Auth";
 import { ProductsProps } from "../../Types/products";
 
 import { Api } from "../../Configs/Api";
@@ -37,7 +38,42 @@ let configPagination;
 
 interface ItemsRecentsResearchesProps {
   nameResearche: string;
+  handleSearch: (data: string) => void;
+  setShowListRecentResearches: (data: boolean) => void;
+  setNameProduct: (data: string) => void;
 }
+
+const ItemsRecentsResearches = ({
+  nameResearche,
+  handleSearch,
+  setShowListRecentResearches,
+  setNameProduct,
+}: ItemsRecentsResearchesProps) => {
+  return (
+    <ContentResearches
+      onPress={() => {
+        setNameProduct(nameResearche);
+        handleSearch(nameResearche);
+        setShowListRecentResearches(false);
+        Keyboard.dismiss();
+      }}
+    >
+      <ContentTextResearche>
+        <Entypo
+          name="back-in-time"
+          size={RFValue(24)}
+          color={Theme.colors.text_black}
+        />
+        <TextResearche>{nameResearche}</TextResearche>
+      </ContentTextResearche>
+      <AntDesign
+        name="arrowright"
+        size={RFValue(24)}
+        color={Theme.colors.text_black}
+      />
+    </ContentResearches>
+  );
+};
 
 export const SearchProducts = () => {
   const [nameProduct, setNameProduct] = useState<string>("");
@@ -60,7 +96,10 @@ export const SearchProducts = () => {
   const [typeNotification, setTypeNotification] =
     useState<TypeNotification>("success");
 
-  const { itemsSales } = useItemsSales();
+  const { cacheItemsUser } = useCacheItemsUser();
+  const { dataUser } = useAuthContext();
+
+  const cacheUser = cacheItemsUser.find((data) => data.user.id === dataUser.id);
 
   const { goBack, navigate } = useNavigation() as any;
 
@@ -94,6 +133,7 @@ export const SearchProducts = () => {
             JSON.stringify([...listRecentsResearches, nameProduct])
           );
         }
+        setPage(1);
       }
     } catch (error) {
       console.error(error);
@@ -115,7 +155,7 @@ export const SearchProducts = () => {
     try {
       setLoading(true);
       const responseSearchProducts = await Api.get(
-        `products/searchProducts/${nameProduct}?page=${page}`
+        `products/searchProducts/${nameProduct}?page=${page + 1}`
       );
 
       if (responseSearchProducts.status) {
@@ -150,34 +190,6 @@ export const SearchProducts = () => {
   //   }
   // };
 
-  const ItemsRecentsResearches = ({
-    nameResearche,
-  }: ItemsRecentsResearchesProps) => {
-    return (
-      <ContentResearches
-        onPress={() => {
-          handleSearch(nameResearche);
-          setShowListRecentResearches(false);
-          Keyboard.dismiss();
-        }}
-      >
-        <ContentTextResearche>
-          <Entypo
-            name="back-in-time"
-            size={RFValue(24)}
-            color={Theme.colors.text_black}
-          />
-          <TextResearche>{nameResearche}</TextResearche>
-        </ContentTextResearche>
-        <AntDesign
-          name="arrowright"
-          size={RFValue(24)}
-          color={Theme.colors.text_black}
-        />
-      </ContentResearches>
-    );
-  };
-
   useEffect(() => {
     const getRecentsResearchs = async () => {
       const responseRecentsResearchs = await AsyncStorage.getItem(
@@ -201,119 +213,116 @@ export const SearchProducts = () => {
   );
 
   return (
-    <Container>
-      <ToastNotification
-        type={typeNotification}
-        title={titleNotification}
-        visible={visibleNotification}
-        setVisible={setVisibleNotification}
-        autoHide
-        duration={2000}
-      />
-      <ContentHeader>
-        <AntDesign
-          name="arrowleft"
-          size={RFValue(24)}
-          color={Theme.colors.text_black}
-          onPress={() => goBack()}
+    <SafeAreaView>
+      <Container>
+        <ToastNotification
+          type={typeNotification}
+          title={titleNotification}
+          visible={visibleNotification}
+          setVisible={setVisibleNotification}
+          autoHide
+          duration={2000}
         />
-
-        <ContentInputSearch>
-          <InputSearch
-            autoFocus={true}
-            placeholder="Pesquisa"
-            value={nameProduct}
-            onChangeText={(text) => setNameProduct(text)}
-            onSubmitEditing={() => handleSearch(null, true)}
+        <ContentHeader>
+          <AntDesign
+            name="arrowleft"
+            size={RFValue(20)}
+            color={Theme.colors.text_black}
+            onPress={() => goBack()}
           />
-          {nameProduct.length > 0 && (
-            <ContentIconClearText onPress={() => setNameProduct("")}>
-              <AntDesign
-                name="close"
-                size={RFValue(15)}
-                color={Theme.colors.text_black}
-              />
-            </ContentIconClearText>
-          )}
-        </ContentInputSearch>
 
-        {/* 
+          <ContentInputSearch>
+            <InputSearch
+              autoFocus={true}
+              placeholder="Pesquisa"
+              value={nameProduct}
+              onChangeText={(text) => setNameProduct(text)}
+              onSubmitEditing={() => handleSearch(null, true)}
+            />
+            {nameProduct.length > 0 && (
+              <ContentIconClearText onPress={() => setNameProduct("")}>
+                <AntDesign
+                  name="close"
+                  size={RFValue(15)}
+                  color={Theme.colors.text_black}
+                />
+              </ContentIconClearText>
+            )}
+          </ContentInputSearch>
+
+          {/* 
         <ContentIcon onPress={handleOpenSpokenSearch}>
           <FontAwesome5 name="microphone" size={RFValue(24)} color={Theme.colors.text_black} />
         </ContentIcon> */}
 
-        <ContentIcon onPress={() => navigate("sales")}>
-          <IconsBadge
-            icon={
-              <AntDesign
-                name="shoppingcart"
-                size={RFValue(20)}
-                color={Theme.colors.text_black}
-              />
-            }
-            quantity={itemsSales.length}
-          />
-        </ContentIcon>
-      </ContentHeader>
-      <Body>
-        {showListRecentResearches ? (
-          <ContainerResearches>
-            {listRecentsResearches.map((value, index) => {
-              return (
-                <ItemsRecentsResearches key={index} nameResearche={value} />
-              );
-            })}
-          </ContainerResearches>
-        ) : (
-          <ContentItems>
-            <FlatList
-              data={products}
-              renderItem={({ item }) => {
-                return (
-                  <View style={{ margin: RFValue(3) }}>
-                    <CardItem
-                      key={item.id}
-                      id={item.id}
-                      typeItem={item.categories.name}
-                      nameItem={item.name}
-                      priceItem={item.price}
-                      urlImg={item.img_product}
-                    />
-                  </View>
-                );
-              }}
-              horizontal={false}
-              numColumns={2}
-              keyExtractor={(item) => String(item.id)}
-              onEndReached={handleSearchLazyLoading}
-              onEndReachedThreshold={0.1}
-              ListFooterComponent={
-                <ActivityIndicator
-                  color={Theme.colors.primary}
-                  size="large"
-                  visible={loading}
+          <ContentIcon onPress={() => navigate("sales")}>
+            <IconsBadge
+              icon={
+                <AntDesign
+                  name="shoppingcart"
+                  size={RFValue(20)}
+                  color={Theme.colors.text_black}
                 />
               }
-              ItemSeparatorComponent={() => {
-                return (
-                  <View
-                    style={{
-                      width: "100%",
-                      borderWidth: 2,
-                      borderColor: Theme.colors.text_black,
-                    }}
-                  ></View>
-                );
-              }}
+              quantity={cacheUser ? cacheUser.itemsSales.length : 0}
             />
-          </ContentItems>
-        )}
-      </Body>
-      {/* <ModalRecordingVoice
+          </ContentIcon>
+        </ContentHeader>
+        <Body>
+          {showListRecentResearches ? (
+            <ContainerResearches>
+              {listRecentsResearches.map((value, index) => {
+                return (
+                  <ItemsRecentsResearches
+                    key={index}
+                    nameResearche={value}
+                    handleSearch={handleSearch}
+                    setShowListRecentResearches={setShowListRecentResearches}
+                    setNameProduct={setNameProduct}
+                  />
+                );
+              })}
+            </ContainerResearches>
+          ) : (
+            <ContentItems>
+              <FlatList
+                data={products}
+                renderItem={({ item }) => {
+                  return (
+                    <View style={{ margin: RFValue(5) }}>
+                      <CardItem
+                        key={item.id}
+                        id={item.id}
+                        typeItem={item.categories.name}
+                        nameItem={item.name}
+                        priceItem={item.price}
+                        urlImg={item.img_product}
+                      />
+                    </View>
+                  );
+                }}
+                horizontal={false}
+                numColumns={2}
+                keyExtractor={(item) => String(item.id)}
+                onEndReached={handleSearchLazyLoading}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={
+                  <ActivityIndicator
+                    color={Theme.colors.primary}
+                    size="large"
+                    visible={loading}
+                  />
+                }
+              />
+            </ContentItems>
+          )}
+        </Body>
+        {/* <ModalRecordingVoice
         transparent
         visible={showModalRecordingVoice}
         setVisible={setShowModalRecordingVoice}
       /> */}
-    </Container>
+      </Container>
+    </SafeAreaView>
   );
 };

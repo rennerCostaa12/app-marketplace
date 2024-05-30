@@ -75,7 +75,17 @@ export const TabsRoutes = () => {
         name="configUser"
         component={ConfigUser}
         options={{
-          tabBarLabel: "Conta",
+          headerShown: true,
+          title: "Minha Conta",
+          headerStyle: {
+            backgroundColor: Theme.colors.primary,
+          },
+          headerTitleStyle: {
+            width: "100%",
+            color: Theme.colors.text_white,
+          },
+          headerTitleAlign: "center",
+          tabBarLabel: "Minha Conta",
           tabBarLabelStyle: {
             fontSize: 14,
             fontFamily: "Lato_700Bold",

@@ -18,17 +18,19 @@ import {
   PriceFinal,
 } from "./styles";
 
-import { useItemsSales } from "../../Contexts/ItemsSales";
-import { ItemsSalesProps } from "../../Contexts/ItemsSales";
+import { useAuthContext } from "../../Contexts/Auth";
+import { useCacheItemsUser } from "../../Contexts/CacheItemsUser";
 
 import { CartEmpty } from "../../Components/CartEmpty";
 import { QuantityProduct } from "../../Components/QuantityProduct";
 import { ModalMethodsPayments } from "../../Components/ModalMethodsPayments";
+import { Button } from "../../Components/Button";
 
 import { ConvertMoneyBrl } from "../../Utils/Helper/ConvertMoneyBrl";
 
 import { Theme } from "../../Theme";
-import { Button } from "../../Components/Button";
+
+import { ItemsSalesProps } from "../../Types/products";
 
 interface CardProductSales {
   dataProduct: ItemsSalesProps;
@@ -36,24 +38,33 @@ interface CardProductSales {
 
 const CardProductSales = ({ dataProduct }: CardProductSales) => {
   const [quantity, setQuantity] = useState<number>(dataProduct.quantity);
-  const { itemsSales, setItemsSales } = useItemsSales();
+  const { dataUser } = useAuthContext();
+  const { cacheItemsUser, setCacheItemsUser } = useCacheItemsUser();
+
+  const cacheUser = cacheItemsUser.find((data) => data.user.id === dataUser.id);
 
   const handleSaveNewQuantities = async () => {
-    try {
+    if (cacheUser) {
       dataProduct.quantity = quantity;
-      const newObject = itemsSales.map((value) => {
-        if (value.id === dataProduct.id) {
-          value = dataProduct;
-        }
-        return value;
-      });
-      setItemsSales(newObject);
-      AsyncStorage.setItem(
-        "@marketplace:items_sales",
-        JSON.stringify(newObject)
+
+      const newSales = cacheUser.itemsSales.map((value) =>
+        value.id === dataProduct.id ? dataProduct : value
       );
-    } catch (error) {
-      console.error(error);
+      const updatedCacheUser = {
+        ...cacheUser,
+        itemsSales: newSales,
+      };
+
+      const updatedCacheItemsUser = cacheItemsUser.map((data) =>
+        data.user.id === dataUser.id ? updatedCacheUser : data
+      );
+
+      setCacheItemsUser(updatedCacheItemsUser);
+
+      await AsyncStorage.setItem(
+        "@marketplace:cache_items_user",
+        JSON.stringify(updatedCacheItemsUser)
+      );
     }
   };
 
@@ -61,18 +72,24 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
     return dataProduct.priceItem * quantity;
   }, [quantity]);
 
-  const handleRemoveItem = () => {
-    try {
-      const newItems = itemsSales.filter(
-        (value) => value.id !== dataProduct.id
+  const handleRemoveItem = async () => {
+    if (cacheUser) {
+      const salesUpdated = cacheUser.itemsSales.filter(
+        (data) => data.id !== dataProduct.id
       );
-      setItemsSales(newItems);
-      AsyncStorage.setItem(
-        "@marketplace:items_sales",
-        JSON.stringify(newItems)
+
+      const cacheUserUpdated = { ...cacheUser, itemsSales: salesUpdated };
+
+      const updatedCacheItemsUser = cacheItemsUser.map((data) =>
+        data.user.id === dataUser.id ? cacheUserUpdated : data
       );
-    } catch (error) {
-      console.error(error);
+
+      setCacheItemsUser(updatedCacheItemsUser);
+
+      await AsyncStorage.setItem(
+        "@marketplace:cache_items_user",
+        JSON.stringify(updatedCacheItemsUser)
+      );
     }
   };
 
@@ -124,12 +141,16 @@ const CardProductSales = ({ dataProduct }: CardProductSales) => {
 };
 
 export const ProductSales = () => {
-  const { itemsSales } = useItemsSales();
   const { navigate } = useNavigation() as any;
   const [showMethodsPayments, setShowMethodsPayments] =
     useState<boolean>(false);
 
-  const totalAmount = itemsSales.reduce((total, item) => {
+  const { dataUser } = useAuthContext();
+  const { cacheItemsUser } = useCacheItemsUser();
+
+  const cacheUser = cacheItemsUser.find((data) => data.user.id === dataUser.id);
+
+  const totalAmount = cacheUser && cacheUser.itemsSales.reduce((total, item) => {
     return total + item.priceItem * item.quantity;
   }, 0);
 
@@ -142,18 +163,18 @@ export const ProductSales = () => {
       />
       <ContentCards>
         <FlatList
-          data={itemsSales}
+          data={cacheUser ? cacheUser.itemsSales : []}
           renderItem={({ item }) => <CardProductSales dataProduct={item} />}
           keyExtractor={(item) => String(item.id)}
-          ListEmptyComponent={CartEmpty}
+          ListEmptyComponent={<CartEmpty text="Nenhum produto encontrado" />}
         />
       </ContentCards>
-      {itemsSales.length > 0 ? (
+      {cacheUser && cacheUser.itemsSales.length > 0 ? (
         <PriceFinal style={{ fontFamily: "Lato_700Bold" }}>
           {ConvertMoneyBrl(totalAmount)}
         </PriceFinal>
       ) : null}
-      {itemsSales.length > 0 ? (
+      {cacheUser && cacheUser.itemsSales.length > 0 ? (
         <ContentButtonCheckout>
           <Button
             color={Theme.colors.primary}

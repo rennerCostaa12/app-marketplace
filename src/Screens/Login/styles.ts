@@ -16,16 +16,19 @@ export const Container = styled.View`
   padding: 0 ${RFValue(20)}px;
   justify-content: center;
   background-color: ${Theme.colors.background_color};
+  gap: ${RFValue(50)}px;
 `;
+
+export const ContentForm = styled.View``;
 
 export const ContentImg = styled.View`
   align-items: center;
-  margin: ${RFValue(20)}px 0;
 `;
 
 export const Image = styled.Image`
-  width: ${RFValue(230)}px;
-  height: ${RFValue(230)}px;
+  width: ${RFValue(150)}px;
+  height: ${RFValue(150)}px;
+  border-radius: ${RFValue(10)}px;
 `;
 
 export const TitlePage = styled.Text`

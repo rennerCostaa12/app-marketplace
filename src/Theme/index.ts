@@ -23,6 +23,6 @@ export const Theme = {
     tiny: RFValue(11),
     small: RFValue(14),
     medium: RFValue(18),
-    big: RFValue(24),
+    big: RFValue(26),
   },
 };

@@ -14,13 +14,13 @@ export const ContentBadge = styled.View`
   position: absolute;
   right: ${RFValue(-10)}px;
   top: ${RFValue(-10)}px;
-  width: ${RFValue(25)}px;
-  height: ${RFValue(20)}px;
+  width: ${RFValue(23)}px;
+  height: ${RFValue(18)}px;
   border-radius: ${RFValue(5)}px;
 `;
 
 export const Badge = styled.Text`
   text-align: center;
   color: ${Theme.colors.text_white};
-  font-size: ${RFValue(13)}px;
+  font-size: ${Theme.fontSize.tiny}px;
 `;

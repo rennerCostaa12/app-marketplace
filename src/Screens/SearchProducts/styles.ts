@@ -6,7 +6,7 @@ import { Theme } from "../../Theme";
 export const Container = styled.View``;
 
 export const ContentHeader = styled.View`
-  padding: ${RFValue(35)}px ${RFValue(12)}px ${RFValue(12)}px ${RFValue(12)}px;
+  padding: ${RFValue(35)}px ${RFValue(20)}px ${RFValue(12)}px ${RFValue(20)}px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -23,15 +23,18 @@ export const ContentInputSearch = styled.View`
 
 export const ContentIconClearText = styled.TouchableOpacity`
   position: absolute;
-  top: ${RFValue(10)}px;
-  right: ${RFValue(5)}px;
+  top: ${RFValue(12)}px;
+  right: ${RFValue(10)}px;
 `;
 
 export const ContentIcon = styled.TouchableOpacity``;
 
-export const ContentItems = styled.SafeAreaView``;
+export const ContentItems = styled.View`
+  align-items: center;
+  height: 90%;
+`;
 
-export const ContainerResearches = styled.SafeAreaView`
+export const ContainerResearches = styled.View`
   width: 100%;
 `;
 

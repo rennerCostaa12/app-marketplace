@@ -6,7 +6,6 @@ import {
 } from "@expo-google-fonts/lato";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
-import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { useEffect, useRef } from "react";
@@ -15,10 +14,7 @@ import { Alert } from "react-native";
 import { Container } from "./styles";
 
 import { Routes } from "./src/Routes";
-
-import { ItemsFavoritesContextProvider } from "./src/Contexts/ItemsFavorites";
-import { ItemsSalesContextProvider } from "./src/Contexts/ItemsSales";
-import { AuthContextProvider } from "./src/Contexts/Auth";
+import { Providers } from "./src/Providers";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -83,13 +79,9 @@ export default function App() {
   return (
     <Container>
       <StatusBar style="auto" />
-      <ItemsFavoritesContextProvider>
-        <ItemsSalesContextProvider>
-          <AuthContextProvider>
-            <Routes />
-          </AuthContextProvider>
-        </ItemsSalesContextProvider>
-      </ItemsFavoritesContextProvider>
+      <Providers>
+        <Routes />
+      </Providers>
     </Container>
   );
 }

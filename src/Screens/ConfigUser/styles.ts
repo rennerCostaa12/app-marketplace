@@ -21,5 +21,5 @@ export const ContentButton = styled.View`
   width: 100%;
   flex-direction: column;
   gap: ${RFValue(10)}px;
-  margin: ${RFValue(10)}px 0;
+  margin: ${RFValue(40)}px 0;
 `;

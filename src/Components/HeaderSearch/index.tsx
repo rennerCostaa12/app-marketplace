@@ -14,17 +14,19 @@ import {
 
 import { IconsBadge } from "../IconsBadge";
 
-import { useItemsFavorites } from "../../Contexts/ItemsFavorites";
-import { useItemsSales } from "../../Contexts/ItemsSales";
+import { useCacheItemsUser } from "../../Contexts/CacheItemsUser";
+import { useAuthContext } from "../../Contexts/Auth";
 
 import { Theme } from "../../Theme";
 
 export const HeaderSearch = () => {
-  const { itemsFavorites } = useItemsFavorites();
-  const { itemsSales } = useItemsSales();
+  const { cacheItemsUser } = useCacheItemsUser();
+  const { dataUser } = useAuthContext();
 
   const { navigate } = useNavigation() as any;
 
+  const cacheUser = cacheItemsUser.find((data) => data.user.id === dataUser.id);
+  
   return (
     <Container>
       <ContentInputSearch>
@@ -56,7 +58,7 @@ export const HeaderSearch = () => {
                 color={Theme.colors.text_black}
               />
             }
-            quantity={itemsSales.length}
+            quantity={cacheUser ? cacheUser.itemsSales.length : 0}
           />
         </ButtonIcon>
 
@@ -69,7 +71,7 @@ export const HeaderSearch = () => {
                 color={Theme.colors.text_black}
               />
             }
-            quantity={itemsFavorites.length}
+            quantity={cacheUser ? cacheUser.itemsFavorites.length : 0}
           />
         </ButtonIcon>
       </ContentIcons>

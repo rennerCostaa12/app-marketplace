@@ -23,3 +23,17 @@ export interface ItemProps {
   priceItem: number;
   typeItem: string;
 }
+
+export interface ItemsSalesProps {
+  id: string | number;
+  urlImg: string;
+  nameItem: string;
+  priceItem: number;
+  typeItem: string;
+  quantity: number;
+}
+export interface CachesUserProps {
+  user: DatasUserProps;
+  itemsFavorites: ItemProps[] | null;
+  itemsSales: ItemsSalesProps[] | null;
+}

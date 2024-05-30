@@ -9,6 +9,7 @@ export const Container = styled.View`
 
 export const ContentIcon = styled.View`
   position: absolute;
+  top: ${RFValue(2)}px;
   left: ${RFValue(10)}px;
   margin: ${RFValue(11)}px ${RFValue(5)}px;
 `;

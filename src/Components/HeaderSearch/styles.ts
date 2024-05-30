@@ -9,7 +9,7 @@ export const Container = styled.View`
   align-items: center;
   padding: ${RFValue(20)}px ${RFValue(15)}px;
   background-color: ${Theme.colors.background_color};
-  margin-top: ${RFValue(20)}px;
+  margin-top: ${RFValue(10)}px;
   gap: ${RFValue(10)}px;
 `;
 
@@ -20,7 +20,7 @@ export const ContentInputSearch = styled.View`
 export const ContentIcons = styled.View`
   flex: 0.2;
   flex-direction: row;
-  gap: ${RFValue(10)}px;
+  gap: ${RFValue(12)}px;
 `;
 
 export const InputSearch = styled.TextInput`
@@ -33,6 +33,7 @@ export const InputSearch = styled.TextInput`
 
 export const ContentSearch = styled.View`
   position: absolute;
+  top: ${RFValue(2)}px;
   left: ${RFValue(10)}px;
   margin: ${RFValue(11)}px ${RFValue(5)}px;
 `;
