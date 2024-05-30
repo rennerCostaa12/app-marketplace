@@ -1,9 +1,10 @@
 {
   "cli": {
-    "version": ">= 5.4.0"
+    "version": ">= 9.1.0"
   },
   "build": {
     "development": {
+      "node": "20.13.1",
       "developmentClient": true,
       "distribution": "internal",
       "android": {
@@ -17,6 +18,7 @@
       }
     },
     "production": {
+      "node": "20.13.1",
       "android": {
         "buildType": "apk"
       }
